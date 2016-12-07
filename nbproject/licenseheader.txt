@@ -1,0 +1,8 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Copyright 2016 Thomas Bodine
+${licensePrefix}All rights Reserved
+<#if licenseLast??>
+${licenseLast}
+</#if>
