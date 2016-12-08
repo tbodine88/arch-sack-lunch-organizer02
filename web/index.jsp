@@ -43,7 +43,7 @@
                     <font face="impact,arial,cambria,david,franklin gothic medium,trebuchet" size="+2">
                 
                     <table >
-                        <tr><td halign="right" bgcolor="lightblue"><a href="/join">Join</a></td></tr>
+                        <tr><td halign="right" bgcolor="lightblue"><a href="joiner">Join</a></td></tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr><td halign="right" bgcolor="lightblue"><a href="go">Log in</a></td></tr>
                         <tr><td>&nbsp;</td></tr>
