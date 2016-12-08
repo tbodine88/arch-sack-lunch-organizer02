@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Join a Committee</h1>
-        <form>
+        <form method="POST" >
         <table border="1">
    <tr><th align="left">login</th><td> <input type=text name=login></input>     </td></tr>
    <tr><th align="left">password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><td> <input type=text name=password1></input> </td></tr>
