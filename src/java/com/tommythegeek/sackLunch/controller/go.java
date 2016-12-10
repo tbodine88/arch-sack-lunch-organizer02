@@ -4,8 +4,13 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.People;
+import com.tommythegeek.sackLunch.dao.Person;
+import com.tommythegeek.sackLunch.dao.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,20 +50,20 @@ public class go extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println("username " + username);
-        if (validateUser(username, password)){
+        Person applicant = new Person();
+        String username =request.getParameter("username");
+        applicant.setLogin(username);
+        applicant.setPassword(request.getParameter("password"));
+        Status stat = People.validates(applicant);
+        if (stat.ok){
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             request.getRequestDispatcher("loggedin.jsp").forward(request, response);    
         } else {
+            request.setAttribute("flash", (Object) stat.message);
+            
             request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
         }
-    }
-
-    private static boolean validateUser(String username, String password) {
-        return username.equals("Bob") && password.equals("pass");
     }
 
     /**

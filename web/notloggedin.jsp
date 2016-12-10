@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" import="java.util.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,4 +16,15 @@
     <body>
         <h1>You are not logged in!</h1>
     </body>
+    request attributes:
+<%
+    for (Enumeration e = request.getAttributeNames(); e.hasMoreElements(); ) {     
+    String attribName = (String) e.nextElement();
+    Object attribValue = session.getAttribute(attribName);
+%>
+<BR><%= attribName %> - <%= attribValue %>
+
+<%
+}
+%>
 </html>
