@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
-    private static final Pattern USER_PATTERN = Pattern.compile("^\\w{6,12}$");
+    private static final Pattern USER_PATTERN = Pattern.compile("^\\w{6,24}$");
     private static final Pattern PASS_PATTERN = Pattern.compile("^[\\w\\.-]{8,16}$");
     
     public static Status validates(Person user) {
@@ -29,7 +29,7 @@ public class People {
         }
         if (!USER_PATTERN.matcher(login).matches()){
             result.ok = false;
-            result.message = "login (" + login + ") is not 6 to 12 word characters in length";
+            result.message = "login (" + login + ") is not 6 to 24 word characters in length";
             return result;
         }
    
@@ -37,9 +37,16 @@ public class People {
           result.ok = false;
           return result;
         }
-        if (CROWD.stream().anyMatch((someone) -> (login.equals(someone.getLogin()) && userPass.equals(someone.getPassword())))) {
-            result.ok = true;
-            result.message = "login match found!";
+        for (Person someone: CROWD){
+            if ( !login.equals(someone.getLogin())) {
+                continue;
+            }
+            if ( !userPass.equals(someone.getPassword())) {
+                result.ok = true;
+                result.message = "login match found!";
+                user.copy(someone);
+                return result;
+            }
         }
         result.ok=false;
         result.message = "No login and password combination matches those given";

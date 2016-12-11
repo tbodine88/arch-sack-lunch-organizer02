@@ -4,26 +4,38 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.tommythegeek.sackLunch.dao.People;
-import com.tommythegeek.sackLunch.dao.Person;
-import com.tommythegeek.sackLunch.dao.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Set;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 /**
  *
- * @author Owner
+ * @author Thomas Bodine
  */
-public class go extends HttpServlet {
+@WebServlet(name = "logout", urlPatterns = {"/logout"}, initParams = {})
+public class logout extends HttpServlet {
 
- 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+       request.getSession(false).invalidate();
+       request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,7 +48,7 @@ public class go extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -50,21 +62,7 @@ public class go extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Person applicant = new Person();
-        String username =request.getParameter("username");
-        applicant.setLogin(username);
-        applicant.setPassword(request.getParameter("password"));
-        Status stat = People.validates(applicant);
-        if (stat.ok){
-            HttpSession session = request.getSession();
-            Integer userId = applicant.getRowid();
-            session.setAttribute("userId", userId.toString());
-            session.setAttribute("username", username);
-            request.getRequestDispatcher("loggedin.jsp").forward(request, response);    
-        } else {
-            request.setAttribute("flash", stat.message);            
-            request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -76,5 +74,5 @@ public class go extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
+

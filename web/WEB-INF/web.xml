@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-  <context-param> 
-    <param-name>adminUser</param-name> 
-    <param-value>admin</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>adminPass</param-name> 
-    <param-value>javapass</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>FacilitatorUser</param-name> 
-    <param-value>fancy</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>FacilitatorPass</param-name> 
-    <param-value>javapass</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>Committee</param-name> 
-    <param-value>1,2,3,4,5</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>memberUser</param-name> 
-    <param-value>mambo</param-value> 
-  </context-param>
-  <context-param> 
-    <param-name>memberPass</param-name> 
-    <param-value>javapass</param-value> 
-  </context-param>
-<listener>
+    <context-param>
+        <param-name>adminUser</param-name>
+        <param-value>administrator</param-value>
+    </context-param>
+    <context-param>
+        <param-name>adminPass</param-name>
+        <param-value>javapass</param-value>
+    </context-param>
+    <context-param>
+        <param-name>FacilitatorUser</param-name>
+        <param-value>fancygirl</param-value>
+    </context-param>
+    <context-param>
+        <param-name>FacilitatorPass</param-name>
+        <param-value>javapass</param-value>
+    </context-param>
+    <context-param>
+        <param-name>Committee</param-name>
+        <param-value>1,2,3,4,5</param-value>
+    </context-param>
+    <context-param>
+        <param-name>memberUser</param-name>
+        <param-value>mambocombo</param-value>
+    </context-param>
+    <context-param>
+        <param-name>memberPass</param-name>
+        <param-value>javapass</param-value>
+    </context-param>
+    <listener>
         <description>ServletContextListener</description>
         <listener-class>com.tommythegeek.sackLunch.listeners.NewServletListener</listener-class>
     </listener>
@@ -44,9 +44,17 @@
             <param-value>two</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

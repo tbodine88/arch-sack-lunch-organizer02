@@ -15,16 +15,7 @@
     </head>
     <body>
         <h1>You are not logged in!</h1>
+        <font color="red"><h2 class="flash">${flash}</h2></font>
     </body>
-    request attributes:
-<%
-    for (Enumeration e = request.getAttributeNames(); e.hasMoreElements(); ) {     
-    String attribName = (String) e.nextElement();
-    Object attribValue = session.getAttribute(attribName);
-%>
-<BR><%= attribName %> - <%= attribValue %>
-
-<%
-}
-%>
+  
 </html>

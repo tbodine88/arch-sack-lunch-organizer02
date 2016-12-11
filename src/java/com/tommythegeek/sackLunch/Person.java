@@ -13,20 +13,20 @@ import java.util.Date;
  */
 public class Person implements Serializable {
     
-	private int rowid;
-	private String name;
-	private String    phone;
-	private String    email;
-	private boolean   can_deliver;
-	private Date   updated;
-	private String    committees;
-	private String    login;
-	private String    password;
-	private String    hint;
-	private Date   Success;
-	private Date   failure;
-	private int   fail_count;
-	private SackLunchPermission  permission;
+    private int rowid;
+    private String name;
+    private String    phone;
+    private String    email;
+    private boolean   can_deliver;
+    private Date   updated;
+    private String    committees;
+    private String    login;
+    private String    password;
+    private String    hint;
+    private Date   Success;
+    private Date   failure;
+    private int   fail_count;
+    private SackLunchPermission  permission;
 
     public int getRowid() {
         return rowid;
@@ -173,6 +173,22 @@ public class Person implements Serializable {
         this.permission = SackLunchPermission.MEMBER;
     }
     
-    
+    public void copy( Person someone){
+        
+      this.rowid = someone.getRowid();
+      this.name = someone.getName();
+      this.phone = someone.getPhone();
+      this.email = someone.getEmail();
+      this.can_deliver = someone.isCan_deliver();
+      this.updated = someone.getUpdated();
+      this.committees = someone.getCommittees();
+      this.login = someone.getLogin();
+      this.password = someone.getPassword();
+      this.hint = someone.getHint();
+      this.Success = someone.getSuccess();
+      this.failure = someone.getFailure();
+      this.fail_count = someone.getFail_count();
+      this.permission = someone.getPermission();
+    }
     
 }
