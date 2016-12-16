@@ -7,6 +7,7 @@ package com.tommythegeek.sackLunch.controller;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.Status;
+import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
@@ -60,7 +61,14 @@ public class go extends HttpServlet {
             Integer userId = applicant.getRowid();
             session.setAttribute("userId", userId.toString());
             session.setAttribute("username", username);
-            request.getRequestDispatcher("loggedin.jsp").forward(request, response);    
+            switch(applicant.getPermission()) {
+                case MEMBER:
+                    request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
+                case FACILITATOR:
+                    request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);    
+                case ADMINISTRATOR:
+                    request.getRequestDispatcher("/WEB-INF/canvas/siteAdministrator.jsp").forward(request, response);    
+            }
         } else {
             request.setAttribute("flash", stat.message);            
             request.getRequestDispatcher("notloggedin.jsp").forward(request, response);

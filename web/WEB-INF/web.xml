@@ -52,6 +52,10 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>chooseGroup</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.chooseGroup</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -59,6 +63,10 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>chooseGroup</servlet-name>
+        <url-pattern>/chooseGroup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
