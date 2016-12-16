@@ -28,6 +28,10 @@
         <param-name>memberPass</param-name>
         <param-value>javapass</param-value>
     </context-param>
+    <context-param>
+        <param-name>gallery</param-name>
+        <param-value>/WEB-INF/views</param-value>
+    </context-param>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>com.tommythegeek.sackLunch.listeners.NewServletListener</listener-class>
