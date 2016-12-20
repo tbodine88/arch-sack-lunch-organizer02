@@ -13,7 +13,7 @@
   </head>
   <body>
     
-    <h2>Hello ${name}!</h2>
+    <h2>Hello ${fullName}!</h2>
     <p>
       <table width="100%">
           <caption><b>${week} Committee Facilitator Menu</b></caption>
@@ -21,7 +21,7 @@
           <td width="8%">
             <table>
               <tr><td><img src="http://images.clipartpanda.com/lunch-clip-art-paper-sack-clipart.jpg" height="10%" width="100%"/></tr>
-              <tr><td><a href="/logout" bgcolor="lightblue">Logout</a></td></tr>
+              <tr><td><a href="logout" bgcolor="lightblue">Logout</a></td></tr>
             </table></td>
           <td valign="justify">
             <table height=100%  width="100%" >              

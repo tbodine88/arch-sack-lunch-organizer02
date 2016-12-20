@@ -25,31 +25,44 @@ public class NewServletListener implements ServletContextListener {
        ServletContext ctx = sce.getServletContext();
        String adminUser = ctx.getInitParameter("adminUser");
        String adminPass = ctx.getInitParameter("adminPass");
+       String adminName = ctx.getInitParameter("adminName");
        String FacilitatorUser = ctx.getInitParameter("FacilitatorUser");
        String FacilitatorPass = ctx.getInitParameter("FacilitatorPass");
+       String FacilitatorName = ctx.getInitParameter("FacilitatorName");
        String FacilitatorCommittee = ctx.getInitParameter("FacilitatorCommittee");
        String memberUser = ctx.getInitParameter("memberUser");
        String memberPass = ctx.getInitParameter("memberPass");
+       String memberName = ctx.getInitParameter("memberName");
        String Committee = ctx.getInitParameter("Committee");
+       int pop;
+
+       People p = new People();
+       ctx.setAttribute("people", p);
        Person someone = new Person();
        someone.setRowid(1);
        someone.setLogin(adminUser);
        someone.setPassword(adminPass);
+       someone.setName(adminName);
        someone.setCommittees(Committee);
        someone.setPermission(SackLunchPermission.ADMINISTRATOR);
        People.introduce(someone);
+       pop = p.updatePop();
        someone = new Person();
        someone.setRowid(2);
        someone.setLogin(FacilitatorUser);
        someone.setPassword(FacilitatorPass);
+       someone.setName(FacilitatorName);
        someone.setPermission(SackLunchPermission.FACILITATOR);
        People.introduce(someone);
+       pop = p.updatePop();
        someone = new Person();
        someone.setRowid(3);
        someone.setLogin(memberUser);
        someone.setPassword(memberPass); 
+       someone.setName(memberName);
        someone.setPermission(SackLunchPermission.MEMBER);
        People.introduce(someone);
+       pop = p.updatePop();
     }
 
     @Override

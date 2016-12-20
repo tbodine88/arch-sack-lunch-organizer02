@@ -12,7 +12,7 @@
       <title>Committee Member Menu</title>
    </head>
    <body>
-      <h2>Hello ${name}!</h2>
+      <h2>Hello ${fullName}!</h2>
       <p>
       <table width="100%" >
          <caption>
@@ -42,7 +42,7 @@
                                  <table border="4" bordercolor="black">
                                     <tr>
                                        <td bgcolor="lightblue">
-                                          <a href="/logout" >Logout</a>
+                                          <a href="logout" >Logout</a>
                                        </td>
                                     <tr>
                                  </table>

@@ -9,12 +9,20 @@
         <param-value>javapass</param-value>
     </context-param>
     <context-param>
+        <param-name>adminName</param-name>
+        <param-value>Adicus minnie Strator</param-value>
+    </context-param>
+    <context-param>
         <param-name>FacilitatorUser</param-name>
         <param-value>fancygirl</param-value>
     </context-param>
     <context-param>
         <param-name>FacilitatorPass</param-name>
         <param-value>javapass</param-value>
+    </context-param>
+    <context-param>
+        <param-name>FacilitatorName</param-name>
+        <param-value>Fancy Girl</param-value>
     </context-param>
     <context-param>
         <param-name>Committee</param-name>
@@ -27,6 +35,10 @@
     <context-param>
         <param-name>memberPass</param-name>
         <param-value>javapass</param-value>
+    </context-param>
+        <context-param>
+        <param-name>memberName</param-name>
+        <param-value>Manfred (mambo) Combination</param-value>
     </context-param>
     <context-param>
         <param-name>gallery</param-name>

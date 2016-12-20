@@ -8,7 +8,14 @@ public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
     private static final Pattern USER_PATTERN = Pattern.compile("^\\w{6,24}$");
     private static final Pattern PASS_PATTERN = Pattern.compile("^[\\w\\.-]{8,16}$");
-    
+    public int population;
+    public People(){
+        population = CROWD.size();
+    }
+    public int updatePop(){
+        population = CROWD.size();
+        return population;
+    }
     public static Status validates(Person user) {
         String login = user.getLogin();
         String userPass = user.getPassword();
@@ -38,10 +45,13 @@ public class People {
           return result;
         }
         for (Person someone: CROWD){
-            if ( !login.equals(someone.getLogin())) {
+            String accum = someone.getLogin();
+            if ( !login.equals(accum)) {
                 continue;
             }
-            if ( !userPass.equals(someone.getPassword())) {
+            accum = someone.getPassword();
+            boolean ok = userPass.equals(accum);
+            if ( ok ) {
                 result.ok = true;
                 result.message = "login match found!";
                 user.copy(someone);
@@ -63,6 +73,7 @@ public class People {
     }
     public static void introduce(Person yokel){
         CROWD.add(yokel);
+        yokel.setRowid(CROWD.size()-1);
     }
     
     public static boolean isInCrowd( Person newby){
@@ -72,5 +83,8 @@ public class People {
             }
         }
         return false;
+    }
+    public static Person personById(int id){
+        return CROWD.get(id);
     }
 }

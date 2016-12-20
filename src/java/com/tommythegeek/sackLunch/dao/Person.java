@@ -5,6 +5,7 @@
 package com.tommythegeek.sackLunch.dao;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -17,7 +18,7 @@ public class Person implements Serializable {
     private String name;
     private String    phone;
     private String    email;
-    private boolean   can_deliver;
+    private boolean   can_deliver ;
     private Date   updated;
     private String    committees;
     private String    login;
@@ -143,7 +144,20 @@ public class Person implements Serializable {
         
     
     public Person() {
-        
+	    this.rowid = 0;
+	    this.name = "nobody";
+	    this.phone = "000-000-0000";
+	    this.email = "noone@nowhwere.org";
+	    this.can_deliver = true;
+	    this.updated = Date.from(Instant.now());
+	    this.committees = "1,2,3,4,5";
+	    this.login = "none";
+	    this.password = "no#$#guess";
+	    this.hint ="hintless";
+	    this.Success= Date.from(Instant.now());
+	    this.failure= Date.from(Instant.now());
+	    this.fail_count = 0;
+	    this.permission = SackLunchPermission.MEMBER;
     }
 
     public void setPermission(int perm) {

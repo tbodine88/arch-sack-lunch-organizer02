@@ -51,17 +51,30 @@ public class go extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        SackLunchPermission perm;
+        Integer userId;
+        String username;
+        String fullName;
+        String group;
+
         Person applicant = new Person();
-        String username =request.getParameter("username");
+        username =request.getParameter("username");
         applicant.setLogin(username);
         applicant.setPassword(request.getParameter("password"));
         Status stat = People.validates(applicant);
         if (stat.ok){
             HttpSession session = request.getSession();
-            Integer userId = applicant.getRowid();
+            userId = applicant.getRowid();
+	    username = applicant.getLogin();
+	    fullName = applicant.getName();
+	    group = applicant.getCommittees();
+	    perm  = applicant.getPermission();
             session.setAttribute("userId", userId.toString());
             session.setAttribute("username", username);
-            switch(applicant.getPermission()) {
+            request.setAttribute("fullName",fullName);
+            request.setAttribute("group",group);
+            request.setAttribute("perm", perm);
+            switch(perm) {
                 case MEMBER:
                     request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
                 case FACILITATOR:

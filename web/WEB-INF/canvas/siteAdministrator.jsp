@@ -20,7 +20,8 @@
         <title>Sack Lunch Site Administrator</title>
     </head>
     <body>
-        <h1>Choose a Task</h1>
+        <h1>Hello ${fullName} </h1>
+        <h2>Choose a Task</h2>
         <p>
             <table>
             <tr>
@@ -33,7 +34,7 @@
                 <td><a href="five">five</a></td>
                 <td><a href="six">six</a></td>
                 <td><a href="seven">seven</a></td>
-                <td><a href="eight">eight</a></td>
+                <td><a href="logout">Log out</a></td>
             </tr>
         </table>
         </p>
