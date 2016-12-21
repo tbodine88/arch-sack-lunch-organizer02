@@ -149,13 +149,13 @@ public class Person implements Serializable {
 	    this.phone = "000-000-0000";
 	    this.email = "noone@nowhwere.org";
 	    this.can_deliver = true;
-	    this.updated = Date.from(Instant.now());
+	    this.updated = new Date();
 	    this.committees = "1,2,3,4,5";
 	    this.login = "none";
 	    this.password = "no#$#guess";
 	    this.hint ="hintless";
-	    this.Success= Date.from(Instant.now());
-	    this.failure= Date.from(Instant.now());
+	    this.Success= this.updated;
+	    this.failure= this.Success;
 	    this.fail_count = 0;
 	    this.permission = SackLunchPermission.MEMBER;
     }

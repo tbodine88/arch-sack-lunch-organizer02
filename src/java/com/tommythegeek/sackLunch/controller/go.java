@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +22,12 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Owner
+ * @author Thomas Bodine
  */
 public class go extends HttpServlet {
 
  
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -56,6 +58,7 @@ public class go extends HttpServlet {
         String username;
         String fullName;
         String group;
+        Pattern compat = Pattern.compile(",");
 
         Person applicant = new Person();
         username =request.getParameter("username");
@@ -68,6 +71,13 @@ public class go extends HttpServlet {
 	    username = applicant.getLogin();
 	    fullName = applicant.getName();
 	    group = applicant.getCommittees();
+            Matcher comat = compat.matcher(group);
+            int from =0;
+            int count = 0;
+            while(comat.find(from)){
+                count ++;
+                from = comat.start()+1;
+            }
 	    perm  = applicant.getPermission();
             session.setAttribute("userId", userId.toString());
             session.setAttribute("username", username);
@@ -75,12 +85,23 @@ public class go extends HttpServlet {
             request.setAttribute("group",group);
             request.setAttribute("perm", perm);
             switch(perm) {
-                case MEMBER:
-                    request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
                 case FACILITATOR:
-                    request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);    
+                    if ( count < 2 ) {
+                      request.getRequestDispatcher("WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);    
+                    } else {
+                      request.getRequestDispatcher("chooseGroup?menu=FacilitatorMenu").forward(request, response);    
+                    }
+                    break;
                 case ADMINISTRATOR:
                     request.getRequestDispatcher("/WEB-INF/canvas/siteAdministrator.jsp").forward(request, response);    
+                    break;
+                default:
+                    if ( count < 2){
+                        request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
+                    } else {
+                        request.getRequestDispatcher("chooseGroup?menu=MemberMenu").forward(request, response);    
+                    }
+                    break;
             }
         } else {
             request.setAttribute("flash", stat.message);            
