@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- 
    Document   : FacilitatorMenu
    Created on : Dec 13, 2016, 5:04:44 AM
@@ -10,13 +11,22 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Committee Member Menu</title>
+      <script type="text/javascript">
+          document.getElementById("donation").addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("rsvp").click();
+            }
+          });
+      </script>
    </head>
    <body>
+      <c:set var="bureau" value='${fn:split(initParam.CommitteeName,",")}' />
       <h2>Hello ${fullName}!</h2>
       <p>
       <table width="100%" >
          <caption>
-            <font size="+2"><b>${week} Committee Member Menu</b></font>
+            <font size="+2"><b>${bureau[week-1]} Committee Member Menu</b></font>
          </caption>
          <tr>
             <td width="50%">
@@ -70,7 +80,7 @@
                                  <b>
                                     <table  width="100%">
                                        <tr>
-                                          <td><input type="radio" name="mailto" value="Facilitator" checked="true"/>Facilitator</td>
+                                           <td><input type="radio" name="mailto" value="Facilitator" checked="true"/>Facilitator (<i>name here</i>)</td>
                                        </tr>
                                        <tr>
                                           <td><input type="radio" name="mailto" value="Committee"/>Committee</td>
@@ -85,12 +95,12 @@
                      <td><textarea name="message" rows=10 cols=50 maxlength="2000"></textarea></td>
                   </tr>
                   <tr>
-                     <td align="center"><input type="submit" value="Send Message"/></td>
+                     <td align="center"><input id="sndMess" type="submit" value="Send Message"/></td>
                   </tr>
                </table>
             </td>
             <td valign="middle">
-               <form action="memberChoice" >
+               <form id="donation" action="memberChoice" >
                   <table border="1">
                      <caption>
                         <b>Choose something to bring the Week of ${date}</b> 
@@ -130,7 +140,7 @@
                      </tr>
                      <!-- /c:forEach> -->
                      <tr>
-                        <td colspan="2" align="center"><input type="submit" value="RSVP &amp; bring selected item(s)"></td>
+                        <td colspan="2" align="center"><input id="rsvp" type="submit" value="RSVP &amp; bring selected item(s)"></td>
                      </tr>
                   </table>
       </table>

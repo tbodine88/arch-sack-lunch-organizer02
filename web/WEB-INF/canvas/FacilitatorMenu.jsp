@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- 
     Document   : FacilitatorMenu
     Created on : Dec 13, 2016, 5:04:44 AM
@@ -12,11 +13,12 @@
     <title>Facilitator Menu</title>
   </head>
   <body>
-    
+   <c:set var="bureau" value='${fn:split(initParam.CommitteeName,",")}' />
+
     <h2>Hello ${fullName}!</h2>
     <p>
       <table width="100%">
-          <caption><b>${week} Committee Facilitator Menu</b></caption>
+          <caption><b>${bureau[week-1]} Committee Facilitator Menu</b></caption>
         <tr>
           <td width="8%">
             <table>

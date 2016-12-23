@@ -17,6 +17,7 @@ public class MeetingList {
     
     public MeetingList(){
         this.meeting= new ArrayList<String>();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         for ( int i = 0 ; i< 5; i++ ){
             this.meeting.add("");
         }
@@ -35,20 +36,32 @@ public class MeetingList {
             case(Calendar.FRIDAY): mondayIsDaysAway =3; break;
             default: mondayIsDaysAway =2; break;
         }
-        nextMeet.add(Calendar.DATE, mondayIsDaysAway);
-        int dayOfMonth = nextMeet.get(Calendar.DAY_OF_MONTH);
-        int slot =0;
-        while (dayOfMonth > 0) {
-            dayOfMonth -= 7;
-            if (dayOfMonth > 0) slot++;
+        while( slotsAreEmpty(this.meeting)){
+            nextMeet.add(Calendar.DATE, mondayIsDaysAway);
+            mondayIsDaysAway = 7;
+            int slot = findSlot( nextMeet);
+            if (this.meeting.get(slot).equals(""))
+                this.meeting.set(slot, format1.format(nextMeet.getTime()));
         }
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        for (int ax=0; ax < 5 ; ax++){
-            String meet = new String(format1.format(nextMeet.getTime()));
-            meeting.set(slot,meet);
-            slot = ( slot + 1 ) % 5;
-            nextMeet.add(Calendar.DATE,7);
+    }
+
+    private boolean slotsAreEmpty(ArrayList<String> meeting) {
+        for (String slot: meeting){
+            if ( slot.equals(""))
+                return true;
         }
+        return false;
+    }
+
+    private int findSlot(Calendar nextMeet) {
+        int day = nextMeet.get(Calendar.DAY_OF_MONTH);
+        int slot = 0;
+        while ( day > 0){
+            day -= 7;
+            if ( day > 0)
+                slot++;
+        }
+        return slot;
     }
     
 }

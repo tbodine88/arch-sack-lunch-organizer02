@@ -81,15 +81,15 @@ public class go extends HttpServlet {
 	    perm  = applicant.getPermission();
             session.setAttribute("userId", userId.toString());
             session.setAttribute("username", username);
-            request.setAttribute("fullName",fullName);
-            request.setAttribute("group",group);
-            request.setAttribute("perm", perm);
+            session.setAttribute("fullName",fullName);
+            session.setAttribute("group",group);
+            session.setAttribute("perm", perm);
             switch(perm) {
                 case FACILITATOR:
                     if ( count < 2 ) {
                       request.getRequestDispatcher("WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);    
                     } else {
-                      request.getRequestDispatcher("chooseGroup?menu=FacilitatorMenu").forward(request, response);    
+                      request.getRequestDispatcher("chooseGroup").forward(request, response);    
                     }
                     break;
                 case ADMINISTRATOR:

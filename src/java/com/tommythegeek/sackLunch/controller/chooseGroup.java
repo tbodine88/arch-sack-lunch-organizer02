@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,14 +35,35 @@ public class chooseGroup extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int groupMemberShip = 0;
+        HttpSession session = request.getSession();
         Pattern comma = Pattern.compile(",");
-        CharSequence group = (CharSequence) request.getAttribute("group");
+        Pattern num = Pattern.compile("^(\\d)");
+        CharSequence group = (CharSequence) session.getAttribute("group");
+        SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
+        String committee = request.getParameter("committee");
+        if ( ! (committee == null || committee.isEmpty())){
+            request.setAttribute("week", committee);
+            if ( perm == SackLunchPermission.FACILITATOR){
+                request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
+            }
+            request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);
+        }
         Matcher comat = comma.matcher(group);
-        SackLunchPermission perm = (SackLunchPermission) request.getAttribute("perm");
+        Matcher nummat = num.matcher(group);
         MeetingList bunch= new MeetingList();
         request.setAttribute("meetDate", bunch.meeting);
-        request.getRequestDispatcher("/WEB-INF/canvas/groupMenu.jsp").forward(request, response);
+        while( comat.find()) groupMemberShip++;
+        if ( groupMemberShip < 2){
+            nummat.find();
+            request.setAttribute("week", nummat.group(1));
+            if ( perm == SackLunchPermission.FACILITATOR){
+                request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
+            }
+            request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/WEB-INF/canvas/groupMenu.jsp").forward(request, response);
+        }
     }
 
     // 
