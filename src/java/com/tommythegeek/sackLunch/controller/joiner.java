@@ -4,8 +4,12 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.People;
+import com.tommythegeek.sackLunch.dao.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
@@ -16,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Owner
+ * @author Thomas Bodine
  */
 @WebServlet(name = "joiner", urlPatterns = {"/joiner"}, initParams = {
     @WebInitParam(name = "aParam", value = "joined")})
@@ -48,9 +52,70 @@ public class joiner extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println("username " + username);
+	    
+	final String badParmPage="WEB-INF/error/badParameter.jsp";
+        String login = request.getParameter("login");
+	if ( login == null || login.equals("")) {
+		request.setAttribute("item","login"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String password = request.getParameter("password1");
+	if ( password == null || password.equals("")) {
+		request.setAttribute("item","first password"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String password2 = request.getParameter("password2");
+	if ( password2 == null || password2.equals("")) {
+		request.setAttribute("item","second password"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String hint = request.getParameter("hint");
+	if ( hint == null || hint.equals("")) {
+		request.setAttribute("item","hint"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String fullName = request.getParameter("name");
+	if ( fullName == null || fullName.equals("")) {
+		request.setAttribute("item","fullName"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String phone = request.getParameter("phone");
+	if ( phone == null || phone.equals("")) {
+		request.setAttribute("item","phone"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String email = request.getParameter("email");
+	if ( email == null || email.equals("")) {
+		request.setAttribute("item","email"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String car = request.getParameter("car");
+	if ( car == null || car.equals("") ){
+		request.setAttribute("item","car"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+        String license = request.getParameter("license");
+	if ( license == null || license.equals("")) {
+		request.setAttribute("item","license"); 
+		request.getRequestDispatcher(badParmPage).forward(request,response);	
+	}
+
+        request.setAttribute("backPage", "joinForm.jsp");
+        if ( People.isInCrowd(login)){
+           request.setAttribute("item", login);
+           request.getRequestDispatcher("WEB-INF/error/inUse.jsp").forward(request, response);    
+        }
+        if ( ! password.equals(password2)){
+            request.setAttribute("flash", "The Passwords don't match!");
+            request.getRequestDispatcher("WEB-INF/error/invalidPassword.jsp").forward(request, response);    
+        }
+        Person newGuy = new Person();
+        newGuy.setLogin(login);
+        newGuy.setPassword(password);
+        newGuy.setHint(hint);
+        newGuy.setName(fullName);
+        newGuy.setPhone(phone);
+        newGuy.setEmail(email);
         request.getRequestDispatcher("loggedin.jsp").forward(request, response);    
     }
 

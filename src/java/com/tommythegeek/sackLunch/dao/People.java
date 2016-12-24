@@ -76,9 +76,9 @@ public class People {
         yokel.setRowid(CROWD.size()-1);
     }
     
-    public static boolean isInCrowd( Person newby){
+    public static boolean isInCrowd( String newby){
         for( Person yokel : CROWD){
-            if( (newby.getLogin()).equals(yokel.getLogin())){
+            if( newby.equals(yokel.getLogin())){
                return true;
             }
         }
