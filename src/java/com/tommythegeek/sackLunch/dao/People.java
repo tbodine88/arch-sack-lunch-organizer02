@@ -2,12 +2,11 @@ package com.tommythegeek.sackLunch.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
-    private static final Pattern USER_PATTERN = Pattern.compile("^\\w{6,24}$");
-    private static final Pattern PASS_PATTERN = Pattern.compile("^[\\w\\.-]{8,16}$");
     public int population;
     public People(){
         population = CROWD.size();
@@ -16,32 +15,34 @@ public class People {
         population = CROWD.size();
         return population;
     }
+    
     public static Status validates(Person user) {
         String login = user.getLogin();
         String userPass = user.getPassword();
         Status result = new Status();
+        Validator victor;
+        victor = new Validator();
         if (login == null && userPass == null){
             result.ok = false;
             result.message = "login and password are null";
+            return result;
         }
         if (login == null ){
             result.ok = false;
             result.message = "login is null";
             return result;
         }
-        if (login == null && userPass == null){
+        if (userPass == null){
             result.ok = false;
             result.message = "password is null";
             return result;
         }
-        if (!USER_PATTERN.matcher(login).matches()){
-            result.ok = false;
-            result.message = "login (" + login + ") is not 6 to 24 word characters in length";
+        result = victor.validUserName(login);
+        if (! result.ok){
             return result;
         }
-   
-        if(!PASS_PATTERN.matcher(userPass).matches()){
-          result.ok = false;
+        result = victor.validPassword(userPass);
+        if(! result.ok){
           return result;
         }
         for (Person someone: CROWD){
@@ -77,6 +78,13 @@ public class People {
     }
     
     public static boolean isInCrowd( String newby){
+        // Disallow user names with bad passwords
+        Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(newby);
+        boolean bad = m.find();
+        if (bad){
+            return false;
+        }
         for( Person yokel : CROWD){
             if( newby.equals(yokel.getLogin())){
                return true;

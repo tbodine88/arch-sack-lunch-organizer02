@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Login</h1>
+        <h2>${flash}</h2>
         <form method="POST" action="/arch-sack-lunch-organizer02/go">
             UserName: <input type="text" name="username"/><br/>
             Password: <input type="text" name="password"/><br/>

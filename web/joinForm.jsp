@@ -27,26 +27,34 @@
         <h1>Join a Committee</h1>
         <form method="POST" action="joiner">
         <table border="1">
-   <tr><th align="left">login</th><td> <input type=text name=login></input>     </td></tr>
-   <tr><th align="left">password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><td> <input type=text name=password1></input> </td></tr>
-   <tr><th>password (again)</th><td> <input type=text name=password2></input> </td></tr>
-   <tr><td colspan="2"></td></tr>
-   <tr><th colspan="2">Pick a week to make <br> lunches for the ARCH</th></tr>
-   <c:set var="i" value="1" />
-   <c:forEach items="${bureau}" var="day"  >
-       <tr><th>${day}</th><td><input type="checkbox" name="committee" value="${i}" /></td></tr>
-       <c:set var="i" value="${i + 1}" />
-   </c:forEach>
-   
-   <tr><td colspan="2"><br></td></tr>
-   <tr><th>name</th><td> <input type=text name=name></input> </td></tr>
-   <tr><th>phone</th><td> <input type=text name=phone></input> </td></tr>
-   <tr><th>email</th><td> <input type=text name=email></input> </td></tr>
+            <tr><td colspan="3">
+                    <table>
+  <tr><th align="right">login</th><td> <input type=text name=login></input>     </td></tr>
+   <tr><th align="right">password </th><td> <input type=text name=password1></input> </td></tr>
+   <tr><th align="right">password (again)</th><td> <input type=text name=password2></input> </td></tr>
+   <tr><th align="right">password hint</th><td> <input type=text name=hint></input> </td></tr>
+   <tr><th align="right">name</th><td> <input type=text name=name></input> </td></tr>
+   <tr><th align="right">phone</th><td> <input type=text name=phone></input> </td></tr>
+   <tr><th align="right">email</th><td> <input type=text name=email></input> </td></tr>
    <tr><td> <input type="checkbox" name="car">Have car?</input></td>
        <td><input type="checkbox" name="license">Have driver's license?</input> </td>
    </tr>
-   <tr><th>hint</th><td> <input type=text name=hint></input> </td></tr>
-   <tr><td colspan="2" align="center"><input type="submit" value="join now"></input></td></tr>
+   <tr><td colspan="2"></td></tr></table>
+ </td>
+ <tr><th colspan="3">Pick a week to make <br> lunches for the ARCH</th></tr>
+   <c:set var="i" value="1" />
+   <c:forEach items="${bureau}" var="day"  >
+       <tr>
+           <th width="50%">${day}</th>
+           <td width="10%"><input type="checkbox" name="committee" value="${i}" /></td>
+           <td>
+           ${meet[i-1]}</td>
+       </tr>
+       <c:set var="i" value="${i + 1}" />
+   </c:forEach>
+   
+       <tr><td colspan="3" align="center"><img src="http://whatdoesafarmerdo.com/wp-content/uploads/2015/12/healthy-school-lunch.jpg" height="124px" width="320px"</td></tr>
+   <tr><td colspan="3" align="center"><input type="submit" value="join now"></input></td></tr>
 </table>
         </form>
                 </td></tr></table>
