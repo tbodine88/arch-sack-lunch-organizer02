@@ -34,10 +34,9 @@ public class NewServletListener implements ServletContextListener {
        String memberPass = ctx.getInitParameter("memberPass");
        String memberName = ctx.getInitParameter("memberName");
        String Committee = ctx.getInitParameter("Committee");
-       int pop;
-
-       People p = new People();
-       ctx.setAttribute("people", p);
+       People pop = new People();
+       pop.updatePop();
+       ctx.setAttribute("people", pop);
        Person someone = new Person();
        someone.setRowid(1);
        someone.setLogin(adminUser);
@@ -46,7 +45,7 @@ public class NewServletListener implements ServletContextListener {
        someone.setCommittees(Committee);
        someone.setPermission(SackLunchPermission.ADMINISTRATOR);
        People.introduce(someone);
-       pop = p.updatePop();
+       pop.updatePop();
        someone = new Person();
        someone.setRowid(2);
        someone.setLogin(FacilitatorUser);
@@ -54,7 +53,7 @@ public class NewServletListener implements ServletContextListener {
        someone.setName(FacilitatorName);
        someone.setPermission(SackLunchPermission.FACILITATOR);
        People.introduce(someone);
-       pop = p.updatePop();
+       pop.updatePop();
        someone = new Person();
        someone.setRowid(3);
        someone.setLogin(memberUser);
@@ -62,7 +61,7 @@ public class NewServletListener implements ServletContextListener {
        someone.setName(memberName);
        someone.setPermission(SackLunchPermission.MEMBER);
        People.introduce(someone);
-       pop = p.updatePop();
+       pop.updatePop();
     }
 
     @Override

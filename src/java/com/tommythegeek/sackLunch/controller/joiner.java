@@ -103,6 +103,18 @@ public class joiner extends HttpServlet {
       if ( license == null || license.isEmpty()) {
         license = "off";
       }
+      String committee = "";
+      for (int i=1; i<6; i++){
+          String bunch = request.getParameter("committee" + i);
+          if (!( bunch == null || bunch.isEmpty())) {
+              committee += "" + i + ",";
+          }
+      }
+      if ( committee == null || committee.isEmpty()) {
+        item = "no committee selected";  
+        error.add("Please select a committee to join.");
+      }
+
       if ( error.size() > 0 ) {
         request.setAttribute("flash", "Please fill in form completely.");
         request.setAttribute("error", error);
@@ -159,6 +171,7 @@ public class joiner extends HttpServlet {
       newGuy.setName(fullName);
       newGuy.setPhone(phone);
       newGuy.setEmail(email);
+      newGuy.setCommittees(committee);
       newGuy.setCan_deliver(car.equals("on") && license.equals("on"));
       newGuy.setPermission( SackLunchPermission.MEMBER);
       People.introduce(newGuy);

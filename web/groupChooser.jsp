@@ -12,6 +12,7 @@
         <title>Group Chooser Menu</title>
     </head>
     <body>
+        <c:set var="ti" value="1" />
         <h1>Which week are you volunteering for?</h1>
         <form action="/groupChosen" >
             <table>
@@ -23,11 +24,12 @@
                 <tr>
                     <c:forEach var="i" begin="0" end="4" >
                         <td>
-                            <input type="radio" name="selectedGroup" value="$i" >"${meetday[i]}"
+                            <input type="radio" name="selectedGroup" value="$i" tabindex="${ti}">"${meetday[i]}"
                         </td>
+                        <c:set var="ti" value="${ti + 1}" />
                     </c:forEach> 
                 </tr>
-                <tr><td colspan="5"><input type="submit" name="submit"></tr>
+                <tr><td colspan="5"><input type="submit" name="submit" tabindex="${ti}"></tr>
             </table>
         </form>
     </body>

@@ -57,13 +57,25 @@ public class go extends HttpServlet {
         Integer userId;
         String username;
         String fullName;
+        String password;
         String group;
         Pattern compat = Pattern.compile(",");
 
         Person applicant = new Person();
         username =request.getParameter("username");
+        if ( username == null || username.isEmpty()){
+            request.setAttribute("flash", "enter a Login");            
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
         applicant.setLogin(username);
-        applicant.setPassword(request.getParameter("password"));
+        password = request.getParameter("password");
+        if ( password == null || password.isEmpty()){     
+            request.setAttribute("flash", "enter a Login and password");            
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+        applicant.setPassword(password);
         Status stat = People.validates(applicant);
         if (stat.ok){
             HttpSession session = request.getSession();
@@ -105,7 +117,7 @@ public class go extends HttpServlet {
             }
         } else {
             request.setAttribute("flash", stat.message);            
-            request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

@@ -53,7 +53,7 @@ send ("{TAB}"); third
 send ("{TAB}"); fourth
 send ("{TAB}"); fifth
 send("{ENTER}");
-sleeP(2000)
+sleep(2000)
 $title = WinGetTitle("Chrome")
 ConsoleWrite( $title & @CRLF )
 If StringInStr($title,"Login")  Then

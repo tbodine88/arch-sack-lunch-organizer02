@@ -12,12 +12,15 @@
         <title>Sack Lunch Login Page</title>
     </head>
     <body>
+        <font color="red"><h2>${flash}</h2></font>
         <h1>Login</h1>
-        <h2>${flash}</h2>
+        
         <form method="POST" action="/arch-sack-lunch-organizer02/go">
             UserName: <input type="text" name="username"/><br/>
             Password: <input type="text" name="password"/><br/>
             <input type="submit" value="login"/><br/> 
         </form>
+        <hr>
+        <a href="index.jsp">Sack Lunch Home</a>
     </body>
 </html>

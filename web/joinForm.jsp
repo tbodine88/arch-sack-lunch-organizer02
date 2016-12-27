@@ -46,7 +46,7 @@
    <c:forEach items="${bureau}" var="day"  >
        <tr>
            <th width="50%">${day}</th>
-           <td width="10%"><input type="checkbox" name="committee" value="${i}" /></td>
+           <td width="10%"><input type="checkbox" name="committee${i}" value="true" /></td>
            <td>
            ${meet[i-1]}</td>
        </tr>

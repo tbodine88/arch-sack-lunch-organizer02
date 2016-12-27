@@ -16,6 +16,7 @@
     <body>
         <h1>You are not logged in!</h1>
         <font color="red"><h2 class="flash">${flash}</h2></font>
+        <a href="go">Try again</a>
     </body>
   
 </html>

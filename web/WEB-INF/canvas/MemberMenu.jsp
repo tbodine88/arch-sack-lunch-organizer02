@@ -10,7 +10,7 @@
 <html>
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Committee Member Menu</title>
+      <title>Committee ${week} Member Menu</title>
       <script type="text/javascript">
           document.getElementById("donation").addEventListener("keyup", function(event) {
             event.preventDefault();
