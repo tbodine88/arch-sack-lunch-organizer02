@@ -16,13 +16,13 @@
 9. Create Group Selection Page  
 10.  Revise Flow Diagram ( Done 12/23)
 11. Create Join Page
----
-Completed to here
----
 12. Create Wire digrams for
   1. Member management page
   2. Meeting management page
   3. item management page
+---
+Completed to here
+---
 13. Create  Member management Page
 14. Create Item Management Page
 15. Create Meeting Management Page
