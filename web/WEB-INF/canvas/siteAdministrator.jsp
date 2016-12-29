@@ -25,7 +25,7 @@
         <p>
             <table>
             <tr>
-                <td><a href="one">one</a></td>
+                <td><a href="memberMan">Member Management</a></td>
                 <td><a href="two">two</a></td>
                 <td><a href="three">three</a></td>
                 <td><a href="four">four</a></td>

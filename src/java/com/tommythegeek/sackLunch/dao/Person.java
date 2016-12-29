@@ -80,6 +80,15 @@ public class Person implements Serializable {
     public String getCommittees() {
         return committees;
     }
+    
+    public boolean isMemberOf( String facGroupList ){
+        String[] comList = this.committees.split(",");
+        for( String g : comList) {
+            if ( facGroupList.contains(g))
+                return true;
+        }
+        return false;
+    }
 
     public void setCommittees(String committees) {
         this.committees = committees;
