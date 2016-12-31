@@ -13,4 +13,11 @@ package com.tommythegeek.sackLunch.dao;
 public class Status {
     public boolean ok;
     public String message;
+    public Status() {
+        ok = true;
+        message = "its ok";
+    }
+    public boolean fail(){
+        return ! ok;
+    }
 }

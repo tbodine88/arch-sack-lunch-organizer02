@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  *
  * @author Thomas Bodine
  */
-public class Validator {
+public class Witness {
     // validate user names passwords and other strings
     private static final Pattern USER_PATTERN = 
               Pattern.compile("^[-\\w._]{6,24}$");
@@ -23,7 +23,8 @@ public class Validator {
     private static final Pattern HINT_PATTERN = 
               Pattern.compile("^[-_ \\w]+$");
     public Status result;
-    public Validator(){
+    
+    public Witness(){
         result = new Status();
         result.ok= false;
         result.message="nothing valid";
@@ -40,6 +41,7 @@ public class Validator {
         }
         return result;
     }
+    
     public Status validPassword( String userPass){
         if ( this.result.ok = PASS_PATTERN.matcher(userPass).matches()) {
             this.result.message = "valid password";

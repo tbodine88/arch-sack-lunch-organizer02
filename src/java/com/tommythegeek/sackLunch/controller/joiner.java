@@ -9,7 +9,7 @@ import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Status;
-import com.tommythegeek.sackLunch.dao.Validator;
+import com.tommythegeek.sackLunch.dao.Witness;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -62,7 +62,7 @@ public class joiner extends HttpServlet {
       throws ServletException, IOException {
 
       final String badParmPage="WEB-INF/error/badParameter.jsp";
-      Validator victor = new Validator();
+      Witness victor = new Witness();
       Status result;
       String item = "";
       ArrayList<String> error = new ArrayList<>();

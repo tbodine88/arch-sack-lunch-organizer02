@@ -7,21 +7,32 @@ import java.util.regex.Pattern;
 
 public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
+    private static Status stat;
+
+    public static void deleteById(int rowId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+ 
     public int population;
     public People(){
         population = CROWD.size();
+        stat = new Status();
     }
     public int updatePop(){
         population = CROWD.size();
         return population;
     }
     
+    public static int getNextRowId(){
+        return CROWD.size();
+    }    
     public static Status validates(Person user) {
         String login = user.getLogin();
         String userPass = user.getPassword();
         Status result = new Status();
-        Validator victor;
-        victor = new Validator();
+        Witness victor;
+        victor = new Witness();
         if (login == null && userPass == null){
             result.ok = false;
             result.message = "login and password are null";
@@ -94,5 +105,42 @@ public class People {
     }
     public static Person personById(int id){
         return CROWD.get(id);
+    }
+    public static Person personByLogin( String login){
+        Person guy;
+        for( int i = 0 ; i< CROWD.size() ; i++){
+            guy = CROWD.get(i);
+            if ( login.equals(guy.getLogin())){
+                return guy;
+            }
+        }
+        return null;
+    }
+    public static Status updateById(int id, Person guy){
+        Person target = CROWD.get(id);
+        String svalue;
+        int ivalue;
+        ivalue = guy.getRowid();
+        if (!(ivalue == id) ){
+            stat.ok= false;
+            stat.message ="rowId doesnt match id";
+            return stat;
+        } 
+        target.copy(guy);
+        target.onlyCopyStrings(guy);
+        return stat;
+    }
+    public static Status changeDetailsById(int id, Person guy){
+        Person target = CROWD.get(id);
+        String svalue;
+        int ivalue;
+        ivalue = guy.getRowid();
+        if (!(ivalue == id) ){
+            stat.ok= false;
+            stat.message ="rowId doesnt match id";
+            return stat;
+        } 
+        target.onlyCopyStrings(guy);
+        return stat;
     }
 }

@@ -197,21 +197,26 @@ public class Person implements Serializable {
     }
     
     public void copy( Person someone){
-        
-      this.rowid = someone.getRowid();
-      this.name = someone.getName();
-      this.phone = someone.getPhone();
-      this.email = someone.getEmail();
-      this.can_deliver = someone.isCan_deliver();
+      onlyCopyStrings( someone);  
       this.updated = someone.getUpdated();
-      this.committees = someone.getCommittees();
-      this.login = someone.getLogin();
-      this.password = someone.getPassword();
-      this.hint = someone.getHint();
       this.Success = someone.getSuccess();
       this.failure = someone.getFailure();
       this.fail_count = someone.getFail_count();
       this.permission = someone.getPermission();
     }
+    
+    public void onlyCopyStrings( Person someone){
+      this.rowid = someone.getRowid();
+      this.name = someone.getName();
+      this.phone = someone.getPhone();
+      this.email = someone.getEmail();
+      this.can_deliver = someone.isCan_deliver();
+      this.committees = someone.getCommittees();
+      this.login = someone.getLogin();
+      this.password = someone.getPassword();
+      this.hint = someone.getHint();
+        
+    }
+
     
 }

@@ -57,6 +57,9 @@ public class memberMan extends HttpServlet {
             request.setAttribute("flash", "You may not access that page");
             request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
         }
+        if ( !(request.getAttribute("error") == null)){
+            request.removeAttribute("error");
+        }
         pop.updatePop();
         for ( int i = 0 ; i < pop.population ; i++ ){
             guy = People.personById(i);
