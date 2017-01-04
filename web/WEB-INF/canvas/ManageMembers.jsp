@@ -10,6 +10,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <style type="text/css">
+        
+        #divid{
+            overflow-y: scroll;
+            height:15em;
+            width:100%;
+            border-style: groove;
+        }
+
+    </style>
   <title>Manage Members ${weekTag}</title>
   <script>
       function navigateTo( url ){
@@ -19,10 +29,10 @@
 </head>
 
 <body>
-					<c:if test="${empty perm}">
-					   <c:set var="perm" value="FACILITATOR" />
-						 <!-- perm is ${perm}. -->
-					</c:if>
+	<c:if test="${empty perm}">
+	   <c:set var="perm" value="FACILITATOR" />
+	 <!-- perm is ${perm}. -->
+	</c:if>
  
  
 	<table width="100%" border="1" summary="member management forms">
@@ -31,8 +41,8 @@
       <td width="20%">
 	      <table width="100%" ><tr><th>Select A member</th></tr><tr><td> 
         <form name="memberSelector" action="memberMan" method="post">
-   <div style="overflow-y: scroll; height:15em; width:100%; border-style: grooved;" >
-        <table summary="memeberList" >
+            <div id="divid" >
+                <table summary="memeberList" >
 					<c:set var="last" value="${fn:length(rowid) == 0 ? 1 : fn:length(rowid) -1 }" /> 
 					<c:forEach var="i" begin="0" end="${last}">
 				<tr>
@@ -47,9 +57,9 @@
 				</td>
 				</tr>
 				</c:forEach>          
-				</table >
+                </table >
+             </div>
         </form>
-   </div>
 			      </td></tr></table>
       </td>
 
