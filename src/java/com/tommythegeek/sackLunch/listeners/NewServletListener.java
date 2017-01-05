@@ -4,6 +4,7 @@
  */
 package com.tommythegeek.sackLunch.listeners;
 
+import com.tommythegeek.sackLunch.dao.Inventory;
 import com.tommythegeek.sackLunch.dao.People;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -62,8 +63,21 @@ public class NewServletListener implements ServletContextListener {
        someone.setPermission(SackLunchPermission.MEMBER);
        People.introduce(someone);
        pop.updatePop();
+       
+       Inventory ivan = new Inventory();
+       // favs Format:  name1;g,r,o,u,p1;name2:g,r,o,u,p2;
+       String favs = ctx.getInitParameter("thing");
+       if ( favs != null && !favs.isEmpty()){
+        String [] favThing = favs.split("[;]");
+        for( String fob : favThing ){
+            String [] part = fob.split(":");     
+            Inventory.addThing(part[0], part[1]);
+        }
+       } 
+        ivan.reCount();
+        ctx.setAttribute("inventory", ivan);
     }
-
+    
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

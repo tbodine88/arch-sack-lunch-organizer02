@@ -4,25 +4,21 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.tommythegeek.sackLunch.dao.MeetingList;
-import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 /**
  *
  * @author Thomas Bodine
  */
-public class chooseGroup extends HttpServlet {
+@WebServlet(name = "logout", urlPatterns = {"/logout"}, initParams = {})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,38 +31,12 @@ public class chooseGroup extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int groupMemberShip = 0;
-        HttpSession session = request.getSession();
-        Pattern comma = Pattern.compile(",");
-        Pattern num = Pattern.compile("^(\\d)");
-        CharSequence group = (CharSequence) session.getAttribute("group");
-        SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
-        String committee = request.getParameter("committee");
-        if ( ! (committee == null || committee.isEmpty())){
-            request.setAttribute("week", committee);
-            if ( perm == SackLunchPermission.FACILITATOR){
-                request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
-            }
-            request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);
-        }
-        Matcher comat = comma.matcher(group);
-        Matcher nummat = num.matcher(group);
-        MeetingList bunch= new MeetingList();
-        request.setAttribute("meetDate", bunch.meeting);
-        while( comat.find()) groupMemberShip++;
-        if ( groupMemberShip < 2){
-            nummat.find();
-            request.setAttribute("week", nummat.group(1));
-            if ( perm == SackLunchPermission.FACILITATOR){
-                request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
-            }
-            request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/WEB-INF/canvas/groupMenu.jsp").forward(request, response);
-        }
+        response.setContentType("text/html;charset=UTF-8");
+       request.getSession(false).invalidate();
+       request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
-    // 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -104,5 +74,5 @@ public class chooseGroup extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
+

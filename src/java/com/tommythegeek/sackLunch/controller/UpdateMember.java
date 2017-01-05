@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Owner
  */
-public class updateMember extends HttpServlet {
+public class UpdateMember extends HttpServlet {
     private final ArrayList<String> error;
     public final HashMap<String,Object> parmap;
-    public updateMember(){
+    public UpdateMember(){
         super();
         error = new ArrayList<>();
-        parmap = new HashMap();
+        parmap = new HashMap<>();
     }
  /**
   * boolean goodParm( String parm, String errmsg,

@@ -48,13 +48,17 @@
         <param-name>CommitteeName</param-name>
         <param-value>First Monday,Second Monday,Third Monday,Fourth Monday,Fifth Monday</param-value>
     </context-param>
+    <context-param>
+        <param-name>thing</param-name>
+        <param-value>Bread:1,2,3,4,5,;Deliver:1,2,3,4,5,;Cheese:1,2,3,4,5,Oranges:1,4,;Apples:2,3,;Pears:1,3,5,</param-value>
+    </context-param>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>com.tommythegeek.sackLunch.listeners.NewServletListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>go</servlet-name>
-        <servlet-class>com.tommythegeek.sackLunch.controller.go</servlet-class>
+        <servlet-class>com.tommythegeek.sackLunch.controller.Login</servlet-class>
         <init-param>
             <param-name>aParam</param-name>
             <param-value>one</param-value>
@@ -66,15 +70,23 @@
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>
-        <servlet-class>com.tommythegeek.sackLunch.controller.logout</servlet-class>
+        <servlet-class>com.tommythegeek.sackLunch.controller.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>chooseGroup</servlet-name>
-        <servlet-class>com.tommythegeek.sackLunch.controller.chooseGroup</servlet-class>
+        <servlet-class>com.tommythegeek.sackLunch.controller.ChooseGroup</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>updateMember</servlet-name>
-        <servlet-class>com.tommythegeek.sackLunch.controller.updateMember</servlet-class>
+        <servlet-class>com.tommythegeek.sackLunch.controller.UpdateMember</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>itemMan</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.UpdateItem</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ItemMan</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.ItemMan</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
@@ -91,6 +103,14 @@
     <servlet-mapping>
         <servlet-name>updateMember</servlet-name>
         <url-pattern>/updateMember</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>itemMan</servlet-name>
+        <url-pattern>/itemMan</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ItemMan</servlet-name>
+        <url-pattern>/ItemMan</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,17 +4,13 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.tommythegeek.sackLunch.dao.People;
-import com.tommythegeek.sackLunch.dao.Person;
+import com.tommythegeek.sackLunch.dao.Inventory;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import static com.tommythegeek.sackLunch.dao.SackLunchPermission.MEMBER;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Owner
  */
-@WebServlet(name = "memberMan", urlPatterns = {"/memberMan"})
-public class memberMan extends HttpServlet {
+public class ItemMan extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,63 +33,33 @@ public class memberMan extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                ServletContext sce = request.getServletContext();
-        Person guy;
-        String guyName;
-        
-        SackLunchPermission perm;
-        People pop = (People) sce.getAttribute("people");
-        ArrayList<String> rowid = new ArrayList<>();
-        ArrayList<String> name = new ArrayList<>();
         HttpSession session = request.getSession(false);
         if( session==null){
              request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        perm = (SackLunchPermission) session.getAttribute("perm");
+        @SuppressWarnings("null")
+        Object operm = session.getAttribute("perm");
+        SackLunchPermission perm = (SackLunchPermission) ((operm == null) ? MEMBER : operm) ;
         String group = (String) session.getAttribute("group");
         if (perm.compareTo(SackLunchPermission.FACILITATOR) == -1 ){
             session.invalidate();
             request.setAttribute("flash", "You may not access that page");
             request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
         }
+        ServletContext sce = request.getServletContext();
+        Inventory ivan = (Inventory) sce.getAttribute("inventory");
+        ArrayList<String> itemid = new ArrayList<>();
+        ArrayList<String> item = new ArrayList<>();
+        ArrayList<String> itemGroup = new ArrayList<>();
+        Inventory.dumpThings( itemid,itemGroup,item);
         if ( !(request.getAttribute("error") == null)){
             request.removeAttribute("error");
         }
-        pop.updatePop();
-        for ( int i = 0 ; i < pop.population ; i++ ){
-            guy = People.personById(i);
-            if ( perm == SackLunchPermission.FACILITATOR ){
-              if (guy.getPermission().compareTo(SackLunchPermission.FACILITATOR) > 0)
-                  continue;
-              if (! guy.isMemberOf(group))
-                    continue;
-            }
-            rowid.add("" + i);
-            name.add(guy.getName());
-        }
-        request.setAttribute("rowid", rowid);
-        request.setAttribute("name",name);
-        String[] values = (String []) request.getParameterValues("selected");
-        if (! (values == null || values.length == 0) ){
-            guy = People.personById(Integer.parseInt(values[0]));
-            request.setAttribute("ed_rowid",values[0]);
-            request.setAttribute("ed_name", guy.getName());
-            request.setAttribute("ed_phone",guy.getPhone());
-            request.setAttribute("ed_email",guy.getEmail());
-            request.setAttribute("ed_can_deliver",guy.isCan_deliver() ? "yes" : "no");
-            request.setAttribute("ed_committees",guy.getCommittees());
-            if( perm == SackLunchPermission.ADMINISTRATOR) {
-                request.setAttribute("ed_permission",guy.getPermission());
-                request.setAttribute("ed_login",guy.getLogin());
-                request.setAttribute("ed_password",guy.getPassword());
-                request.setAttribute("ed_hint",guy.getHint());
-                request.setAttribute("ed_success",guy.getSuccess());
-                request.setAttribute("ed_failure",guy.getFailure());
-                request.setAttribute("ed_fail_count",guy.getFail_count());
-                request.setAttribute("ed_updated",guy.getUpdated());
-            }
-        }
-        request.getRequestDispatcher("WEB-INF/canvas/ManageMembers.jsp").forward(request, response);
+        request.setAttribute("itemid", itemid);
+        request.setAttribute("item", item);
+        request.setAttribute("itemGroup", itemGroup);
+        
+        request.getRequestDispatcher("WEB-INF/canvas/itemManage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -109,8 +74,6 @@ public class memberMan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        
         processRequest(request, response);
     }
 
@@ -125,8 +88,6 @@ public class memberMan extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
         processRequest(request, response);
     }
 

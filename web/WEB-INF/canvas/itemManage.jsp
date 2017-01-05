@@ -32,15 +32,15 @@
 	</c:if>
 	<c:set var="itemid" value="${fn:split('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20', ' ')}" />
 
-	<c:set var="group" value="${fn:split('1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1,2,3,4,5', ' ')}" />
-	<c:set var="groupName" value="${fn:split('none first second third fourth fifth',' ')}" />
+	<c:set var="itemGroup" value="${fn:split('1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1,2,3,4,5', ' ')}" />
+	<c:set var="itemGroupName" value="${fn:split('none first second third fourth fifth',' ')}" />
 	<c:set var="item" value="${fn:split('Blackcurrant Blueberry Chili pepper Cranberry Eggplant Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange' , ' ')}" />
 	<c:set var="selected" value="14" />
-	<c:set var="band1" value="${groupName[1]}" />
-	<c:set var="band2" value="${groupName[2]}" />
-	<c:set var="band3" value="${groupName[3]}" />
-	<c:set var="band4" value="${groupName[4]}" />
-	<c:set var="band5" value="${groupName[5]}" />
+	<c:set var="band1" value="${itemGroupName[1]}" />
+	<c:set var="band2" value="${itemGroupName[2]}" />
+	<c:set var="band3" value="${itemGroupName[3]}" />
+	<c:set var="band4" value="${itemGroupName[4]}" />
+	<c:set var="band5" value="${itemGroupName[5]}" />
         <h1>Manage Items</h1>
         <h2>${week}</h2>
         <table width="100%" summary="Item management forms" border=1>
@@ -69,7 +69,7 @@
                                     <c:forEach var="i" begin="0" end="${last}">
                                         <tr>
 						<td width=10%> <input type="checkbox" name="selected" value="${rowid[i]}" onchange="this.form.submit();" /> ${itemid[i]} </td> <td width=40% align=center> 
-							<c:set var="gindex" value="${group[i]}" />
+							<c:set var="gindex" value="${itemGroup[i]}" />
 							<c:if test="${fn:contains(gindex,'1')}" >
 							  ${band1} &nbsp;
 							</c:if>
@@ -102,17 +102,17 @@
                     <table summary="right hand pane">
                         <tr>
                         <form method="upDateItem">
-				<c:set var="chosen" value="${group[selected]}" />
+				<c:set var="chosen" value="${itemGroup[selected]}" />
                             <table summary="item input" >
                                 <tr>
                                     <td>
                                         <input type="hidden" name="rowid" value="${rowid}" />
                                         <c:choose > 
                                         <c:when test="${fn:contains(chosen,'1')}">
-                                            <input type="checkbox" name="group" value="1" checked />
+                                            <input type="checkbox" name="itemGroup" value="1" checked />
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="group" value="1"/>
+                                            <input type="checkbox" name="itemGroup" value="1"/>
                                         </c:otherwise>
                                         </c:choose>
                                         first
@@ -120,10 +120,10 @@
                                     <td>
                                         <c:choose > 
                                         <c:when test="${fn:contains(chosen,'4')}">
-                                            <input type="checkbox" name="group" value="4" checked />
+                                            <input type="checkbox" name="itemGroup" value="4" checked />
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="group" value="4"/>
+                                            <input type="checkbox" name="itemGroup" value="4"/>
                                         </c:otherwise>
                                         </c:choose>
                                         fourth
@@ -133,10 +133,10 @@
                                     <td>
                                         <c:choose > 
                                         <c:when test="${fn:contains(chosen,'2')}">
-                                            <input type="checkbox" name="group" value="2" checked />
+                                            <input type="checkbox" name="itemGroup" value="2" checked />
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="group" value="2"/>
+                                            <input type="checkbox" name="itemGroup" value="2"/>
                                         </c:otherwise>
                                         </c:choose>
                                         second
@@ -144,10 +144,10 @@
                                     <td>
                                         <c:choose > 
                                         <c:when test="${fn:contains(chosen,'5')}">
-                                            <input type="checkbox" name="group" value="5" checked />
+                                            <input type="checkbox" name="itemGroup" value="5" checked />
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="group" value="5"/>
+                                            <input type="checkbox" name="itemGroup" value="5"/>
                                         </c:otherwise>
                                         </c:choose>
                                         fifth
@@ -157,10 +157,10 @@
                                     <td>
                                         <c:choose > 
                                         <c:when test="${fn:contains(chosen,'3')}">
-                                            <input type="checkbox" name="group" value="3" checked />
+                                            <input type="checkbox" name="itemGroup" value="3" checked />
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="group" value="3"/>
+                                            <input type="checkbox" name="itemGroup" value="3"/>
                                         </c:otherwise>
                                         </c:choose>
                                         third

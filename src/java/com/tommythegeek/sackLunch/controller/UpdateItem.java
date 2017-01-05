@@ -6,19 +6,25 @@ package com.tommythegeek.sackLunch.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 /**
  *
- * @author Thomas Bodine
+ * @author Owner
  */
-@WebServlet(name = "logout", urlPatterns = {"/logout"}, initParams = {})
-public class logout extends HttpServlet {
+public class UpdateItem extends HttpServlet {
+    private final ArrayList<String> error;
+    public final HashMap<String,Object> parmap;
+    public UpdateItem(){
+        super();
+        error = new ArrayList<>();
+        parmap = new HashMap<>();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,8 +38,14 @@ public class logout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       request.getSession(false).invalidate();
-       request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.setAttribute("menu", "itemMan");
+        if ( error.isEmpty())
+            request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
+        else {
+            request.setAttribute("flash", "There are problems with the data eneterd.");
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,5 +86,5 @@ public class logout extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-}
 
+}

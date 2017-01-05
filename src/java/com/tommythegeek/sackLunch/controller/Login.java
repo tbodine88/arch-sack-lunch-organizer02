@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Thomas Bodine
  */
-public class go extends HttpServlet {
+public class Login extends HttpServlet {
 
  
     

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "joiner", urlPatterns = {"/joiner"}, initParams = {
     @WebInitParam(name = "aParam", value = "joined")})
-public class joiner extends HttpServlet {
+public class Joiner extends HttpServlet {
 
     // <editor-fold desc="HttpServlet methods. ">
     /**
