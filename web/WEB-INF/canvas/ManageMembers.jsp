@@ -33,8 +33,8 @@
 	   <c:set var="perm" value="FACILITATOR" />
 	 <!-- perm is ${perm}. -->
 	</c:if>
- 
- 
+    <c:set var="userType" value="${fn:split('MEMBER FACILITATOR ADMINISTRATOR',' ')}" />
+    
 	<table width="100%" border="1" summary="member management forms">
 	  <caption><h1>Manage Members ${weekTag}</h1></caption>
     <tr>
@@ -92,12 +92,38 @@
                           <td>Email: <input type="text" name="ed_email" value=
                           "${ed_email}" /></td>
 
-                          <td>Can_deliver: <input type="text" name="ed_can_deliver"
-                          value="${ed_can_deliver}" /></td>
+                          <td>Can_deliver: 
+                              <c:choose>
+                                  <c:when test="${fn:contains(ed_can_deliver,'yes')}" >
+                                  <input type="checkbox" name="ed_can_deliver" checked />
+                                  </c:when>
+                                  <c:otherwise>
+                                  <input type="checkbox" name="ed_can_deliver"  /> 
+                                  </c:otherwise>
+                              </c:choose>
+                              
+                          </td>
                             <c:choose>
 				<c:when test="${perm == 'ADMINISTRATOR'}"  >
 					<td> Committees: <input type="text" name="ed_committees" value="${ed_committees}" /> </td>
-					<td> Permission: <input type="text" name="ed_permission" value="${ed_permission}" /> </td>
+					<td> Permission: 
+                                            <select name="ed_permission">
+                                                <c:forEach items="${userType}" var="ut" > 
+                                                    <c:if test="${fn:contains(ed_permission,ut)}" >
+                                                    <option value="$ut" selected >
+                                                        ${ut}
+                                                    </option>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:forEach items="${userType}" var="ut" > 
+                                                    <c:if test="${not fn:contains(ed_permission,ut)}" >
+                                                    <option value="$ut"  >
+                                                        ${ut}
+                                                    </option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
+                                        </td>
 					</tr><tr>
 					<td> Login: <input type="text" name="ed_login" value="${ed_login}" /> </td>
 					<td> Password: <input type="text" name="ed_password" value="${ed_password}" /> </td>

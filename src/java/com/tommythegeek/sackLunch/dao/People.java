@@ -85,7 +85,9 @@ public class People {
     }
     public static void introduce(Person yokel){
         CROWD.add(yokel);
-        yokel.setRowid(CROWD.size()-1);
+        yokel.setRowid(CROWD.size()-1); // This is erroneous code
+                                        // waiting for data base to change
+                                        // to actual index of yokel in data base
     }
     
     public static boolean isInCrowd( String newby){
@@ -117,7 +119,12 @@ public class People {
         return null;
     }
     public static Status updateById(int id, Person guy){
-        Person target = CROWD.get(id);
+        Person target;
+        if ( id >= CROWD.size()){
+            People.introduce(guy);
+            return stat;
+        }
+        target = CROWD.get(id);
         String svalue;
         int ivalue;
         ivalue = guy.getRowid();

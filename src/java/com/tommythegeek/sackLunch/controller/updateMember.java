@@ -163,7 +163,11 @@ public class updateMember extends HttpServlet {
             rowId = People.getNextRowId();
         } else {
             try {
+                int nextId =People.getNextRowId();
                 rowId = Integer.parseInt((String)accum);
+                if (rowId < 0 || rowId >  (nextId - 1) ){
+                    rowId = nextId;
+                }
             } catch(NumberFormatException e){
                 error.add("Tnternal error updateMember: rowId not an integer");
             }
