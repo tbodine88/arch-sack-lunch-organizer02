@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Owner
+ * @author Thomas Bodine
  */
 public class updateMember extends HttpServlet {
     private final ArrayList<String> error;
@@ -108,7 +108,7 @@ public class updateMember extends HttpServlet {
         Person guy = new Person();
 
         String accum ;
-        int rowId;
+        int rowId = 0;
         Witness victor = new Witness();
         Status result;
         error.clear();
@@ -164,24 +164,24 @@ public class updateMember extends HttpServlet {
         } else {
             try {
                 rowId = Integer.parseInt((String)accum);
-                if ( activity.equals("edit") ) {
-                        guy.setRowid(rowId);
-                        People.updateById(rowId, guy);
-                } else if ( activity.equals("delete") ){
-                    People.deleteById(rowId);
-                }
             } catch(NumberFormatException e){
                 error.add("Tnternal error updateMember: rowId not an integer");
             }
         }
-        if ( activity.equals("add") ){
-            People.introduce(guy);
-        }// end switch
         
         request.setAttribute("menu", "memberMan");
-        if ( error.isEmpty())
+        if ( error.isEmpty()) {
+            if ( activity.equals("add") ){
+                People.introduce(guy);
+            } else if ( activity.equals("edit") ) {
+                        guy.setRowid(rowId);
+                        People.updateById(rowId, guy);
+            } else if ( activity.equals("delete") ){
+                    People.deleteById(rowId);
+            }
             request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
-        else {
+        } else {
+            request.setAttribute("err-ed_phone",parmap.get("ed_phone"));
             request.setAttribute("flash", "There are problems with the data eneterd.");
             request.setAttribute("error", error);
             request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);

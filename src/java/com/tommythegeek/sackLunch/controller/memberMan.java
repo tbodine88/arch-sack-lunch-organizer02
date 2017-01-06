@@ -38,7 +38,8 @@ public class memberMan extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                ServletContext sce = request.getServletContext();
+        
+        ServletContext sce = request.getServletContext();
         Person guy;
         String guyName;
         
@@ -57,9 +58,6 @@ public class memberMan extends HttpServlet {
             request.setAttribute("flash", "You may not access that page");
             request.getRequestDispatcher("notloggedin.jsp").forward(request, response);
         }
-        if ( !(request.getAttribute("error") == null)){
-            request.removeAttribute("error");
-        }
         pop.updatePop();
         for ( int i = 0 ; i < pop.population ; i++ ){
             guy = People.personById(i);
@@ -74,6 +72,12 @@ public class memberMan extends HttpServlet {
         }
         request.setAttribute("rowid", rowid);
         request.setAttribute("name",name);
+        //
+        // If retrying, load form from parameters
+        if ( request.getParameter("retry") != null){
+            retry(request,response,perm);
+            return;
+        }
         String[] values = (String []) request.getParameterValues("selected");
         if (! (values == null || values.length == 0) ){
             guy = People.personById(Integer.parseInt(values[0]));
@@ -84,6 +88,7 @@ public class memberMan extends HttpServlet {
             request.setAttribute("ed_can_deliver",guy.isCan_deliver() ? "yes" : "no");
             request.setAttribute("ed_committees",guy.getCommittees());
             if( perm == SackLunchPermission.ADMINISTRATOR) {
+                request.setAttribute("menu", "site");
                 request.setAttribute("ed_permission",guy.getPermission());
                 request.setAttribute("ed_login",guy.getLogin());
                 request.setAttribute("ed_password",guy.getPassword());
@@ -97,7 +102,7 @@ public class memberMan extends HttpServlet {
         request.getRequestDispatcher("WEB-INF/canvas/ManageMembers.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -139,5 +144,45 @@ public class memberMan extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void retry(HttpServletRequest request, HttpServletResponse response, 
+		    SackLunchPermission perm) throws ServletException, IOException {
+            int rowid = -1;
+            String login = request.getParameter("ed_login");
+            Person guy = People.personByLogin(login);
+            
+            if ( guy != null ) {
+               rowid = guy.getRowid();
+            }
+            request.setAttribute("ed_rowid",rowid);
+            request.setAttribute("ed_name", 
+		    request.getParameter("ed_name"));
+            request.setAttribute("ed_phone",
+		    request.getParameter("ed_phone"));
+            request.setAttribute("ed_email",
+		    request.getParameter("ed_email"));
+            request.setAttribute("ed_can_deliver",
+		    request.getParameter("ed_can_deliver"));
+            request.setAttribute("ed_committees",
+		    request.getParameter("ed_committees"));
+            if( perm == SackLunchPermission.ADMINISTRATOR) {
+                request.setAttribute("ed_permission",
+			request.getParameter("ed_permission"));
+                request.setAttribute("ed_login", login );
+                request.setAttribute("ed_password",
+			request.getParameter("ed_password"));
+                request.setAttribute("ed_hint",
+			request.getParameter("ed_hint"));
+                request.setAttribute("ed_success",
+			request.getParameter("ed_success"));
+                request.setAttribute("ed_failure",
+			request.getParameter("ed_failure"));
+                request.setAttribute("ed_fail_count",
+			request.getParameter("ed_fail_count"));
+                request.setAttribute("ed_updated",
+			request.getParameter("ed_updated"));
+            }
+        request.getRequestDispatcher("WEB-INF/canvas/ManageMembers.jsp").forward(request, response);
+    }
 
 }

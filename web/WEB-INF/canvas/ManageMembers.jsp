@@ -140,9 +140,8 @@
 
         <table width="100%">
           <tr>
-						<td width="40%"><a href="${menu}">${menuName}</a></td>
-
-            <td><a href="logout">Log Out</a></td>
+	    <td width="40%"><a href="memberMan">Clear Form</a></td>
+            <td><a href="mainMenuSelector"> Main Menu </a></td>
             <td><a href="logout">Log Out</a></td>
           </tr>
         </table>
