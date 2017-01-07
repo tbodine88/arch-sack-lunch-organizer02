@@ -28,7 +28,7 @@
           <td valign="justify">
             <table height=100%  width="100%" >              
               <tr ><td   width="25%" height="50%"><a href="memberMan">Member Management</a></td><td width="25%"><a href="two">two</a></td><td width="25%"><a href="three">three</a></td><td><a href="four">four</a></td></tr>
-              <tr ><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              <tr ><td><a href="itemManager">Manage Items</a></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
               <tr><td><a href="one">one</a></td><td><a href="two">two</a></td><td><a href="three">three</a></td><td><a href="four">four</a></td></tr>
               <tr></tr>
             </table></td>

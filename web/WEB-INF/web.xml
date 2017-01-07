@@ -80,6 +80,10 @@
         <servlet-name>mainMenuSelector</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.mainMenuSelector</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>itemManager</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.itemManager</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>mainMenuSelector</servlet-name>
         <url-pattern>/mainMenuSelector</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>itemManager</servlet-name>
+        <url-pattern>/itemManager</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

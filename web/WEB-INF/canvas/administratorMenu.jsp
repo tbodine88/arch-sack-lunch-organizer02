@@ -31,7 +31,7 @@
                 <td><a href="four">four</a></td>
             </tr>
             <tr>
-                <td><a href="five">five</a></td>
+                <td><a href="itemManager">Manage Items</a></td>
                 <td><a href="six">six</a></td>
                 <td><a href="seven">seven</a></td>
                 <td><a href="logout">Log out</a></td>

@@ -105,7 +105,7 @@ public class go extends HttpServlet {
                     }
                     break;
                 case ADMINISTRATOR:
-                    request.getRequestDispatcher("/WEB-INF/canvas/siteAdministrator.jsp").forward(request, response);    
+                    request.getRequestDispatcher("/WEB-INF/canvas/administratorMenu.jsp").forward(request, response);    
                     break;
                 default:
                     if ( count < 2){
