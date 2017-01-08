@@ -67,7 +67,22 @@ public class NewServletListener implements ServletContextListener {
        someone.setPermission(SackLunchPermission.MEMBER);
        People.introduce(someone);
        pop.updatePop();
-       
+       String[] facilitator = Utils.split("firstmonday secondmonday " +""
+               + "thirdmonday fourthmonday fifthmonday", " ");
+       int nexti = 4;
+       int groupi = 1;
+       for( String login : facilitator){
+           someone=new Person();
+           someone.setRowid(nexti++);
+           someone.setLogin(login);
+           someone.setPassword(memberPass);
+           someone.setName(login);
+           someone.setCommittees("" + groupi + ",");
+           groupi++;
+           someone.setPermission(SackLunchPermission.FACILITATOR);
+           People.introduce(someone);
+           pop.updatePop();
+       }
         //initialize the list of things to bring -- the check list
         // Add items to Check.list
        	String[] in_itemid = Utils.split("0 1 2 3 4 5 "," "); //6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");

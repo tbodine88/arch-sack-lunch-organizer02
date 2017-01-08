@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.tommythegeek.sackLunch.dao.Item;
+import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import static com.tommythegeek.sackLunch.dao.SackLunchPermission.ADMINISTRATOR;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author Owner
@@ -37,7 +40,12 @@ public class itemManager extends HttpServlet {
 
         ServletContext ctx = request.getServletContext();
         Check theCheck = (Check) ctx.getAttribute("checklist");
+        HttpSession session = request.getSession(false);
+        if( session==null){
+             request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
         Council theCouncil = (Council) ctx.getAttribute("council");
+        SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
         ArrayList<String> itemid = new ArrayList<>();
 	ArrayList<String> itemGroupName= new ArrayList<>();
 	ArrayList<String> item= new ArrayList<>();
@@ -50,6 +58,9 @@ public class itemManager extends HttpServlet {
             Item thing = theCheck.findByIndex(i);
             if( thing == null ){
                 continue;
+            }
+            if (perm.compareTo( ADMINISTRATOR ) < 0){
+                thing.hashCode();
             }
             itemid.add("" + thing.getIndex());
             name = thing.getName();

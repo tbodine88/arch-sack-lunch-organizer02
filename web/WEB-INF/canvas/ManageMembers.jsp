@@ -110,14 +110,14 @@
                                             <select name="ed_permission">
                                                 <c:forEach items="${userType}" var="ut" > 
                                                     <c:if test="${fn:contains(ed_permission,ut)}" >
-                                                    <option value="$ut" selected >
-                                                        ${ut}
+                                                    <option value="${ut}" selected >
+                                                       ${ut}
                                                     </option>
                                                     </c:if>
                                                 </c:forEach>
                                                 <c:forEach items="${userType}" var="ut" > 
                                                     <c:if test="${not fn:contains(ed_permission,ut)}" >
-                                                    <option value="$ut"  >
+                                                    <option value="${ut}"  >
                                                         ${ut}
                                                     </option>
                                                     </c:if>
