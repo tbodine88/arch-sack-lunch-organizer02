@@ -30,12 +30,6 @@
 	   <c:set var="perm" value="FACILITATOR" />
 	 <!-- perm is ${perm}. -->
 	</c:if>
-	<c:set var="itemid" value="${fn:split('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20', ' ')}" />
-
-	<c:set var="group" value="${fn:split('1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1,2,3,4,5', ' ')}" />
-	<c:set var="groupName" value="${fn:split('none first second third fourth fifth',' ')}" />
-	<c:set var="item" value="${fn:split('Blackcurrant Blueberry Chili pepper Cranberry Eggplant Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange' , ' ')}" />
-	<c:set var="selected" value="14" />
 	<c:set var="band1" value="${groupName[1]}" />
 	<c:set var="band2" value="${groupName[2]}" />
 	<c:set var="band3" value="${groupName[3]}" />

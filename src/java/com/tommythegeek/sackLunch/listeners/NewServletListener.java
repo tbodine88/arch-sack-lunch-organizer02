@@ -4,6 +4,11 @@
  */
 package com.tommythegeek.sackLunch.listeners;
 
+import com.sun.javafx.util.Utils;
+import com.tommythegeek.sackLunch.dao.Check;
+import com.tommythegeek.sackLunch.dao.Committee;
+import com.tommythegeek.sackLunch.dao.Council;
+import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.People;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -62,6 +67,41 @@ public class NewServletListener implements ServletContextListener {
        someone.setPermission(SackLunchPermission.MEMBER);
        People.introduce(someone);
        pop.updatePop();
+       
+        //initialize the list of things to bring -- the check list
+        // Add items to Check.list
+       	String[] in_itemid = Utils.split("0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
+	String[] in_itemGroup = Utils.split("1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, " +
+			"1, 2, 3, 4, 5, 1,2,3,4,5", " ");
+	String[] in_item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
+			"Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant " +
+			"Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange"," ");
+        Check theCheck;
+        Item thing;
+        
+        theCheck = new Check();
+        for( int i = 0; i < in_itemid.length ; i++){
+            thing = new Item();
+            thing.setIndex( Integer.parseInt(in_itemid[i]));
+            thing.setCommittee(in_itemGroup[i]);
+            thing.setName(in_item[i]);
+            theCheck.list.add(thing);
+        }
+        ctx.setAttribute("checklist",theCheck);
+        
+        //initialize the Council with the names of the subcommittees
+        Council council = new Council();
+        Committee committee; 
+        String[] longName = Utils.split("first monday; second monday; third monday; fourth monday; fifth monday; ","; ");
+        String[] shortName = Utils.split("first second third fourth fifth"," ");
+        for( int i = council.subcommittee.size() ; i < shortName.length; i++){
+            committee = new Committee();
+            committee.setIndex(i);
+            committee.setFullname(longName[i]);
+            committee.setName(shortName[i]);
+            council.subcommittee.add(committee);
+        }
+        ctx.setAttribute("council",council);
     }
 
     @Override

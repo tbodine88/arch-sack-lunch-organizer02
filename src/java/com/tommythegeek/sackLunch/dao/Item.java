@@ -11,8 +11,17 @@ import java.util.Set;
  * Items - things used in lunches or actions involved such as delivery
  * @author Thomas Bodine
  */
-class Item {
+public class Item {
     private int index;
+    private String committee;
+
+    public String getCommittee() {
+        return committee;
+    }
+
+    public void setCommittee(String committee) {
+        this.committee = committee;
+    }
     private String name;
 
     public int getIndex() {
@@ -33,6 +42,7 @@ class Item {
     public Item copy(){
         Item xcopy = new Item();
         xcopy.setIndex( this.getIndex());
+        xcopy.setCommittee( this.committee);
         xcopy.setName(this.getName());
         return xcopy;
     }

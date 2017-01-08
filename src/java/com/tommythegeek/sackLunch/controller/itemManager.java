@@ -5,17 +5,22 @@
 package com.tommythegeek.sackLunch.controller;
 
 import com.sun.javafx.util.Utils;
+import com.tommythegeek.sackLunch.dao.Check;
+import com.tommythegeek.sackLunch.dao.Council;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.tommythegeek.sackLunch.dao.Item;
+import javax.servlet.ServletContext;
 /**
  *
  * @author Owner
  */
 public class itemManager extends HttpServlet {
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,21 +34,28 @@ public class itemManager extends HttpServlet {
     @SuppressWarnings("empty-statement")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-	String[] itemid;
-	String[] itemGroupName;
-	String[] item;
-        String[] itemGroup;
+
+        ServletContext ctx = request.getServletContext();
+        Check theCheck = (Check) ctx.getAttribute("checklist");
+        Council theCouncil = (Council) ctx.getAttribute("council");
+        ArrayList<String> itemid = new ArrayList<>();
+	ArrayList<String> itemGroupName= new ArrayList<>();
+	ArrayList<String> item= new ArrayList<>();
+        ArrayList<String>itemGroup= new ArrayList<>();
 	String elected;
         
-	itemid = Utils.split("0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
-	itemGroup = Utils.split("1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, " +
-			"1, 2, 3, 4, 5, 1,2,3,4,5", " ");
-	item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
-			"Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant " +
-			"Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange"," ");
-	itemGroupName = Utils.split("none first second third fourth fifth"," ");
 
-	elected = "14";
+        for( int i = 0; i < theCheck.list.size() ; i++){
+            Item thing = theCheck.list.get(i);
+            itemid.add("" + thing.getIndex());
+            itemGroup.add(thing.getCommittee());
+            item.add(thing.getName());
+        }
+        String[] in_itemGroupName = Utils.split("none first second third fourth fifth"," ");
+        for( int i = 0 ; i < theCouncil.subcommittee.size(); i++){
+            itemGroupName.add(theCouncil.subcommittee.get(i).getName());
+        }
+        elected = request.getParameter("elect");
 
 	request.setAttribute("itemid",itemid);
 	request.setAttribute("itemGroupName",itemGroupName);
