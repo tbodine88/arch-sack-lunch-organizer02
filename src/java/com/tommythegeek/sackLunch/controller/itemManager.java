@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import static com.tommythegeek.sackLunch.dao.SackLunchPermission.ADMINISTRATOR;
+import com.tommythegeek.sackLunch.dao.groupMemberChecker;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 /**
@@ -46,6 +47,8 @@ public class itemManager extends HttpServlet {
         }
         Council theCouncil = (Council) ctx.getAttribute("council");
         SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
+        String usersGroup = (String) session.getAttribute("group");
+        groupMemberChecker bouncer = new groupMemberChecker(usersGroup);
         ArrayList<String> itemid = new ArrayList<>();
 	ArrayList<String> itemGroupName= new ArrayList<>();
 	ArrayList<String> item= new ArrayList<>();
@@ -59,12 +62,13 @@ public class itemManager extends HttpServlet {
             if( thing == null ){
                 continue;
             }
-            if (perm.compareTo( ADMINISTRATOR ) < 0){
-                thing.hashCode();
-            }
-            itemid.add("" + thing.getIndex());
             name = thing.getName();
             committee = thing.getCommittee();
+            if (perm.compareTo( ADMINISTRATOR ) < 0){
+                if ( bouncer.reject(committee))
+                    continue;
+            }
+            itemid.add("" + thing.getIndex());
             itemGroup.add(committee);
             item.add(name);
         }
@@ -72,18 +76,28 @@ public class itemManager extends HttpServlet {
         for( int i = 0 ; i < theCouncil.subcommittee.size(); i++){
             itemGroupName.add(theCouncil.subcommittee.get(i).getName());
         }
-        elected = request.getParameter("elect");
+        
+        // adjust for the actual size of the displayed array 
+        // rowId 4 may be in row 2
+        String selected = request.getParameter("elect");
+        elected="-1";
+        for(int i = 0; i < itemid.size(); i++){
+            if ( itemid.get(i).equals(selected)){
+                elected= new Integer(i).toString();
+            }
+        }
 
 	request.setAttribute("itemid",itemid);
 	request.setAttribute("itemGroupName",itemGroupName);
 	request.setAttribute("itemGroup",itemGroup);
 	request.setAttribute("item",item);
 	request.setAttribute("elected",elected);
+        request.setAttribute("menu","/mainMenuSelector");
 	
         request.getRequestDispatcher("WEB-INF/canvas/itemMenu.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold  desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

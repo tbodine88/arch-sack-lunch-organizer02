@@ -109,10 +109,10 @@
 						<input type="hidden" name="rowid" value="${elected}" />
 						<c:choose > 
 						<c:when test="${fn:contains(chosen,'1')}">
-						    <input type="checkbox" name="itemGroup1" value="1" checked />
+						    <input type="checkbox" name="itemGroup1" value="1" checked ${(!fn:contains(group,'1')) ? 'disabled' : ''} />
 						</c:when>
 						<c:otherwise>
-						    <input type="checkbox" name="itemGroup1" value="1"/>
+						<input type="checkbox" name="itemGroup1" value="1" ${(!fn:contains(group,'1')) ? 'disabled' : ''} />
 						</c:otherwise>
 						</c:choose>
 						first
@@ -120,10 +120,10 @@
 					    <td>
 						<c:choose > 
 						<c:when test="${fn:contains(chosen,'4')}">
-						    <input type="checkbox" name="itemGroup4" value="4" checked />
+						<input type="checkbox" name="itemGroup4" value="4" checked  ${(!fn:contains(group,'4')) ? 'disabled' : ''} />
 						</c:when>
 						<c:otherwise>
-						    <input type="checkbox" name="itemGroup4" value="4"/>
+						<input type="checkbox" name="itemGroup4" value="4" ${(!fn:contains(group,'4')) ? 'disabled' : ''} />
 						</c:otherwise>
 						</c:choose>
 						fourth
@@ -133,10 +133,10 @@
 					    <td>
 						<c:choose > 
 						<c:when test="${fn:contains(chosen,'2')}">
-						    <input type="checkbox" name="itemGroup2" value="2" checked />
+						<input type="checkbox" name="itemGroup2" value="2" checked  ${(!fn:contains(group,'2')) ? 'disabled' : ''} />
 						</c:when>
 						<c:otherwise>
-						    <input type="checkbox" name="itemGroup2" value="2"/>
+						<input type="checkbox" name="itemGroup2" value="2" ${(!fn:contains(group,'2')) ? 'disabled' : ''} />
 						</c:otherwise>
 						</c:choose>
 						second
@@ -144,10 +144,10 @@
 					    <td>
 						<c:choose > 
 						<c:when test="${fn:contains(chosen,'5')}">
-						    <input type="checkbox" name="itemGroup5" value="5" checked />
+						<input type="checkbox" name="itemGroup5" value="5" checked  ${(!fn:contains(group,'5')) ? 'disabled' : ''} />
 						</c:when>
 						<c:otherwise>
-						    <input type="checkbox" name="itemGroup5" value="5"/>
+						<input type="checkbox" name="itemGroup5" value="5" ${(!fn:contains(group,'5')) ? 'disabled' : ''} />
 						</c:otherwise>
 						</c:choose>
 						fifth
@@ -157,10 +157,10 @@
 					    <td>
 						<c:choose > 
 						<c:when test="${fn:contains(chosen,'3')}">
-						    <input type="checkbox" name="itemGroup3" value="3" checked />
+						<input type="checkbox" name="itemGroup3" value="3" checked  ${(!fn:contains(group,'3')) ? 'disabled' : ''} />
 						</c:when>
 						<c:otherwise>
-						    <input type="checkbox" name="itemGroup3" value="3"/>
+						<input type="checkbox" name="itemGroup3" value="3" ${(!fn:contains(group,'3')) ? 'disabled' : ''} />
 						</c:otherwise>
 						</c:choose>
 						third
