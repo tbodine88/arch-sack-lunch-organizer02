@@ -92,83 +92,93 @@
                         <tr></tr>
                     </table>
                 </td>
-                <td align="left">
+                <td align="center">
                     <table summary="right hand pane">
                         <tr>
                         <form action="updateItem" method="GET" >
 				<c:set var="chosen" value="${itemGroup[elected]}" />
-                            <table summary="item input" >
-                                <tr>
-                                    <td>
-                                        <input type="hidden" name="rowid" value="${rowid}" />
-                                        <c:choose > 
-                                        <c:when test="${fn:contains(chosen,'1')}">
-                                            <input type="checkbox" name="itemGroup" value="1" checked />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="itemGroup" value="1"/>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        first
-                                    </td>
-                                    <td>
-                                        <c:choose > 
-                                        <c:when test="${fn:contains(chosen,'4')}">
-                                            <input type="checkbox" name="itemGroup" value="4" checked />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="itemGroup" value="4"/>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        fourth
-                                    </td>
+                            <table summary="item input" border="1">
+                                <tr><th colspan="2">Item entry form</th></tr>
+                                <tr><th>Item:</th><td align="center"><input type="text" name="item" value="${item[elected]}"/></td></tr>
+                                    <td colspan="2">
+                                        <table  summary="committe selector" >
+						<thead>
+							<tr><td colspan=2 >Committee(s) that require this item</td></tr>
+						</thead>
+						<tr><td>
+						<input type="hidden" name="rowid" value="${elected}" />
+						<c:choose > 
+						<c:when test="${fn:contains(chosen,'1')}">
+						    <input type="checkbox" name="itemGroup1" value="1" checked />
+						</c:when>
+						<c:otherwise>
+						    <input type="checkbox" name="itemGroup1" value="1"/>
+						</c:otherwise>
+						</c:choose>
+						first
+					    </td>
+					    <td>
+						<c:choose > 
+						<c:when test="${fn:contains(chosen,'4')}">
+						    <input type="checkbox" name="itemGroup4" value="4" checked />
+						</c:when>
+						<c:otherwise>
+						    <input type="checkbox" name="itemGroup4" value="4"/>
+						</c:otherwise>
+						</c:choose>
+						fourth
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+						<c:choose > 
+						<c:when test="${fn:contains(chosen,'2')}">
+						    <input type="checkbox" name="itemGroup2" value="2" checked />
+						</c:when>
+						<c:otherwise>
+						    <input type="checkbox" name="itemGroup2" value="2"/>
+						</c:otherwise>
+						</c:choose>
+						second
+					    </td>
+					    <td>
+						<c:choose > 
+						<c:when test="${fn:contains(chosen,'5')}">
+						    <input type="checkbox" name="itemGroup5" value="5" checked />
+						</c:when>
+						<c:otherwise>
+						    <input type="checkbox" name="itemGroup5" value="5"/>
+						</c:otherwise>
+						</c:choose>
+						fifth
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+						<c:choose > 
+						<c:when test="${fn:contains(chosen,'3')}">
+						    <input type="checkbox" name="itemGroup3" value="3" checked />
+						</c:when>
+						<c:otherwise>
+						    <input type="checkbox" name="itemGroup3" value="3"/>
+						</c:otherwise>
+						</c:choose>
+						third
+					    </td>
+					    <td>
+						&nbsp;
+					    </td>
+					</tr>
+                                    </table>
+				    </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <c:choose > 
-                                        <c:when test="${fn:contains(chosen,'2')}">
-                                            <input type="checkbox" name="itemGroup" value="2" checked />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="itemGroup" value="2"/>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        second
-                                    </td>
-                                    <td>
-                                        <c:choose > 
-                                        <c:when test="${fn:contains(chosen,'5')}">
-                                            <input type="checkbox" name="itemGroup" value="5" checked />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="itemGroup" value="5"/>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        fifth
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <c:choose > 
-                                        <c:when test="${fn:contains(chosen,'3')}">
-                                            <input type="checkbox" name="itemGroup" value="3" checked />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="itemGroup" value="3"/>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        third
-                                    </td>
-                                    <td>
-                                        &nbsp;
-                                    </td>
-                                </tr>
-                                <tr><td colspan="2"><input type="text" name="item" value="${item[elected]}"/></td></tr>
 				<tr><td colspan=2>
 				     <table><tr>
                                     <td><input type="submit"  name="activity" value="add"/></td>
-				    <td><input type="submit" name="activity" value="delete" /></td>    
-                                    <td><input type="submit" name="activity" value="update"/></td>
+                                    <c:if test="${not empty(elected)}" >
+                                        <td><input type="submit" name="activity" value="delete" /></td>    
+                                        <td><input type="submit" name="activity" value="update"/></td>
+                                    </c:if>
 				     </tr></table>
 				</td></tr>
                             </table>

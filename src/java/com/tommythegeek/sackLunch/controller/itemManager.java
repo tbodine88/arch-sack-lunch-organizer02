@@ -44,12 +44,18 @@ public class itemManager extends HttpServlet {
         ArrayList<String>itemGroup= new ArrayList<>();
 	String elected;
         
-
-        for( int i = 0; i < theCheck.list.size() ; i++){
-            Item thing = theCheck.list.get(i);
+        String committee;
+        String name;
+        for( int i = theCheck.firstIndex(); i < theCheck.lastIndex() ; i++){
+            Item thing = theCheck.findByIndex(i);
+            if( thing == null ){
+                continue;
+            }
             itemid.add("" + thing.getIndex());
-            itemGroup.add(thing.getCommittee());
-            item.add(thing.getName());
+            name = thing.getName();
+            committee = thing.getCommittee();
+            itemGroup.add(committee);
+            item.add(name);
         }
         String[] in_itemGroupName = Utils.split("none first second third fourth fifth"," ");
         for( int i = 0 ; i < theCouncil.subcommittee.size(); i++){

@@ -14,6 +14,11 @@ import java.util.Set;
 public class Item {
     private int index;
     private String committee;
+    public Item(){
+        index = -1;
+        name = "";
+        committee = "0";
+    }
 
     public String getCommittee() {
         return committee;

@@ -70,7 +70,7 @@ public class NewServletListener implements ServletContextListener {
        
         //initialize the list of things to bring -- the check list
         // Add items to Check.list
-       	String[] in_itemid = Utils.split("0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
+       	String[] in_itemid = Utils.split("0 1 2 3 4 5 "," "); //6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
 	String[] in_itemGroup = Utils.split("1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, " +
 			"1, 2, 3, 4, 5, 1,2,3,4,5", " ");
 	String[] in_item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
@@ -85,15 +85,15 @@ public class NewServletListener implements ServletContextListener {
             thing.setIndex( Integer.parseInt(in_itemid[i]));
             thing.setCommittee(in_itemGroup[i]);
             thing.setName(in_item[i]);
-            theCheck.list.add(thing);
+            theCheck.add(thing);
         }
         ctx.setAttribute("checklist",theCheck);
         
         //initialize the Council with the names of the subcommittees
         Council council = new Council();
         Committee committee; 
-        String[] longName = Utils.split("first monday; second monday; third monday; fourth monday; fifth monday; ","; ");
-        String[] shortName = Utils.split("first second third fourth fifth"," ");
+        String[] longName = Utils.split("no day; first monday; second monday; third monday; fourth monday; fifth monday; ","; ");
+        String[] shortName = Utils.split("none first second third fourth fifth"," ");
         for( int i = council.subcommittee.size() ; i < shortName.length; i++){
             committee = new Committee();
             committee.setIndex(i);

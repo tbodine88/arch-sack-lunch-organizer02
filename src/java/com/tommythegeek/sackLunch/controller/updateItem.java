@@ -4,10 +4,15 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.sun.javafx.util.Utils;
+import com.tommythegeek.sackLunch.dao.Check;
+import com.tommythegeek.sackLunch.dao.Council;
+import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.People;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,27 +35,66 @@ public class updateItem extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ServletContext ctx = request.getServletContext();
+        Check theCheck = (Check) ctx.getAttribute("checklist");
+        Council theCouncil = (Council) ctx.getAttribute("council");
         ArrayList<String> error = new ArrayList<>();
+        Item jewel = new Item();
         String activity = request.getParameter("activity");
         if( activity == null || activity.isEmpty()){
             activity = "none";
             error.add("Internal Error(updateItem): no activity specified ");
-        }
-        String itemGroup = request.getParameter("itemGroup");
+        } // end if
+        StringBuilder itemGroup = new StringBuilder("");
+        for ( String i : Utils.split("1 2 3 4 5"," ")){
+            String parm = request.getParameter("itemGroup"+i);
+            if ( parm != null && ! parm.isEmpty()){
+                itemGroup.append(parm).append(",");
+            }
+        }// end for
+        if( itemGroup.toString().isEmpty()){
+            error.add("Please assign this item to a Committee.");
+        } // end if
         String itemName = request.getParameter("item");
+        if ( itemName == null || itemName.isEmpty()){
+            error.add("Please enter an Item name.");
+        } // end if
+        String itemIndex = request.getParameter("rowid");
+        boolean replace = ! (itemIndex == null || itemIndex.isEmpty()); 
+        if ( replace ){
+            jewel.setIndex(Integer.parseInt(itemIndex));
+        } // end if
+        jewel.setName(itemName);
+        jewel.setCommittee(itemGroup.toString());
         
         request.setAttribute("menu", "itemManager");
+        boolean result = true;
         if ( error.isEmpty()) {
-            if ( activity.equals("add") ){ 
-            } else if ( activity.equals("edit") ) {
-            } else if ( activity.equals("delete") ){
+            switch (activity) {
+                case "add":
+                    result = theCheck.add(jewel);
+                    break;
+                case "update":
+                    result = theCheck.update(jewel);
+                    break;
+                case "delete":
+                    result = theCheck.delete(jewel);
+                    break;
+                default:
+                    break;
+            } // end switch
+            if ( ! result ){
+                error.add("The " + activity + " action failed");
             }
-            request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
+        } // end if error isEmpty
+        
+        if( error.isEmpty()) { // 2
+           request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
         } else {
             request.setAttribute("flash", "There are problems with the data eneterd.");
             request.setAttribute("error", error);
             request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);
-        }
+        }// end if error isEmpty 2
     }
 
     // <editor-fold  desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
