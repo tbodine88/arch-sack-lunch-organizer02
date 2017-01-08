@@ -56,7 +56,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <form method="upDateItem" >
+                                <form action="itemManager" method="POST" >
 				  <div id="divid" >
                                     <table summary="item list" width=100% border=1>
                                     <c:set var="last" value="${fn:length(itemid) == 0 ? 1 : fn:length(itemid) -1 }" /> 
@@ -95,7 +95,7 @@
                 <td align="left">
                     <table summary="right hand pane">
                         <tr>
-                        <form method="upDateItem">
+                        <form action="updateItem" method="GET" >
 				<c:set var="chosen" value="${itemGroup[elected]}" />
                             <table summary="item input" >
                                 <tr>
@@ -166,7 +166,7 @@
                                 <tr><td colspan="2"><input type="text" name="item" value="${item[elected]}"/></td></tr>
 				<tr><td colspan=2>
 				     <table><tr>
-                                    <td><input type="submit" name="activity" value="add"/></td>
+                                    <td><input type="submit"  name="activity" value="add"/></td>
 				    <td><input type="submit" name="activity" value="delete" /></td>    
                                     <td><input type="submit" name="activity" value="update"/></td>
 				     </tr></table>
