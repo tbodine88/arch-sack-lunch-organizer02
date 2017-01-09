@@ -20,7 +20,7 @@
         }
 
     </style>
-  <title>Manage Members ${weekTag}</title>
+  <title>Manage Members ${weekTag}  </title>
   <script>
       function navigateTo( url ){
           window.location.href = url;
@@ -36,7 +36,7 @@
     <c:set var="userType" value="${fn:split('MEMBER FACILITATOR ADMINISTRATOR',' ')}" />
     
 	<table width="100%" border="1" summary="member management forms">
-	  <caption><h1>Manage Members ${weekTag}</h1></caption>
+	  <caption><h1>Manage Members ${weekTag} </h1></caption>
     <tr>
       <td width="20%">
 	      <table width="100%" ><tr><th>Select A member</th></tr><tr><td> 
@@ -167,7 +167,7 @@
         <table width="100%">
           <tr>
 	    <td width="40%"><a href="memberMan">Clear Form</a></td>
-            <td><a href="mainMenuSelector"> Main Menu </a></td>
+            <td><a href="${menu}"> Main Menu </a></td>
             <td><a href="logout">Log Out</a></td>
           </tr>
         </table>

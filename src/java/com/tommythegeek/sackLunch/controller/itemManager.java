@@ -92,7 +92,11 @@ public class itemManager extends HttpServlet {
 	request.setAttribute("itemGroup",itemGroup);
 	request.setAttribute("item",item);
 	request.setAttribute("elected",elected);
-        request.setAttribute("menu","/mainMenuSelector");
+        if (perm == ADMINISTRATOR )
+            request.setAttribute("menu","menuSel?sel=administratorMenu");
+        else
+            request.setAttribute("menu","menuSel?sel=FacilitatorMenu");
+        
 	
         request.getRequestDispatcher("WEB-INF/canvas/itemMenu.jsp").forward(request, response);
     }

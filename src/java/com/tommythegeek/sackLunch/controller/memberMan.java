@@ -78,6 +78,12 @@ public class memberMan extends HttpServlet {
             retry(request,response,perm);
             return;
         }
+            if( perm == SackLunchPermission.ADMINISTRATOR) {
+                request.setAttribute("menu", "menuSel?sel=administratorMenu");
+            } else {
+                request.setAttribute("menu", "menuSel?sel=FacilitatorMenu");
+            }
+
         String[] values = (String []) request.getParameterValues("selected");
         if (! (values == null || values.length == 0) ){
             guy = People.personById(Integer.parseInt(values[0]));
@@ -87,8 +93,9 @@ public class memberMan extends HttpServlet {
             request.setAttribute("ed_email",guy.getEmail());
             request.setAttribute("ed_can_deliver",guy.isCan_deliver() ? "yes" : "no");
             request.setAttribute("ed_committees",guy.getCommittees());
+            request.setAttribute("menu", "menuSel?sel=FacilitatorMenu");
             if( perm == SackLunchPermission.ADMINISTRATOR) {
-                request.setAttribute("menu", "site");
+                request.setAttribute("menu", "menuSel?sel=administratorMenu");
                 request.setAttribute("ed_permission",guy.getPermission());
                 request.setAttribute("ed_login",guy.getLogin());
                 request.setAttribute("ed_password",guy.getPassword());
