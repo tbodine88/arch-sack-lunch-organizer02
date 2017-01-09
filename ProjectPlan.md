@@ -20,11 +20,11 @@
   1. Member management page
   2. Meeting management page
   3. item management page
+13. Create  Member management Page
+14. Create Item Management Page
 ---
 Completed to here
 ---
-13. Create  Member management Page
-14. Create Item Management Page
 15. Create Meeting Management Page
 16. Revise DAO to use a data base
 17. Write tests using chrome and postman

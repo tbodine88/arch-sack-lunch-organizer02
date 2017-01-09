@@ -88,6 +88,10 @@
         <servlet-name>menuSel</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.menuSel</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>meetManager</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.meetManager</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -115,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>menuSel</servlet-name>
         <url-pattern>/menuSel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>meetManager</servlet-name>
+        <url-pattern>/meetManager</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

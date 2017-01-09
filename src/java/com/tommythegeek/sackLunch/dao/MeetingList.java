@@ -21,11 +21,11 @@ public class MeetingList {
         for ( int i = 0 ; i< 5; i++ ){
             this.meeting.add("");
         }
-        Calendar nextMeet = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
         // figure out Next Mondays date    
         // Figure out the next meeting date for each group
 
-        int thisWeekDay = nextMeet.get(Calendar.DAY_OF_WEEK);
+        int thisWeekDay = today.get(Calendar.DAY_OF_WEEK);
         int mondayIsDaysAway;
         switch (thisWeekDay){
             case(Calendar.SUNDAY): mondayIsDaysAway =1; break;
@@ -37,11 +37,11 @@ public class MeetingList {
             default: mondayIsDaysAway =2; break;
         }
         while( slotsAreEmpty(this.meeting)){
-            nextMeet.add(Calendar.DATE, mondayIsDaysAway);
+            today.add(Calendar.DATE, mondayIsDaysAway);
             mondayIsDaysAway = 7;
-            int slot = findSlot( nextMeet);
+            int slot = findSlot(today);
             if (this.meeting.get(slot).equals(""))
-                this.meeting.set(slot, format1.format(nextMeet.getTime()));
+                this.meeting.set(slot, format1.format(today.getTime()));
         }
     }
 

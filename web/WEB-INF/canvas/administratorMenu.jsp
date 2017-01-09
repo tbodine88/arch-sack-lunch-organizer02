@@ -25,16 +25,13 @@
         <p>
             <table>
             <tr>
-                <td><a href="memberMan">Member Management</a></td>
-                <td><a href="two">two</a></td>
-                <td><a href="three">three</a></td>
-                <td><a href="four">four</a></td>
+                <td><a href="memberMan">Member Manager</a></td>
             </tr>
             <tr>
-                <td><a href="itemManager">Manage Items</a></td>
-                <td><a href="six">six</a></td>
-                <td><a href="seven">seven</a></td>
-                <td><a href="logout">Log out</a></td>
+                <td><a href="itemManager">Item Manager</a></td>
+            </tr>
+            <tr>
+                <td><a href="meetManager">Meeting Manager</a></td>
             </tr>
         </table>
         </p>
