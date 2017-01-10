@@ -62,7 +62,8 @@
                                     <c:set var="last" value="${fn:length(itemid) == 0 ? 1 : fn:length(itemid) -1 }" /> 
                                     <c:forEach var="i" begin="0" end="${last}">
                                         <tr>
-						<td width=10%> <input type="checkbox" name="elect" value="${itemid[i]}" onchange="this.form.submit();" /> ${itemid[i]} </td> <td width=40% align=center> 
+						<td width=10%> <input type="checkbox" name="elect" value="${itemid[i]}" onchange="this.form.submit();" /> ${itemid[i]} </td> 
+                                                <td width=40% align=center> 
 							<c:set var="gindex" value="${itemGroup[i]}" />
 							<c:if test="${fn:contains(gindex,'1')}" >
 							  ${band1} &nbsp;

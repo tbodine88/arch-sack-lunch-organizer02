@@ -46,6 +46,10 @@ public class meetManager extends HttpServlet {
         if (group == null){  nullExit("group",request,response); return;}
         MeetingList mlist = new MeetingList();
         request.setAttribute("meetings", mlist.meeting);
+        if( perm == SackLunchPermission.ADMINISTRATOR )
+            request.setAttribute("menu","menuSel?administratorMenu");
+        else
+            request.setAttribute("menu","menuSel?FacilitatorMenu");
         request.getRequestDispatcher("WEB-INF/canvas/ManageMeetings.jsp").forward(request,response);
     }
 

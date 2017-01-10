@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Facilitator Menu</title>
   </head>
-  <body>
+  <body bgcolor="blue" >
    <c:set var="bureau" value='${fn:split(initParam.CommitteeName,",")}' />
 
     <h2>Hello ${fullName}!</h2>
