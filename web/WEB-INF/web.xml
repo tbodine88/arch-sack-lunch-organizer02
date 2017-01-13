@@ -92,6 +92,10 @@
         <servlet-name>meetManager</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.meetManager</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateMeeting</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.updateMeeting</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>meetManager</servlet-name>
         <url-pattern>/meetManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateMeeting</servlet-name>
+        <url-pattern>/updateMeeting</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

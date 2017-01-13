@@ -10,7 +10,10 @@ public class People {
     private static Status stat;
 
     public static void deleteById(int rowId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Person aGuy = CROWD.get(rowId);
+        // CROWD.remove(aGuy);
+        aGuy.copy(new Person());
+        aGuy.setRowid(rowId);
     }
 
  

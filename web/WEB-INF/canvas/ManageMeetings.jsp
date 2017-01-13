@@ -6,9 +6,6 @@
     Created on : Jan 9, 2017, 7:08:55 AM
     Author     : Owner
 --%>
-<c:set var="ed_month" value="1" />
-<c:set var="ed_day"  value="16" />
-<c:set var="ed_year" value="2017" />
 <c:set var="selectableMonth" value="${fn:split('&nbsp; Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec',' ')}" />
 <c:set var="groupName" value="${fn:split('First Second Third Fourth Fifth',' ')}" />
 
@@ -37,7 +34,7 @@
             </c:choose>
             Monday Sack Lunch Committee${fn:contains(perm,'ADM') ? 's' : ''}
         </h2>
-        
+        selected ${selected}
         <table width="100%">
             <tr>
                 <td class="leftColumn" bgcolor="lightblue" width="20%">
@@ -49,7 +46,7 @@
                         <tr><td><a href="logout">Logout</a></td></tr>
                     </table>
                 </td>
-                <td class="centerColumn" bgcolor="pink" width="60%">
+                <td class="centerColumn" bgcolor="pink" width="40%">
                     <form action="meetManager" method="POST" >
                     <table width="100%">
                         <tr><td><table  width="100%">
@@ -74,27 +71,33 @@
                 </td>
                 <td class="rightColumn" bgcolor="LightYellow">
                     <form action="updateMeeting" method="POST" >
-                    <table size="100%" border="1">
+                    <table size="100%" >
+                        <tr><th>Meeting ID</th><td> ${ed_meetingID} <input type="hidden" name="ed_meetingID" value="${ed_meetingID}"></td></tr>
                         <tr><th width="40%">Month</th><th width="10%">Day</th><th>Year</th></tr>
                         <tr>
                             <td>
-                                <select name="ed_month">
+                               
+                                <select name="ed_month"> 
                                     <c:set var="monthNumber" value="1" />
-                                    <c:forEach var="month" items="${selectableMonth}">
-                                        <option value="${monthNumber +1}" 
-                                            ${fn:contains(ed_month,monthNumber) ? "selected='selected'" : ""}> ${month}
-                                        </option>
+                                    <c:forEach var="i" begin="0" end="${fn:length(selectableMonth)}" >
+                                        <c:set var="fudge" value="0${i}" />
+                                       
+                                       <option value="${i}" 
+                ${fn:contains(ed_month,fudge) ? "selected='selected'" : "" } >  ${selectableMonth[i]}  <br/>
+                                        </option> 
                                         <c:set var="monthNumber" value="${monthNumber + 1}" />
                                     </c:forEach>        
                                 </select>
                             </td>
-                            <td><input type="text" name="ed_day" value="${ed_day}" width="2px" /></td>
+                            <td><input type="number" min="1" max="31" name="ed_day" value="${ed_day}" width="2px" /></td>
                             <td>
                                 <select name="ed_year">
                                     <option  value="${ed_year}">${ed_year}</option>
                                     <option  value="${ed_year + 1}">${ed_year + 1}</option>
                                 </select>    
                             </td>
+                        </tr>
+                        <tr><td colspan="3" align="center"><input type="submit" value="change date" />
                     </table>
                     </form>
                 </td>

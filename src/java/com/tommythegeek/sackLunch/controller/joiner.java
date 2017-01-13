@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,7 +44,11 @@ public class joiner extends HttpServlet {
             throws ServletException, IOException {
         MeetingList committee;
         
-        committee = new MeetingList();
+        HttpSession session = request.getSession(false);
+        if( session == null){
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        committee = (MeetingList) session.getAttribute("meetings");
         
         request.setAttribute("meet", committee.meeting);
         request.getRequestDispatcher("joinForm.jsp").forward(request, response);

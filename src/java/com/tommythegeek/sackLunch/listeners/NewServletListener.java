@@ -15,6 +15,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import com.tommythegeek.sackLunch.dao.Schedule;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +43,13 @@ public class NewServletListener implements ServletContextListener {
        People pop = new People();
        pop.updatePop();
        ctx.setAttribute("people", pop);
+       Schedule sked = new Schedule();
+       ctx.setAttribute("sked",sked);
+       sked.nextFirst();
+       sked.nextSecond();
+       sked.nextThird();
+       sked.nextFourth();
+       sked.nextFifth();
        Person someone = new Person();
        someone.setRowid(1);
        someone.setLogin(adminUser);
@@ -121,7 +129,11 @@ public class NewServletListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ServletContext ctx = sce.getServletContext();
+        People pop = (People) ctx.getAttribute("people");
+        Schedule sked =(Schedule) ctx.getAttribute("sked");
+        Check theCheck =(Check) ctx.getAttribute("checklist");
+        Committee council  =(Committee) ctx.getAttribute("council");
     }
   
 }

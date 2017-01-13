@@ -4,16 +4,19 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import com.tommythegeek.sackLunch.dao.Schedule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +82,10 @@ public class go extends HttpServlet {
         Status stat = People.validates(applicant);
         if (stat.ok){
             HttpSession session = request.getSession();
+            ServletContext ctx = request.getServletContext();
+            Schedule sked = (Schedule) ctx.getAttribute("sked");
+            MeetingList ml = new MeetingList(sked);
+            session.setAttribute("meetings", ml);
             userId = applicant.getRowid();
 	    username = applicant.getLogin();
 	    fullName = applicant.getName();

@@ -4,10 +4,13 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.sun.jmx.mbeanserver.Util;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,12 +47,38 @@ public class meetManager extends HttpServlet {
         if (perm == null){  nullExit("SackLunchPermission",request,response); return;}
         String group = (String) session.getAttribute("group");
         if (group == null){  nullExit("group",request,response); return;}
-        MeetingList mlist = new MeetingList();
-        request.setAttribute("meetings", mlist.meeting);
-        if( perm == SackLunchPermission.ADMINISTRATOR )
+        MeetingList mlist = (MeetingList) session.getAttribute("meetings");
+        request.setAttribute("meetings", mlist.getDates());
+        String elected = request.getParameter("selected");
+        if( !(elected == null || elected.isEmpty()) ){
+            int selected = Integer.parseInt(elected);
+            String ed_date = mlist.meeting.get(selected).getDateString();
+            if (ed_date != null && ! ed_date.isEmpty() ){
+                String[] part = ed_date.split(Pattern.quote("/"));
+                String ed_year;
+                String ed_month;
+                String ed_day;
+                if (part.length == 3) {
+                    ed_year = part[2];
+                    ed_month = part[0];
+                    ed_day = part[1];
+                } else {
+                    ed_year = "-1";
+                    ed_month = "-1";
+                    ed_day = "-1";
+                    
+                }
+                request.setAttribute("ed_meetingID",elected);
+                request.setAttribute("ed_year",ed_year);
+                request.setAttribute("ed_month", ed_month);
+                request.setAttribute("ed_day", ed_day);
+            }// end if ed_date
+        } // end if ! elected
+        if( perm == SackLunchPermission.ADMINISTRATOR ){
             request.setAttribute("menu","menuSel?administratorMenu");
-        else
+        }else{
             request.setAttribute("menu","menuSel?FacilitatorMenu");
+        }// end if perm
         request.getRequestDispatcher("WEB-INF/canvas/ManageMeetings.jsp").forward(request,response);
     }
 

@@ -4,6 +4,7 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.Check;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,11 @@ public class chooseGroup extends HttpServlet {
             throws ServletException, IOException {
         int groupMemberShip = 0;
         HttpSession session = request.getSession();
+        if( session==null){
+             request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        ServletContext ctx = request.getServletContext();
+
         Pattern comma = Pattern.compile(",");
         Pattern num = Pattern.compile("^(\\d)");
         CharSequence group = (CharSequence) session.getAttribute("group");
@@ -51,7 +58,7 @@ public class chooseGroup extends HttpServlet {
         }
         Matcher comat = comma.matcher(group);
         Matcher nummat = num.matcher(group);
-        MeetingList bunch= new MeetingList();
+        MeetingList bunch= (MeetingList) session.getAttribute("meetings");
         request.setAttribute("meetDate", bunch.meeting);
         while( comat.find()) groupMemberShip++;
         if ( groupMemberShip < 2){
