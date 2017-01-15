@@ -97,7 +97,7 @@
                                 </select>    
                             </td>
                         </tr>
-                        <tr><td colspan="3" align="center"><input type="submit" value="change date" />
+                        <tr><td colspan="3" align="center"><input type="submit" name="activity" value="change date" />
                     </table>
                     </form>
                 </td>

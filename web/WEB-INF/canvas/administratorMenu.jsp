@@ -33,6 +33,9 @@
             <tr>
                 <td><a href="meetManager">Meeting Manager</a></td>
             </tr>
+            <tr>
+                <td><a href="logout">Log out</a></td>
+            </tr>
         </table>
         </p>
     </body>

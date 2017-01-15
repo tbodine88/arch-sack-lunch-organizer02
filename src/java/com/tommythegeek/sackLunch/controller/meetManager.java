@@ -4,12 +4,9 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.sun.jmx.mbeanserver.Util;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -75,9 +72,9 @@ public class meetManager extends HttpServlet {
             }// end if ed_date
         } // end if ! elected
         if( perm == SackLunchPermission.ADMINISTRATOR ){
-            request.setAttribute("menu","menuSel?administratorMenu");
+            request.setAttribute("menu","menuSel?sel=administratorMenu");
         }else{
-            request.setAttribute("menu","menuSel?FacilitatorMenu");
+            request.setAttribute("menu","menuSel?sel=FacilitatorMenu");
         }// end if perm
         request.getRequestDispatcher("WEB-INF/canvas/ManageMeetings.jsp").forward(request,response);
     }
