@@ -37,6 +37,25 @@ public class Schedule {
         }//end for
     }// end Schedule  
     /**
+     * returns info about the meeting at index
+     * @param index
+     * @return 
+     */
+    public String get(int index){
+        if ( index >= theSked.size() || index < 0){
+            return "null";
+        }
+        Meeting tryst = theSked.get(index);
+        return "" + tryst.getIndex() + ": " + tryst.getCommittee().getName() +
+                " " + tryst.getDateString();
+    }
+    /**
+     *  return the schedule size 
+     */
+    public int size(){
+        return theSked.size();
+    }
+    /**
      * slotsFull() - test that all five Committees are at the end of the Schedule
      * @return 
      */
