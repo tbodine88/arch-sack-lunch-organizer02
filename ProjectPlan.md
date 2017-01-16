@@ -25,7 +25,7 @@
 15. Create Meeting Management Page
 ---
 Completed to here
----
 bug found in Schedule generation, must fix
+---
 16. Revise DAO to use a data base
 17. Write tests using chrome and postman
