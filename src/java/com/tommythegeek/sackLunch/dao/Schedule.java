@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import org.jboss.weld.util.collections.ArraySet;
 
 
 /**
@@ -35,6 +34,18 @@ public class Schedule {
             panel.setIndex(xedni++);
             congress.add(panel);
         }//end for
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        Calendar newday = new GregorianCalendar(year,0,1);
+        int monDate = 1 + daysToMonday(newday);
+        newday = new GregorianCalendar(year,0,monDate);
+        Meeting firstOfYear = new Meeting();
+        firstOfYear.setDate(newday.getTime());
+        firstOfYear.setCommittee(congress.get(0));
+        firstOfYear.setIndex(0);
+        theSked.add(firstOfYear);
+        for( int wk = 1 ; wk < 18 ; wk++){
+            addAnotherMonday();
+        }
     }// end Schedule  
     /**
      * returns info about the meeting at index
@@ -219,7 +230,7 @@ public class Schedule {
             Committee drone = moba.getCommittee();
             if ( drone.getIndex() == ordinal ){
                Date aday = moba.getDate();
-               if ( aday.compareTo(aday) > 0){
+               if ( aday.compareTo(today) > 0){
                    return moba;
                }// end if aday
             }// end if drone

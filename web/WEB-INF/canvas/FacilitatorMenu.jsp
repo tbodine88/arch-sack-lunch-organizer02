@@ -30,6 +30,7 @@
               <tr ><td   width="25%" height="50%"><a href="memberMan">Member Management</a></td></tr>
               <tr ><td><a href="itemManager">Manage Items</a></td></tr>
               <tr><td><a href="meetManager">Meeting Manager</a></td></tr>
+              <tr><td><a href="scheduleDisplay.jsp">Schedule </a></td></tr>
               <tr></tr>
             </table></td>
         </tr>
