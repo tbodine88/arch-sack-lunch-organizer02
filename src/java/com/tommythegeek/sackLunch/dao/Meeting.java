@@ -40,7 +40,10 @@ public class Meeting {
     public void setCommittee(Committee committee) {
         this.committee = committee;
     }
-
+    /**
+     * 
+     * @return a properly formatted dateString mm/dd/yyyy  
+     */
     public String getDateString() {
       Calendar myCal = new GregorianCalendar();
       String aDate;
@@ -51,5 +54,17 @@ public class Meeting {
       aDate = String.format("%02d/%02d/%04d",month,calday,year);
       return aDate;
     }
-    
+    /**
+     * true if committee and date are equal
+     * @param tryst
+     * @return 
+     */
+    public boolean  equals(Meeting tryst){
+       if ( this.committee.equals(tryst.getCommittee())){
+           if( this.date.compareTo(tryst.getDate()) == 0){
+               return true;
+           }
+       }
+       return false;
+    }
 }

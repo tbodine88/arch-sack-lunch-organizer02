@@ -22,6 +22,7 @@ public class MeetingList {
     public final Meeting fourth;
     public final Meeting fifth;
     public ArrayList<Meeting> meeting;
+    private final Schedule source;
     
     public MeetingList(Schedule sked){
         meeting = new ArrayList<>(5);
@@ -30,6 +31,7 @@ public class MeetingList {
         meeting.add(third = sked.nextThird());
         meeting.add(fourth = sked.nextFourth());
         meeting.add(fifth = sked.nextFifth());
+        source = sked;
     }
 
     public ArrayList<String>  getDates() {
@@ -48,5 +50,13 @@ public class MeetingList {
           card.add(aDate);
         } // end for
         return card;
+    }
+
+    public ArrayList<Integer> getIndices() {
+        ArrayList<Integer> idx = new ArrayList<>();
+        for ( Meeting tryst : meeting){
+            idx.add(source.indexOf(tryst));
+        }
+        return idx;
     }
 }

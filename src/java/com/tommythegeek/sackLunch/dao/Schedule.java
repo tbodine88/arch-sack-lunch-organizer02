@@ -52,13 +52,25 @@ public class Schedule {
      * @param index
      * @return 
      */
-    public String get(int index){
+    public String getMeetingInfo(int index){
         if ( index >= theSked.size() || index < 0){
             return "null";
         }
         Meeting tryst = theSked.get(index);
         return "" + tryst.getIndex() + ": " + tryst.getCommittee().getName() +
                 " " + tryst.getDateString();
+    }
+    /**
+     * get the meeting at index in schedule
+     * @param index
+     * @return 
+     */
+    public Meeting getMeetingByIndex( int index){
+        if ( index >= theSked.size() || index < 0){
+            return null;
+        }
+        Meeting tryst = theSked.get(index);
+        return tryst;
     }
     /**
      *  return the schedule size 
@@ -106,7 +118,7 @@ public class Schedule {
                 );
     }// end slotsFull 
     /**
-     * get the index of the next Monday after today
+     * getMeetingInfo the index of the next Monday after today
      * @param today
      * @return 
      */
@@ -217,7 +229,7 @@ public class Schedule {
         return lastMeeting;
     }//end addAnotherMonday
     /**
-     * get the next ordinal Monday meeting
+     * getMeetingInfo the next ordinal Monday meeting
      * @param ordinal
      * @return 
      */
@@ -285,6 +297,15 @@ public class Schedule {
 
     public Meeting nextFifth() {
         return next(4);
+    }
+
+    public Integer indexOf(Meeting tryst) {
+        for( int i = 0 ; i < theSked.size() ; i++){
+            if ( theSked.get(i).equals(tryst)){
+                return i;
+            }
+        }
+        return -1;
     }
 }// end class Schedule
 

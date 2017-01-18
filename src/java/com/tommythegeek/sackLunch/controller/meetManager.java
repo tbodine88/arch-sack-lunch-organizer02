@@ -6,6 +6,7 @@ package com.tommythegeek.sackLunch.controller;
 
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import com.tommythegeek.sackLunch.dao.Schedule;
 import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
@@ -45,11 +46,15 @@ public class meetManager extends HttpServlet {
         String group = (String) session.getAttribute("group");
         if (group == null){  nullExit("group",request,response); return;}
         MeetingList mlist = (MeetingList) session.getAttribute("meetings");
+        if ( mlist == null){ nullExit("meetingList",request,response); return;}
+        Schedule sked = (Schedule) sce.getAttribute("sked");
+        if ( sked ==null ){ nullExit("sked",request,response); return;}
         request.setAttribute("meetings", mlist.getDates());
+        request.setAttribute("indices",mlist.getIndices());
         String elected = request.getParameter("selected");
         if( !(elected == null || elected.isEmpty()) ){
             int selected = Integer.parseInt(elected);
-            String ed_date = mlist.meeting.get(selected).getDateString();
+            String ed_date = sked.getMeetingByIndex(selected).getDateString();
             if (ed_date != null && ! ed_date.isEmpty() ){
                 String[] part = ed_date.split(Pattern.quote("/"));
                 String ed_year;

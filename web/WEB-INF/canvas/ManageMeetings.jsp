@@ -58,7 +58,7 @@
                                         <td>
                                             <table width="100%">
                                                 <tr>
-                                                    <td width="10%"><input type="checkbox" name="selected" value="${i}" onchange="this.form.submit();" >${i}</td>
+                                                    <td width="10%"><input type="checkbox" name="selected" value="${indices[i]}" onchange="this.form.submit();" >${indices[i]}</td>
                                                     <td width="30%" align="center" >${groupName[i]}</td>
                                                     <td>${meetings[i]}</td>
                                                 </tr>
