@@ -89,7 +89,6 @@ public class updateMeeting extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);
         }
         flash = "New date for meeting " +ed_meetingID + " " + ed_month + " "+ ed_day +" " + ed_year;
- 
         switch (activity) {
             case "add":
                 flash = "Adding meeting " +
@@ -99,7 +98,7 @@ public class updateMeeting extends HttpServlet {
             case "change date":
                 flash = "Change meeting " +ed_meetingID + " " + ed_month +
                         " "+ ed_day +" " + ed_year;
-                //sked.update(ed_meetingID,ed_month,ed_year,ed_year,mlist, error);
+                sked.update(ed_meetingID,ed_month,ed_day,ed_year, error);
                 break;
             case "delete":
                 flash = "Delete meeting " +ed_meetingID + " " + ed_month + " "+ ed_day +" " + ed_year;

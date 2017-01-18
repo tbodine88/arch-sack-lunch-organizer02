@@ -16,7 +16,11 @@ public class Meeting {
     private int index;
     private Date date;
     private Committee committee;
-
+    
+    public String toString(){
+        return String.format("%02d %10s %s", index, 
+                committee.getName(), this.getDateString());
+    }
     public int getIndex() {
         return index;
     }
@@ -67,4 +71,6 @@ public class Meeting {
        }
        return false;
     }
+    
+    
 }

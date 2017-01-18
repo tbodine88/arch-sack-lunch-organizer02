@@ -307,5 +307,26 @@ public class Schedule {
         }
         return -1;
     }
+    private int intTest( String num, String name, ArrayList<String> error){
+        int result = 0;
+        try{
+           result = Integer.parseInt(num);
+       } catch(NumberFormatException e){
+           error.add(name + " (" + num + ") is not an integer");
+       }
+       return result;
+    }
+    public void update(String ed_meetingID, String ed_month, String ed_day, 
+            String ed_year, ArrayList<String> error) {
+       int id,month,day,year;
+       id = intTest(ed_meetingID,"ed_meetingID",error);
+       month = intTest(ed_month,"ed_month",error);
+       year = intTest(ed_year,"ed_year",error);
+       day = intTest(ed_day,"ed_day",error);
+       if ( error.isEmpty()){
+           Meeting tryst = theSked.get(id);
+           tryst.setDate((new GregorianCalendar(year,month-1,day)).getTime());
+       }
+    }
 }// end class Schedule
 

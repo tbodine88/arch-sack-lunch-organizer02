@@ -29,7 +29,7 @@
             Schedule sked = (Schedule) application.getAttribute("sked");
             if (sked != null){
                 for( int i = 0 ; i < sked.size() ; i++){
-                    out.print(sked.get(i) + "<br/>");
+                    out.print(sked.getMeetingByIndex(i).toString() + "<br/>");
                 }
             } else {
                 out.print("sked is null");
