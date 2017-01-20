@@ -1,0 +1,3 @@
+jdbc:derby://localhost:1527/sackLunch;user=OBSCURED;password=OBSCURED;create=true;
+
+jdbc:derby://104.236.236.227:1527/sackLunch;user=OBSCURED;password=OBSCURED;

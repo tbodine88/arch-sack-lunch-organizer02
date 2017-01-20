@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
+        <param-name>dbconnection</param-name>
+        <param-value>jdbc:derby://104.236.236.227:1527/sackLunch;</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbuser</param-name>
+        <param-value></param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbpassword</param-name>
+        <param-value></param-value>
+    </context-param>
+    <context-param>
         <param-name>adminUser</param-name>
         <param-value>administrator</param-value>
     </context-param>
@@ -47,6 +59,10 @@
     <context-param>
         <param-name>CommitteeName</param-name>
         <param-value>First Monday,Second Monday,Third Monday,Fourth Monday,Fifth Monday</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbconnection</param-name>
+        <param-value>jdbc:sqlite:C:\Users\Owner\Documents\NetBeansProjects\arch-sack-lunch-organizer02\database\sackLunch.db [ on Default schema]</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener</description>

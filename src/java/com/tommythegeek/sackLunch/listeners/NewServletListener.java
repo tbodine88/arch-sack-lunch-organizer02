@@ -8,6 +8,7 @@ import com.sun.javafx.util.Utils;
 import com.tommythegeek.sackLunch.dao.Check;
 import com.tommythegeek.sackLunch.dao.Committee;
 import com.tommythegeek.sackLunch.dao.Council;
+import com.tommythegeek.sackLunch.dao.DataConn;
 import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.People;
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import javax.servlet.ServletContextListener;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +31,16 @@ public class NewServletListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
        ServletContext ctx = sce.getServletContext();
+       String conn = ctx.getInitParameter("dbconnection");
+       String user = ctx.getInitParameter("dbuser");
+       String password = ctx.getInitParameter("dbpassword");
+       conn = String.format("%s;user=%s;password=%s", conn,user,password);
+       try {
+         DataConn dc = new DataConn(conn);
+         ctx.setAttribute("dbconnection", dc);
+       } catch (SQLException sqle){
+           throw new RuntimeException(sqle);
+       }
        String adminUser = ctx.getInitParameter("adminUser");
        String adminPass = ctx.getInitParameter("adminPass");
        String adminName = ctx.getInitParameter("adminName");
