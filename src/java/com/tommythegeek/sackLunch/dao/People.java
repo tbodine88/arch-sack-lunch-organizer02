@@ -153,4 +153,9 @@ public class People {
         target.onlyCopyStrings(guy);
         return stat;
     }
+    public boolean loadFromDB(DataConn dc){
+       boolean result = dc.loadCrowd(CROWD);
+        this.population = CROWD.size();
+        return result;
+    }
 }

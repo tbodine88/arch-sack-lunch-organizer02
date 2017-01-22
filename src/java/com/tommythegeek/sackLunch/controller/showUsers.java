@@ -6,8 +6,8 @@ package com.tommythegeek.sackLunch.controller;
 
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
+import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletContext;
@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,7 +36,21 @@ public class showUsers extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        ServletContext ctx = request.getServletContext();
+        if( ctx == null){
+             request.getRequestDispatcher("index.jsp").forward(request, response);
+             return;
+        }
+        HttpSession session = request.getSession(false);
+        if( session==null){
+             request.getRequestDispatcher("index.jsp").forward(request, response);
+             return;
+        }
+        SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
+        if ( perm == null || perm.compareTo(SackLunchPermission.ADMINISTRATOR) != 0){
+             request.getRequestDispatcher("index.jsp").forward(request, response);
+             return;            
+        }
         ArrayList<String> rowid = new ArrayList<>();
         ArrayList<String> name = new ArrayList<>();
         ArrayList<String> phone = new ArrayList<>();

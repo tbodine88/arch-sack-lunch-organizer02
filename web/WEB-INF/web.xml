@@ -6,11 +6,11 @@
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
-        <param-value></param-value>
+        <param-value>javauser</param-value>
     </context-param>
     <context-param>
         <param-name>dbpassword</param-name>
-        <param-value></param-value>
+        <param-value>javapass</param-value>
     </context-param>
     <context-param>
         <param-name>adminUser</param-name>

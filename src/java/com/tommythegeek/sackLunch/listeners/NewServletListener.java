@@ -5,6 +5,7 @@
 package com.tommythegeek.sackLunch.listeners;
 
 import com.sun.javafx.util.Utils;
+import com.tommythegeek.sackLunch.dao.BodineNeedsToImplement;
 import com.tommythegeek.sackLunch.dao.Check;
 import com.tommythegeek.sackLunch.dao.Committee;
 import com.tommythegeek.sackLunch.dao.Council;
@@ -18,8 +19,9 @@ import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Web application lifecycle listener.
@@ -30,29 +32,26 @@ public class NewServletListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+       DataConn dc;
        ServletContext ctx = sce.getServletContext();
        String conn = ctx.getInitParameter("dbconnection");
        String user = ctx.getInitParameter("dbuser");
        String password = ctx.getInitParameter("dbpassword");
        conn = String.format("%s;user=%s;password=%s", conn,user,password);
        try {
-         DataConn dc = new DataConn(conn);
+        dc = new DataConn(conn);
          ctx.setAttribute("dbconnection", dc);
        } catch (SQLException sqle){
            throw new RuntimeException(sqle);
        }
-       String adminUser = ctx.getInitParameter("adminUser");
-       String adminPass = ctx.getInitParameter("adminPass");
-       String adminName = ctx.getInitParameter("adminName");
-       String FacilitatorUser = ctx.getInitParameter("FacilitatorUser");
-       String FacilitatorPass = ctx.getInitParameter("FacilitatorPass");
-       String FacilitatorName = ctx.getInitParameter("FacilitatorName");
-       String FacilitatorCommittee = ctx.getInitParameter("FacilitatorCommittee");
-       String memberUser = ctx.getInitParameter("memberUser");
-       String memberPass = ctx.getInitParameter("memberPass");
-       String memberName = ctx.getInitParameter("memberName");
-       String Committee = ctx.getInitParameter("Committee");
        People pop = new People();
+       if ( ! pop.loadFromDB(dc)){
+           try {
+               throw new BodineNeedsToImplement( "Data base load failed");
+           } catch (BodineNeedsToImplement ex) {
+               Logger.getLogger(NewServletListener.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
        pop.updatePop();
        ctx.setAttribute("people", pop);
        Schedule sked = new Schedule();
@@ -62,47 +61,6 @@ public class NewServletListener implements ServletContextListener {
        sked.nextThird();
        sked.nextFourth();
        sked.nextFifth();
-       Person someone = new Person();
-       someone.setRowid(1);
-       someone.setLogin(adminUser);
-       someone.setPassword(adminPass);
-       someone.setName(adminName);
-       someone.setCommittees(Committee);
-       someone.setPermission(SackLunchPermission.ADMINISTRATOR);
-       People.introduce(someone);
-       pop.updatePop();
-       someone = new Person();
-       someone.setRowid(2);
-       someone.setLogin(FacilitatorUser);
-       someone.setPassword(FacilitatorPass);
-       someone.setName(FacilitatorName);
-       someone.setPermission(SackLunchPermission.FACILITATOR);
-       People.introduce(someone);
-       pop.updatePop();
-       someone = new Person();
-       someone.setRowid(3);
-       someone.setLogin(memberUser);
-       someone.setPassword(memberPass); 
-       someone.setName(memberName);
-       someone.setPermission(SackLunchPermission.MEMBER);
-       People.introduce(someone);
-       pop.updatePop();
-       String[] facilitator = Utils.split("firstmonday secondmonday " +""
-               + "thirdmonday fourthmonday fifthmonday", " ");
-       int nexti = 4;
-       int groupi = 1;
-       for( String login : facilitator){
-           someone=new Person();
-           someone.setRowid(nexti++);
-           someone.setLogin(login);
-           someone.setPassword(memberPass);
-           someone.setName(login);
-           someone.setCommittees("" + groupi + ",");
-           groupi++;
-           someone.setPermission(SackLunchPermission.FACILITATOR);
-           People.introduce(someone);
-           pop.updatePop();
-       }
         //initialize the list of things to bring -- the check list
         // Add items to Check.list
        	String[] in_itemid = Utils.split("0 1 2 3 4 5 "," "); //6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
