@@ -180,6 +180,26 @@ public class Person implements Serializable {
         }
         this.permission = SackLunchPermission.ADMINISTRATOR;
     }
+    /**
+     * for storage in database
+     * @return an integer 
+     */
+    public int getPermissionAsInteger(){
+        switch(this.permission){
+            case MEMBER:
+                return 1;
+            case FACILITATOR:
+                return 8;
+            case ADMINISTRATOR:
+                return 16;
+            default: // not a member
+                return 0;
+        }
+    }
+    /**
+     * 
+     * @param perm 
+     */
     public void setPermission(String perm) {
         if ( perm.matches("\\d+")){ // only digits 
             setPermission( Integer.parseInt(perm));

@@ -4,16 +4,23 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.DataConn;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import com.tommythegeek.sackLunch.dao.Schedule;
 import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.Witness;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.SessionContext;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
@@ -21,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 /**
  *
@@ -46,10 +54,13 @@ public class joiner extends HttpServlet {
         
         HttpSession session = request.getSession(false);
         if( session == null){
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            nullExit("session", request,response); return;
         }
-        committee = (MeetingList) session.getAttribute("meetings");
-        
+        ServletContext ctx = session.getServletContext();
+        if (ctx ==null){ nullExit("context",request,response); return; }
+        Schedule sked = (Schedule) ctx.getAttribute("sked");
+        if(sked == null){ nullExit("sked",request,response); return; }
+        committee = new MeetingList(sked);
         request.setAttribute("meet", committee.meeting);
         request.getRequestDispatcher("joinForm.jsp").forward(request, response);
     }
@@ -179,9 +190,17 @@ public class joiner extends HttpServlet {
       newGuy.setCommittees(committee);
       newGuy.setCan_deliver(car.equals("on") && license.equals("on"));
       newGuy.setPermission( SackLunchPermission.MEMBER);
-      People.introduce(newGuy);
-      request.setAttribute("flash","Welcome " + fullName +", please log in.");
-      request.getRequestDispatcher("login.jsp").forward(request, response);    
+      ServletContext sce = request.getServletContext();
+      if ( sce==null){  nullExit("ServletContext", request,response); return;}
+      DataConn dc = (DataConn) sce.getAttribute("dbconnection");
+      if (dc==null){ nullExit("dataConn", request,response); return;}
+      try {
+            People.introduce(newGuy,dc);
+            request.setAttribute("flash","Welcome " + fullName +", please log in.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);    
+      } catch (SQLException ex) {
+            Logger.getLogger(joiner.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 
     /**
@@ -193,5 +212,12 @@ public class joiner extends HttpServlet {
     public String getServletInfo() {
         return "Joins an applicant to a committee";
     }// </editor-fold>
+
+    private void nullExit(String tag, HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        request.setAttribute("flash", tag + " was null");
+        request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request,response);
+    }
+
 
 }

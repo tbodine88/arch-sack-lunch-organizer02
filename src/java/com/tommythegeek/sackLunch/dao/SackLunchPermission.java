@@ -6,7 +6,7 @@ package com.tommythegeek.sackLunch.dao;
 
 /**
  *
- * @author Owner
+ * @author Thomas Bodine
  */
 public enum SackLunchPermission {
     MEMBER,FACILITATOR,ADMINISTRATOR

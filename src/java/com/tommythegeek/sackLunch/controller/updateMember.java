@@ -3,7 +3,7 @@
  * All rights Reserved
  */
 package com.tommythegeek.sackLunch.controller;
-import com.tommythegeek.sackLunch.dao.BodineMap;
+import com.tommythegeek.sackLunch.dao.DataConn;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Witness;
 import com.tommythegeek.sackLunch.dao.Person;
@@ -11,8 +11,12 @@ import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.WitnessType;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +54,19 @@ public class updateMember extends HttpServlet {
             parmap.put(parm,value);
         }
         return true;
+    }
+    /**
+     * show an error page when unexpected nulls encountered
+     * @param tag - the name of the value that is null
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
+    private void nullExit(String tag, HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        request.setAttribute("flash", tag + " was null");
+        request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request,response);
     }
 /**
  * vouch - check validity of parameter
@@ -104,15 +121,18 @@ public class updateMember extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         Person guy = new Person();
-
         String accum ;
         int rowId = 0;
         Witness victor = new Witness();
         Status result;
         error.clear();
         parmap.clear();
+        ServletContext sce = request.getServletContext();
+        if ( sce==null){  nullExit("ServletContext", request,response); return;}
+        DataConn dc = (DataConn) sce.getAttribute("dbconnection");
+        if (dc==null){ nullExit("dataConn", request,response); return;}
         goodParm("ed_name","no name given",request);
         goodParm("ed_phone","no phone given",request);
         vouch("ed_phone",WitnessType.WTPHONE,"");
@@ -160,10 +180,10 @@ public class updateMember extends HttpServlet {
         guy.setFail_count(0);
         
         if ( accum == null || accum.isEmpty()){
-            rowId = People.getNextRowId();
+            rowId = People.getNextRowId(dc);
         } else {
             try {
-                int nextId =People.getNextRowId();
+                int nextId =People.getNextRowId(dc);
                 rowId = Integer.parseInt((String)accum);
                 if (rowId < 0 || rowId >  (nextId - 1) ){
                     rowId = nextId;
@@ -175,13 +195,19 @@ public class updateMember extends HttpServlet {
         
         request.setAttribute("menu", "memberMan");
         if ( error.isEmpty()) {
-            if ( activity.equals("add") ){
-                People.introduce(guy);
-            } else if ( activity.equals("edit") ) {
-                        guy.setRowid(rowId);
-                        People.updateById(rowId, guy);
-            } else if ( activity.equals("delete") ){
+            switch (activity) {
+                case "add":
+                    People.introduce(guy,dc);
+                    break;
+                case "edit":
+                    guy.setRowid(rowId);
+                    People.updateById(rowId, guy,dc);
+                    break;
+                case "delete":
                     People.deleteById(rowId);
+                    break;
+                default:
+                    break;
             }
             request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
         } else {
@@ -232,7 +258,11 @@ public class updateMember extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(updateMember.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

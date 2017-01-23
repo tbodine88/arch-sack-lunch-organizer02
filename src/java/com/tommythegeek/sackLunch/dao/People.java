@@ -1,5 +1,6 @@
 package com.tommythegeek.sackLunch.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,8 +28,9 @@ public class People {
         return population;
     }
     
-    public static int getNextRowId(){
-        return CROWD.size();
+    public static int getNextRowId(DataConn dc){
+        
+        return dc.nextIdFor("PERSON", "ROWID");
     }    
     public static Status validates(Person user) {
         String login = user.getLogin();
@@ -86,11 +88,9 @@ public class People {
         }
         return false;
     }
-    public static void introduce(Person yokel){
+    public static void introduce(Person yokel,DataConn dc) throws SQLException{
+        dc.addPerson(yokel);
         CROWD.add(yokel);
-        yokel.setRowid(CROWD.size()-1); // This is erroneous code
-                                        // waiting for data base to change
-                                        // to actual index of yokel in data base
     }
     
     public static boolean isInCrowd( String newby){
@@ -121,10 +121,10 @@ public class People {
         }
         return null;
     }
-    public static Status updateById(int id, Person guy){
+    public static Status updateById(int id, Person guy, DataConn dc) throws SQLException{
         Person target;
         if ( id >= CROWD.size()){
-            People.introduce(guy);
+            People.introduce(guy,dc);
             return stat;
         }
         target = CROWD.get(id);

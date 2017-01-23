@@ -12,14 +12,12 @@ import com.tommythegeek.sackLunch.dao.Council;
 import com.tommythegeek.sackLunch.dao.DataConn;
 import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.People;
+import com.tommythegeek.sackLunch.dao.MeetingList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import com.tommythegeek.sackLunch.dao.Person;
-import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
 import java.sql.SQLException;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
