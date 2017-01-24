@@ -10,11 +10,13 @@ public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
     private static Status stat;
 
-    public static void deleteById(int rowId) {
+    public static Status deleteById(int rowId) {
+        Status stat = new Status();
         Person aGuy = CROWD.get(rowId);
         // CROWD.remove(aGuy);
         aGuy.copy(new Person());
         aGuy.setRowid(rowId);
+        return stat;
     }
 
  
@@ -29,8 +31,8 @@ public class People {
     }
     
     public static int getNextRowId(DataConn dc){
-        
-        return dc.nextIdFor("PERSON", "ROWID");
+        int nid =  dc.nextIdFor("PERSON", "ROWID");
+        return nid;
     }    
     public static Status validates(Person user) {
         String login = user.getLogin();
@@ -88,9 +90,11 @@ public class People {
         }
         return false;
     }
-    public static void introduce(Person yokel,DataConn dc) throws SQLException{
-        dc.addPerson(yokel);
+    public static Status introduce(Person yokel,DataConn dc) throws SQLException{
+        Status stat = dc.addPerson(yokel);
+        if (stat.ok)
         CROWD.add(yokel);
+        return stat;
     }
     
     public static boolean isInCrowd( String newby){
@@ -128,16 +132,10 @@ public class People {
             return stat;
         }
         target = CROWD.get(id);
-        String svalue;
-        int ivalue;
-        ivalue = guy.getRowid();
-        if (!(ivalue == id) ){
-            stat.ok= false;
-            stat.message ="rowId doesnt match id";
-            return stat;
-        } 
-        target.copy(guy);
-        target.onlyCopyStrings(guy);
+        Status stat = dc.updatePerson(guy);
+        if (stat.ok){
+            target.copy(guy);
+        }
         return stat;
     }
     public static Status changeDetailsById(int id, Person guy){

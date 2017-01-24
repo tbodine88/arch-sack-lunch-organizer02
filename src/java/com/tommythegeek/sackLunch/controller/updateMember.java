@@ -54,7 +54,7 @@ public class updateMember extends HttpServlet {
             parmap.put(parm,value);
         }
         return true;
-    }
+    } // end goodParam
     /**
      * show an error page when unexpected nulls encountered
      * @param tag - the name of the value that is null
@@ -63,11 +63,13 @@ public class updateMember extends HttpServlet {
      * @throws ServletException
      * @throws IOException 
      */
-    private void nullExit(String tag, HttpServletRequest request, HttpServletResponse response)
+    private void nullExit(String tag, HttpServletRequest request, 
+		    HttpServletResponse response)
     throws ServletException, IOException {
         request.setAttribute("flash", tag + " was null");
-        request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request,response);
-    }
+        request.getRequestDispatcher("WEB-INF/error/badParameter.jsp")
+		.forward(request,response);
+    }//end nullExit
 /**
  * vouch - check validity of parameter
  * @param parmname - name of parameter to test
@@ -120,7 +122,8 @@ public class updateMember extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, 
+		    HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         Person guy = new Person();
         String accum ;
@@ -184,39 +187,50 @@ public class updateMember extends HttpServlet {
         } else {
             try {
                 int nextId =People.getNextRowId(dc);
+                if ( nextId < 0){
+                    error.add(dc.getLastError());
+                } // end if
                 rowId = Integer.parseInt((String)accum);
                 if (rowId < 0 || rowId >  (nextId - 1) ){
                     rowId = nextId;
-                }
+                } // end if 
             } catch(NumberFormatException e){
                 error.add("Tnternal error updateMember: rowId not an integer");
-            }
-        }
+            } // end try
+        }// end if accum
         
         request.setAttribute("menu", "memberMan");
-        if ( error.isEmpty()) {
+       if ( error.isEmpty()) {
             switch (activity) {
                 case "add":
-                    People.introduce(guy,dc);
+                    result = People.introduce(guy,dc);
                     break;
                 case "edit":
                     guy.setRowid(rowId);
-                    People.updateById(rowId, guy,dc);
+                    result = People.updateById(rowId, guy,dc);
                     break;
                 case "delete":
-                    People.deleteById(rowId);
+                    result = People.deleteById(rowId);
                     break;
                 default:
                     break;
-            }
-            request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
+            } // end switch 
+            if ( result.fail()){
+                error.add(result.message);
+	    } // end if 
+        if( error.isEmpty()){
+            request.getRequestDispatcher("WEB-INF/canvas/success.jsp")
+	      .forward(request, response);
         } else {
             request.setAttribute("err-ed_phone",parmap.get("ed_phone"));
-            request.setAttribute("flash", "There are problems with the data eneterd.");
+            request.setAttribute("flash", "There are problems with the data"
+	       +" entered.");
             request.setAttribute("error", error);
-            request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);
-        }
-    }
+            request.getRequestDispatcher("WEB-INF/error/badParameter.jsp")
+	      .forward(request, response);
+        } // end if
+      } // end if error.isEmpty()
+    } // end processRequest
 
     // <editor-fold  desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -261,7 +275,11 @@ public class updateMember extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(updateMember.class.getName()).log(Level.SEVERE, null, ex);
+            ArrayList<String> erlist  = new ArrayList<>(); 
+            erlist.add(ex.getMessage());
+            request.setAttribute("error", erlist);
+            request.getRequestDispatcher("WEB-INF/error/badParameter.jsp")
+	      .forward(request, response);
         }
     }
 
