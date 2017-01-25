@@ -57,7 +57,7 @@ public class itemManager extends HttpServlet {
         
         String committee;
         String name;
-        for( int i = theCheck.firstIndex(); i < theCheck.lastIndex() ; i++){
+        for( int i = theCheck.firstIndex(); i <= theCheck.lastIndex() ; i++){
             Item thing = theCheck.findByIndex(i);
             if( thing == null ){
                 continue;
