@@ -204,21 +204,7 @@ public class updateMember extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<meta http-equiv=\"refresh\" content=\"3;url=index.jsp\" />");
-            out.println("<title>Servlet doGet updateMember</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet doGet updateMember at " + request.getContextPath() + "</h1>");
-            out.println("<p><font color=red>This is an error</font></p>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-        // processRequest(request, response);
+         processRequest(request, response);
     }
 
     /**

@@ -9,11 +9,19 @@ public class People {
     private static final List<Person> CROWD = new ArrayList<>();   
     private static Status stat;
 
+    /**
+     * enforce internal id matches location in array
+     */
+    private static void makeIndexMatchLocation() {
+        for ( int i = 0; i < CROWD.size() ; i++){
+            Person guy = CROWD.get(i);
+            guy.setRowid(i);
+        }
+    }
     public static void deleteById(int rowId) {
         Person aGuy = CROWD.get(rowId);
-        // CROWD.remove(aGuy);
-        aGuy.copy(new Person());
-        aGuy.setRowid(rowId);
+        CROWD.remove(aGuy);
+        makeIndexMatchLocation();
     }
 
  
