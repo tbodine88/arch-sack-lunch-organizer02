@@ -37,6 +37,13 @@
                 <td><a href="scheduleDisplay.jsp">Schedule</a></td>
             </tr>
             <tr>
+                <td>
+                    <a href="showUsers">ShowUsers</a></td>
+                </td>
+            </tr>
+                          <tr><td><a href="menuSel?sel=MemberMenu">Member Menu</a></tr>
+
+            <tr>
                 <td><a href="logout">Log out</a></td>
             </tr>
         </table>

@@ -31,6 +31,7 @@
               <tr ><td><a href="itemManager">Manage Items</a></td></tr>
               <tr><td><a href="meetManager">Meeting Manager</a></td></tr>
               <tr><td><a href="scheduleDisplay.jsp">Schedule </a></td></tr>
+              <tr><td><a href="menuSel?sel=MemberMenu">Member Menu</a></tr>
               <tr></tr>
             </table></td>
         </tr>

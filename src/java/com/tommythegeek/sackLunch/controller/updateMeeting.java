@@ -78,7 +78,7 @@ public class updateMeeting extends HttpServlet {
         String ed_year = request.getParameter("ed_year");
         notInteger(ed_year,error);
         String activity = request.getParameter("activity");
-        String flash;
+        String flash;  
         if (perm == ADMINISTRATOR )
             request.setAttribute("menu","menuSel?sel=administratorMenu");
         else
@@ -107,6 +107,7 @@ public class updateMeeting extends HttpServlet {
                 break;
         }// end switch
         if(  error.isEmpty()) {
+            request.setAttribute("menu","meetManager");
             request.setAttribute("flash",flash);
             request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
         } else {

@@ -50,7 +50,7 @@
                     <form action="meetManager" method="POST" >
                     <table width="100%">
                         <tr><td><table  width="100%">
-                                    <tr><th width="10%">Meeting ID</th>
+                                    <tr><th width="10%" align="left">Meeting ID</th>
                                         <th width="30%" align="center">Group</th>
                                         <th align="left">Date</th></tr></table></td></tr>
                                 <c:forEach var="i" begin="0" end="${fn:length(meetings)-1}" >
@@ -71,9 +71,24 @@
                 </td>
                 <td class="rightColumn" bgcolor="LightYellow">
                     <form action="updateMeeting" method="POST" >
-                    <table size="100%" >
-                        <tr><th>Meeting ID</th><td> ${ed_meetingID} <input type="hidden" name="ed_meetingID" value="${ed_meetingID}"></td></tr>
-                        <tr><th width="40%">Month</th><th width="10%">Day</th><th>Year</th></tr>
+                    <table width="50%" >
+                        <tr><td colspan="3"> 
+                                <table>
+                                    <tr>
+                                    <th align="left">
+                                        Meeting ID
+                                    </th>
+                                    <td> ${ed_meetingID} 
+                                        <input type="hidden" 
+                                               name="ed_meetingID" 
+                                               value="${ed_meetingID}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                               </table>                    
+</td></tr>
+                        <tr><th align="left">Month</th><th width="10%" align="left">Day</th><th align="left">Year</th></tr>
                         <tr>
                             <td>
                                
