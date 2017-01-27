@@ -124,34 +124,8 @@ public class go extends HttpServlet {
                     break;
                 default:
                     if ( count < 2){
-                        group = group.substring(0,1);
-                        request.setAttribute("week", group);
-                        int dsel = Integer.parseInt(group);
-                        MeetingList bunch= (MeetingList) session.getAttribute("meetings");
-                        if ( is.naull(bunch, "meetings", request, response)) return ;
-                        Calendar cal  = new GregorianCalendar();
-                        Meeting bee =bunch.meeting.get(dsel -1);
-                        cal.setTime(bee.getDate());
-                        String sdate = String.format("%02d/%02d/%04d", 
-                                cal.get(Calendar.MONTH )+ 1,
-                                cal.get(Calendar.DAY_OF_MONTH),
-                                cal.get(Calendar.YEAR));
-                        request.setAttribute("date", sdate);
-                        Check checkList = (Check) ctx.getAttribute("checklist");
-                        if ( is.naull(checkList,"checkList", request, response)) return ;
-                        ArrayList<Item> things =  checkList.forCommittee(dsel);
-                        ArrayList<String> tname = new ArrayList<>();
-                        ArrayList<String> donator = new ArrayList<>();
-                        for( int i = 0 ; i < things.size() ; i++){
-                            String butang = things.get(i).getName(); 
-                            tname.add(butang );
-                            donator.add( ItemVolunteered.donor(bee.getDate(),butang).getName());
-                        }
-                        Person facilitator = People.facilitator(dsel);
-                        request.setAttribute("facilitator",facilitator.getName());
-                        request.setAttribute("thing",tname);
-                        request.setAttribute("donator", donator);
-                        request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
+                        Handle.memberMenu(group, request, response);
+                        return;
                     } else {
                         request.getRequestDispatcher("chooseGroup?menu=MemberMenu").forward(request, response);    
                     }

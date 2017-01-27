@@ -37,7 +37,7 @@
                            <tr>
                               <td width="25%"><img src="http://images.clipartpanda.com/lunch-clip-art-paper-sack-clipart.jpg" height="10%" width="100%"/></td>
                               <td>
-                                                 <form id="donation" action="memberChoice" >
+                                                 <form id="donation" action="memberChoice" method="POST" >
                   <table border="1">
                      <caption>
                         <b>Choose something to bring the Week of ${date}</b> 
@@ -46,7 +46,7 @@
                         <th>Item Needed</th>
                         <th>Contributor</th>
                      </tr>
-                     <c:forEach var="i" begin="0" end="${fn:length(thing) - 1}" >
+                     <c:forEach var="i" begin="0" end="${fn:length(thing) > 0 ? fn:length(thing) -1 : 0}" >
                      <tr>
                          <c:choose >
                              <c:when test="${fn:contains(donator[i],'nobody')}" >
@@ -55,7 +55,7 @@
                                </td>
                              </c:when>
                              <c:otherwise>
-                             <td>$thing</td>
+                             <td>${thing}</td>
                              </c:otherwise>
                         </c:choose>
                         <td>${donator[i]}</td>
@@ -83,7 +83,7 @@
                      <td align="left">
                          <table border="1"  bordercolor="brown" >
                              <tr><td>
-                         <form id="messy" action="memberMessage" >
+                         <form id="messy" action="memberMessage" method="POST">
                         <table  width="100%"  >
                            <tr>
                               <th align="right">Message for</th>

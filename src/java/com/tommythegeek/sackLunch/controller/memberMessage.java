@@ -4,23 +4,19 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.tommythegeek.sackLunch.dao.Check;
-import com.tommythegeek.sackLunch.dao.People;
-import com.tommythegeek.sackLunch.dao.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Owner
  */
-public class menuSel extends HttpServlet {
+public class memberMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,34 +29,22 @@ public class menuSel extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext ctx = request.getServletContext();
-        if( ctx == null){
-             request.getRequestDispatcher("index.jsp").forward(request, response);
-             return;
-        }
-        HttpSession session = request.getSession(false);
-        if( session==null){
-             request.getRequestDispatcher("index.jsp").forward(request, response);
-             return;
-        }
-        String selectedMenu = request.getParameter("sel");
-        if ( selectedMenu == null || selectedMenu.isEmpty()){
-            request.setAttribute("item", "selectedMenu");
+        
+        ArrayList<String> error = new ArrayList<>();
+        String flash = "Message not Sent";
+        error.add("bad stuff happens");
+        
+        request.setAttribute("menu","menuSel?sel=MemberMenu");
+        if(  error.isEmpty()) {
+            request.setAttribute("flash",flash);
+            request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
+        } else {
+            request.setAttribute("flash", "There are problems with the data enterd.");
+            request.setAttribute("error", error);
             request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);
-            return;
-        }
-        if( selectedMenu.equals("MemberMenu")){
-            String userid = (String) session.getAttribute("userId");
-            Person user = People.personById(Integer.parseInt(userid));
-            String group = user.getCommittees();
-            Handle.memberMenu(group, request, response);
-            return;
-        }
-        String destination = "WEB-INF/canvas/" + selectedMenu + ".jsp";
-        request.getRequestDispatcher(destination).forward(request, response);
+        } //end if    }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold  desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
