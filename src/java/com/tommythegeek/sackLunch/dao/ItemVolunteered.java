@@ -4,56 +4,49 @@
  */
 package com.tommythegeek.sackLunch.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author Thomas Bodine
  */
 public class ItemVolunteered {
-    private int index;
-    private Meeting meeting;
-    private Item item;
-    private Person donor;    
-
-    public int getIndex() {
-        return index;
+    private static ArrayList<VolunteerLog> log;
+    /**
+     * who is donating a butang on date
+     * @param date
+     * @param butang
+     * @return 
+     */
+    public static Person donor(Date date, String butang) {
+        Person guy = new Person();
+        if ( log == null){
+            return guy;
+        }
+        for( VolunteerLog entry : log){
+            if (entry.day.compareTo(date) == 0 ){
+                if( entry.gift.getName().equals(butang))
+                    return entry.donor;
+            } // end if
+        } // end for
+        return guy;
+    }
+    /**
+     * 
+     * @param butang - thing donated
+     * @param date - when it will be or was donated
+     * @param giver - the person donating
+     * @return true successful always
+     */
+    public static boolean donate(Item butang, Date date,Person giver){
+        VolunteerLog entry = new VolunteerLog(date, giver, butang);
+        if ( log == null ){
+            log = new ArrayList<>();
+        }
+        log.add(entry);
+        return true;
+    } // end donate
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public Meeting getMeeting() {
-        return meeting;
-    }
-
-    public void setMeeting(Meeting meeting) {
-        this.meeting = meeting;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public Person getDonor() {
-        return donor;
-    }
-
-    public void setDonor(Person donor) {
-        this.donor = donor;
-    }
-    public boolean equals( ItemVolunteered thing) throws BodineToDo{
-        throw new BodineToDo();
-    } 
-    public ItemVolunteered copy (){
-        ItemVolunteered xcopy = new ItemVolunteered();
-        xcopy.setDonor(this.getDonor());
-        xcopy.setIndex(this.getIndex());
-        xcopy.setItem(this.getItem());
-        xcopy.setMeeting(this.getMeeting());
-        return xcopy;
-    }
-}
+    

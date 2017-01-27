@@ -4,6 +4,10 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.dao.Check;
+import com.tommythegeek.sackLunch.dao.Item;
+import com.tommythegeek.sackLunch.dao.ItemVolunteered;
+import com.tommythegeek.sackLunch.dao.Meeting;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
@@ -12,6 +16,9 @@ import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -106,6 +113,7 @@ public class go extends HttpServlet {
             switch(perm) {
                 case FACILITATOR:
                     if ( count < 2 ) {
+                      //request.setAttribute("week", group);
                       request.getRequestDispatcher("WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);    
                     } else {
                       request.getRequestDispatcher("chooseGroup").forward(request, response);    
@@ -116,6 +124,33 @@ public class go extends HttpServlet {
                     break;
                 default:
                     if ( count < 2){
+                        group = group.substring(0,1);
+                        request.setAttribute("week", group);
+                        int dsel = Integer.parseInt(group);
+                        MeetingList bunch= (MeetingList) session.getAttribute("meetings");
+                        if ( is.naull(bunch, "meetings", request, response)) return ;
+                        Calendar cal  = new GregorianCalendar();
+                        Meeting bee =bunch.meeting.get(dsel -1);
+                        cal.setTime(bee.getDate());
+                        String sdate = String.format("%02d/%02d/%04d", 
+                                cal.get(Calendar.MONTH )+ 1,
+                                cal.get(Calendar.DAY_OF_MONTH),
+                                cal.get(Calendar.YEAR));
+                        request.setAttribute("date", sdate);
+                        Check checkList = (Check) ctx.getAttribute("checklist");
+                        if ( is.naull(checkList,"checkList", request, response)) return ;
+                        ArrayList<Item> things =  checkList.forCommittee(dsel);
+                        ArrayList<String> tname = new ArrayList<>();
+                        ArrayList<String> donator = new ArrayList<>();
+                        for( int i = 0 ; i < things.size() ; i++){
+                            String butang = things.get(i).getName(); 
+                            tname.add(butang );
+                            donator.add( ItemVolunteered.donor(bee.getDate(),butang).getName());
+                        }
+                        Person facilitator = People.facilitator(dsel);
+                        request.setAttribute("facilitator",facilitator.getName());
+                        request.setAttribute("thing",tname);
+                        request.setAttribute("donator", donator);
                         request.getRequestDispatcher("/WEB-INF/canvas/MemberMenu.jsp").forward(request, response);    
                     } else {
                         request.getRequestDispatcher("chooseGroup?menu=MemberMenu").forward(request, response);    

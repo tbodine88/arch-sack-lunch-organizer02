@@ -77,7 +77,7 @@ public class NewServletListener implements ServletContextListener {
        pop.updatePop();
        String[] facilitator = Utils.split("firstmonday secondmonday " +""
                + "thirdmonday fourthmonday fifthmonday", " ");
-       int nexti = 4;
+       int nexti = 5;
        int groupi = 1;
        for( String login : facilitator){
            someone=new Person();
@@ -88,6 +88,21 @@ public class NewServletListener implements ServletContextListener {
            someone.setCommittees("" + groupi + ",");
            groupi++;
            someone.setPermission(SackLunchPermission.FACILITATOR);
+           People.introduce(someone);
+           pop.updatePop();
+       }
+       String[] member = Utils.split("onefish twofish " +""
+               + "threecat fourboy fivehigh", " ");
+       groupi = 1;
+       for( String login : member){
+           someone=new Person();
+           someone.setRowid(nexti++);
+           someone.setLogin(login);
+           someone.setPassword(memberPass);
+           someone.setName(login);
+           someone.setCommittees("" + groupi + ",");
+           groupi++;
+           someone.setPermission(SackLunchPermission.MEMBER);
            People.introduce(someone);
            pop.updatePop();
        }

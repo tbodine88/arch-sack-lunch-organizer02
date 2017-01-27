@@ -23,6 +23,29 @@ public class People {
         CROWD.remove(aGuy);
         makeIndexMatchLocation();
     }
+    /**
+     * find facilitator for group
+     * @param dsel
+     * @return facilitating person
+     */ 
+  
+    public static Person facilitator(int dsel) {
+        Person guy = null;
+        Person adm = null;
+        for ( Person gal : CROWD){
+            if( adm == null && gal.getPermission() == SackLunchPermission.ADMINISTRATOR){
+                adm = gal;
+            }
+            if( (gal.getPermission() == SackLunchPermission.FACILITATOR)
+               && gal.getCommittees().contains(""+dsel)){
+               guy = gal;
+               break;
+             }
+        }
+        if ( guy == null)
+            guy = adm;
+        return guy;
+    }
 
  
     public int population;

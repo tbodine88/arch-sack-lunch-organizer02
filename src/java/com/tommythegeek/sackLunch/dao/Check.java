@@ -121,4 +121,18 @@ import java.util.ArrayList;
             }// end for
             return null;
         }
-    } // end Check
+/**
+ * 
+ * @param dsel - committee number 1,2,3,4 or 5
+ * @return list of items required by the committee
+ */
+    public ArrayList<Item> forCommittee(int dsel) {
+        ArrayList<Item> things = new ArrayList<>();
+        for ( Item cosa : list){
+            String committee = cosa.getCommittee();
+            if ( committee.contains(""+dsel))
+                things.add(cosa);
+       }
+        return things;
+    }
+} // end Check

@@ -29,6 +29,10 @@ public class Person implements Serializable {
     private int   fail_count;
     private SackLunchPermission  permission;
 
+    Person(String nobody, String string, int i) {
+        
+    }
+
     public int getRowid() {
         return rowid;
     }
