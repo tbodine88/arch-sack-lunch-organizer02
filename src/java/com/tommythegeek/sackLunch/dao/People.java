@@ -46,7 +46,40 @@ public class People {
             guy = adm;
         return guy;
     }
-
+ /**
+  * 
+  * @param comittee
+  * @return  list of members of committee 
+  */
+    public static String committeeEmail(int comittee) {
+        StringBuilder sb = new StringBuilder();
+    
+        for ( Person guy : CROWD){
+            if ( guy.getPermission().
+                    compareTo(SackLunchPermission.MEMBER)>=0 && 
+                    guy.getCommittees().contains(""+comittee))
+                sb.append(guy.getEmail()).append(',');
+        }
+        if( sb.length() > 0 ) sb.deleteCharAt(sb.length());
+        return sb.toString();
+    }
+    /**
+     * list of email for the facilitator of the committee
+     * @param committee
+     * @return 
+     */
+    public static String facilitatorEmail(int committee) {
+        StringBuilder sb = new StringBuilder();
+    
+        for ( Person guy : CROWD){
+            if ( guy.getPermission().
+                    compareTo(SackLunchPermission.FACILITATOR)>=0 && 
+                    guy.getCommittees().contains(""+committee))
+                sb.append(guy.getEmail()).append(',');
+        }
+        if( sb.length() > 0 ) sb.deleteCharAt(sb.length() -1 );
+        return sb.toString();
+    }
  
     public int population;
     public People(){

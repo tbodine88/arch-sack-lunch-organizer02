@@ -36,8 +36,11 @@ public class updateItem extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext ctx = request.getServletContext();
+        if(is.naull(ctx, "servlet Context", request, response)) return;
         Check theCheck = (Check) ctx.getAttribute("checklist");
+        if(is.naull(theCheck, "checklist", request, response)) return;
         Council theCouncil = (Council) ctx.getAttribute("council");
+        if(is.naull(theCouncil,"council", request, response)) return;
         ArrayList<String> error = new ArrayList<>();
         Item jewel = new Item();
         String activity = request.getParameter("activity");

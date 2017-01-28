@@ -4,10 +4,6 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import com.tommythegeek.sackLunch.dao.Check;
-import com.tommythegeek.sackLunch.dao.Item;
-import com.tommythegeek.sackLunch.dao.ItemVolunteered;
-import com.tommythegeek.sackLunch.dao.Meeting;
 import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
@@ -15,12 +11,6 @@ import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
@@ -89,8 +79,11 @@ public class go extends HttpServlet {
         Status stat = People.validates(applicant);
         if (stat.ok){
             HttpSession session = request.getSession();
+            if(is.naull(session, "session", request, response)) return;
             ServletContext ctx = request.getServletContext();
+            if(is.naull(ctx, "Servlet Context", request, response)) return;
             Schedule sked = (Schedule) ctx.getAttribute("sked");
+            if(is.naull(sked, "sked", request, response)) return;
             MeetingList ml = new MeetingList(sked);
             session.setAttribute("meetings", ml);
             userId = applicant.getRowid();

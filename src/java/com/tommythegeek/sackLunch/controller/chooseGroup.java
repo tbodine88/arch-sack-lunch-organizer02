@@ -39,10 +39,9 @@ public class chooseGroup extends HttpServlet {
             throws ServletException, IOException {
         int groupMemberShip = 0;
         HttpSession session = request.getSession();
-        if( session==null){
-             request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
+        if(is.nullSession(session, "Please Log In", request, response)) return;
         ServletContext ctx = request.getServletContext();
+        if(is.naull(ctx, "Servlet context", request, response)) return;
 
         Pattern comma = Pattern.compile(",");
         Pattern num = Pattern.compile("^(\\d)");
@@ -50,7 +49,7 @@ public class chooseGroup extends HttpServlet {
         SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
         String committee = request.getParameter("committee");
         if ( ! (committee == null || committee.isEmpty())){
-            request.setAttribute("week", committee);
+            session.setAttribute("week", committee);
             if ( perm == SackLunchPermission.FACILITATOR){
                 request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
             }
@@ -63,7 +62,7 @@ public class chooseGroup extends HttpServlet {
         while( comat.find()) groupMemberShip++;
         if ( groupMemberShip < 2){
             nummat.find();
-            request.setAttribute("week", nummat.group(1));
+            session.setAttribute("week", nummat.group(1));
             if ( perm == SackLunchPermission.FACILITATOR){
                 request.getRequestDispatcher("/WEB-INF/canvas/FacilitatorMenu.jsp").forward(request, response);
             }

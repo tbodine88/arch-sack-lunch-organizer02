@@ -9,5 +9,5 @@ package com.tommythegeek.sackLunch.dao;
  * @author Owner
  */
 public enum SackLunchPermission {
-    MEMBER,FACILITATOR,ADMINISTRATOR
+    ALUMNI,MEMBER,FACILITATOR,ADMINISTRATOR
 }

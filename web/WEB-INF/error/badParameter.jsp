@@ -31,11 +31,11 @@
             <c:remove var="error" scope="request"/>
         </c:if>
                 <form action="${menu}" name="retry">            
-        <c:forEach var="par" items="${param}" >
-            <c:set var="part" value="${fn:split(par,'=')}" />
-            <input type="hidden" name="${part[0]}" value="${part[1]}" />
-        </c:forEach>
-            <input type="submit" name="retry" value="Try again" />
+                    <c:forEach var="par" items="${param}" >
+                        <c:set var="part" value="${fn:split(par,'=')}" />
+                            <input type="hidden" name="${part[0]}" value="${part[1]}" />
+                    </c:forEach>
+                    <input type="submit" name="retry" value="Try again" />
                 </form>
         </font>
         <a href="${menu}">Back</a>
