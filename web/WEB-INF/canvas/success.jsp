@@ -18,7 +18,7 @@
         <c:if test="${empty menu}" >
             <c:set var="menu" value="index.jsp" />
         </c:if>
-        <meta http-equiv="refresh" content="3;url=${menu}" />
+        <meta http-equiv="refresh" content="15;url=${menu}" />
         <h1>Success !</h1>
     <blink><h2><font color="white">${flash}</font></h2></blink>
     </body>

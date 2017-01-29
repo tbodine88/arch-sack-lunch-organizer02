@@ -61,6 +61,16 @@ public class memberMessage extends HttpServlet {
         if( is.naull(recipient, "recipient", request, response)) return;
         String weekOfMonth = (String)session.getAttribute("week");
         if(is.naull(weekOfMonth,"week", request, response)) return;
+        String message = request.getParameter("message");
+        if ( message == null || message.isEmpty()){
+            error.add("No nessage entered");
+            request.setAttribute("flash", 
+                    "Need a message to send");
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("WEB-INF/error/badParameter.jsp")
+                    .forward(request, response);
+            return;
+        }
         try{
           int bee = Integer.parseInt(weekOfMonth);
             if ( recipient.equals("Facilitator")){
@@ -74,7 +84,7 @@ public class memberMessage extends HttpServlet {
             PrintWriter pw = new PrintWriter(new FileWriter( messName ));
             pw.println("from: "+ People.personById(id4user).getEmail());
             pw.println("to: " + recipient);
-            pw.println(request.getParameter("message"));
+            pw.println();
             pw.flush();
             flash = flash + "<br/>Message saved";
         } catch( IOException | NumberFormatException e){

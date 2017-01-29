@@ -51,7 +51,7 @@
                          <c:choose >
                              <c:when test="${fn:contains(donator[i],'nobody')}" >
                                <td>
-                                   <input type="checkbox" name="donation" value="${thing[i]}" >${thing[i]}
+                                   <input type="checkbox" name="donation" value="${i}" >${thing[i]}
                                </td>
                              </c:when>
                              <c:otherwise>
@@ -62,7 +62,18 @@
                      </tr>
                      </c:forEach>
                      <tr>
-                        <td colspan="2" align="center"><input id="rsvp" type="submit" value="RSVP &amp; bring selected item(s)"></td>
+                        <td colspan="2" align="center">
+                            <input id="rsvp1"
+                                   type="submit"
+                                   name="helper"
+                                   value="Will Help"
+                            />
+                            <input id="rsvp3"
+                                   type="submit"
+                                   name="absentee"
+                                   value="unavailable"
+                            />
+                        </td>
                      </tr>
                   </table>
                </form>

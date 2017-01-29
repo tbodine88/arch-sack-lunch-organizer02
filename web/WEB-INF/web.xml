@@ -104,6 +104,10 @@
         <servlet-name>memberMessage</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.memberMessage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>memberChoice</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.memberChoice</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>memberMessage</servlet-name>
         <url-pattern>/memberMessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>memberChoice</servlet-name>
+        <url-pattern>/memberChoice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

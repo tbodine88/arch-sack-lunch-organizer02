@@ -66,6 +66,9 @@ public class Handle {
                     donator.add( ItemVolunteered.donor(bee.getDate(),butang).getName());
                 }
                 Person facilitator = People.facilitator(dsel);
+                if( request.getAttribute("menu") == null){
+                    request.setAttribute("menu","menuSel?sel=MemberMenu");
+                }
                 request.setAttribute("facilitator",facilitator.getName());
                 request.setAttribute("thing",tname);
                 request.setAttribute("donator", donator);

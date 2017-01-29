@@ -136,7 +136,7 @@ public class go extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Login then choose proper menu";
     }// </editor-fold>
 
 }
