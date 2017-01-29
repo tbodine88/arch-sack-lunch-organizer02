@@ -118,7 +118,6 @@ public class go extends HttpServlet {
                 default:
                     if ( count < 2){
                         Handle.memberMenu(group, request, response);
-                        return;
                     } else {
                         request.getRequestDispatcher("chooseGroup?menu=MemberMenu").forward(request, response);    
                     }

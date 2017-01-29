@@ -2,6 +2,7 @@ package com.tommythegeek.sackLunch.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,16 +53,15 @@ public class People {
   * @return  list of members of committee 
   */
     public static String committeeEmail(int comittee) {
-        StringBuilder sb = new StringBuilder();
+        StringJoiner sj = new StringJoiner(",");
     
         for ( Person guy : CROWD){
             if ( guy.getPermission().
                     compareTo(SackLunchPermission.MEMBER)>=0 && 
                     guy.getCommittees().contains(""+comittee))
-                sb.append(guy.getEmail()).append(',');
+                sj.add(guy.getEmail());
         }
-        if( sb.length() > 0 ) sb.deleteCharAt(sb.length());
-        return sb.toString();
+        return sj.toString();
     }
     /**
      * list of email for the facilitator of the committee
@@ -69,16 +69,15 @@ public class People {
      * @return 
      */
     public static String facilitatorEmail(int committee) {
-        StringBuilder sb = new StringBuilder();
+        StringJoiner sj = new StringJoiner(",");
     
         for ( Person guy : CROWD){
             if ( guy.getPermission().
                     compareTo(SackLunchPermission.FACILITATOR)>=0 && 
                     guy.getCommittees().contains(""+committee))
-                sb.append(guy.getEmail()).append(',');
+                sj.add(guy.getEmail());
         }
-        if( sb.length() > 0 ) sb.deleteCharAt(sb.length() -1 );
-        return sb.toString();
+        return sj.toString();
     }
  
     public int population;

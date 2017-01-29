@@ -1,3 +1,0 @@
-from: noone@nowhwere.org
-to: noone@nowhwere.org,noone@nowhwere.org,noone@nowhwere.org
-haoaw
