@@ -16,8 +16,6 @@ import javax.servlet.ServletContextListener;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Web application lifecycle listener.
@@ -100,7 +98,7 @@ public class NewServletListener implements ServletContextListener {
            someone.setLogin(login);
            someone.setPassword(memberPass);
            someone.setName(login);
-           someone.setCommittees("" + groupi + ",");
+           someone.setCommittees("" + 1 + ",");
            groupi++;
            someone.setPermission(SackLunchPermission.MEMBER);
            People.introduce(someone);
@@ -109,9 +107,29 @@ public class NewServletListener implements ServletContextListener {
         //initialize the list of things to bring -- the check list
         // Add items to Check.list
        	String[] in_itemid = Utils.split("0 1 2 3 4 5 "," "); //6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"," ");
-	String[] in_itemGroup = Utils.split("1, 2,4 3, 4, 1,5, 1, 2, 3, 4, 5, 1,2,3, 2, 3, 4, 5, " +
-			"1, 2, 3, 4, 5, 1,2,3,4,5", " ");
-	String[] in_item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
+        String allGroups = "1,2,3,4,5,";
+	String[] in_itemGroup = { allGroups , allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups ,
+                allGroups};
+        String[] in_item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
 			"Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant " +
 			"Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange"," ");
         Check theCheck;

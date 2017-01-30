@@ -16,8 +16,8 @@ public class Item {
     private String committee;
     public Item(){
         index = -1;
-        name = "";
-        committee = "0";
+        name = "nothing";
+        committee = "1,2,3,4,5";
     }
 
     public String getCommittee() {

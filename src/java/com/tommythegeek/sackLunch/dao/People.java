@@ -79,6 +79,21 @@ public class People {
         }
         return sj.toString();
     }
+   /**
+    * get the person with the id, 
+    * @param userId should be a integer in a string
+    * @return 
+    */
+    public static Person personById(String userId) {
+        
+        int id;
+        try{
+                id = Integer.parseInt(userId);
+        } catch (NumberFormatException e){
+          return new Person();
+        }
+        return CROWD.get(id);
+    }
  
     public int population;
     public People(){

@@ -22,8 +22,8 @@
    </head>
    <body>
       <c:set var="bureau" value='${fn:split(initParam.CommitteeName,",")}' />
-      <h2>Hello ${fullName}!</h2>
       <center>
+      <h2>Hello ${fullName}!</h2>
       <table width="50em"  border="1">
          <caption>
             <font size="+2"><b>${bureau[week-1]} Committee Member Menu</b></font>
@@ -50,15 +50,17 @@
                      <tr>
                          <c:choose >
                              <c:when test="${fn:contains(donator[i],'nobody')}" >
-                               <td>
+                               <td bgcolor="yellow">
                                    <input type="checkbox" name="donation" value="${i}" >${thing[i]}
+                                   <td bgcolor="yellow">${donator[i]}</td>
                                </td>
                              </c:when>
                              <c:otherwise>
-                             <td>${thing}</td>
+                             <td bgcolor="lime">${thing[i]}</td>
+                             <td bgcolor="lime">${donator[i]}</td>
+               
                              </c:otherwise>
                         </c:choose>
-                        <td>${donator[i]}</td>
                      </tr>
                      </c:forEach>
                      <tr>
