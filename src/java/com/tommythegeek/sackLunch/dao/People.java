@@ -64,7 +64,8 @@ public class People {
         return sj.toString();
     }
     /**
-     * list of email for the facilitator of the committee
+     * list of email for the facilitator of the committee 
+     * a committee is 1 2 3 4 or 5
      * @param committee
      * @return 
      */

@@ -51,6 +51,7 @@ public class NewServletListener implements ServletContextListener {
        Person someone = new Person();
        someone.setRowid(1);
        someone.setLogin(adminUser);
+       someone.setEmail(adminUser+ "@nowhere.com");
        someone.setPassword(adminPass);
        someone.setName(adminName);
        someone.setCommittees(Committee);
@@ -62,6 +63,7 @@ public class NewServletListener implements ServletContextListener {
        someone.setLogin(FacilitatorUser);
        someone.setPassword(FacilitatorPass);
        someone.setName(FacilitatorName);
+       someone.setEmail(FacilitatorUser+ "@nowhere.com");
        someone.setPermission(SackLunchPermission.FACILITATOR);
        People.introduce(someone);
        pop.updatePop();
@@ -81,6 +83,7 @@ public class NewServletListener implements ServletContextListener {
            someone=new Person();
            someone.setRowid(nexti++);
            someone.setLogin(login);
+           someone.setEmail(login + "@nowhere.com");
            someone.setPassword(memberPass);
            someone.setName(login);
            someone.setCommittees("" + groupi + ",");
@@ -99,6 +102,7 @@ public class NewServletListener implements ServletContextListener {
            someone.setPassword(memberPass);
            someone.setName(login);
            someone.setCommittees("" + 1 + ",");
+           someone.setEmail(login + "@nowhere.com");
            groupi++;
            someone.setPermission(SackLunchPermission.MEMBER);
            People.introduce(someone);

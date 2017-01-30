@@ -4,6 +4,7 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
+import com.tommythegeek.sackLunch.utility.is;
 import com.sun.javafx.util.Utils;
 import com.tommythegeek.sackLunch.dao.Check;
 import com.tommythegeek.sackLunch.dao.Council;

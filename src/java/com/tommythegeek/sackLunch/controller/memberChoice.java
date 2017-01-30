@@ -4,7 +4,7 @@
  */
 package com.tommythegeek.sackLunch.controller;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import com.tommythegeek.sackLunch.utility.is;
 import com.tommythegeek.sackLunch.dao.Check;
 import com.tommythegeek.sackLunch.dao.Item;
 import com.tommythegeek.sackLunch.dao.ItemVolunteered;
@@ -14,18 +14,16 @@ import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Schedule;
+import com.tommythegeek.sackLunch.utility.email;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -44,6 +42,7 @@ public class memberChoice extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+           String notice;
             HttpSession session = request.getSession();
             if(is.naull(session,"session", request, response)) return;
             ServletContext ctx = request.getServletContext();
@@ -67,14 +66,20 @@ public class memberChoice extends HttpServlet {
 
             String donationId = request.getParameter("donation");
             String helper = request.getParameter("helper");
+            int dsel = Integer.parseInt(week);
+            MeetingList ml = new MeetingList(sked);
+            Meeting bee =ml.meeting.get(dsel -1);
+            Date beeDay = bee.getDate();
+            Person volunteer = People.personById(userId);
+            String facilitator = People.facilitatorEmail(dsel);
             if ( helper == null ){
+                notice = String.format("Hello, %n%s will not be available for " 
+                        + " sack lunch preparation on %s%n",
+                        volunteer.getName(), 
+                        bee.getDateString());
+                email.send(ctx, volunteer.getEmail(), facilitator,"not available for sack lunch preparation", notice);
                 request.getRequestDispatcher("WEB-INF\\canvas\\WellMissYou.jsp").forward(request, response);
             } else {
-                int dsel = Integer.parseInt(week);
-                MeetingList ml = new MeetingList(sked);
-                Meeting bee =ml.meeting.get(dsel -1);
-                Date beeDay = bee.getDate();
-                Person volunteer = People.personById(userId);
                 Item butang;
                 if (donationId != null){
                     butang = list.findByIndex(Integer.parseInt(donationId));
@@ -83,6 +88,13 @@ public class memberChoice extends HttpServlet {
                     butang.setCommittee(group);
                 }
                 ItemVolunteered.donate(butang, beeDay,volunteer );
+                notice = String.format(
+                        "Hello, %n%s plans to bring %s and attend sack lunch"
+                        +"meeting " +
+                                "on %s%n", volunteer.getName(), 
+                                butang.getName(),
+                                bee.getDateString());
+                email.send(ctx, volunteer.getEmail(), facilitator,"coming to make sack lunch", notice);
                 request.getRequestDispatcher("WEB-INF\\canvas\\SeeYouThere.jsp").forward(request, response);
             }
         }

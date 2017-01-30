@@ -3,11 +3,10 @@
  * All rights Reserved
  */
 package com.tommythegeek.sackLunch.controller;
-
+import com.tommythegeek.sackLunch.utility.is;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -102,7 +101,8 @@ public class memberMessage extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/error/internalError.jsp")
                     .forward(request, response);
         } //end if    }
-    }
+    } // end processRequest
+    
     // <editor-fold  desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

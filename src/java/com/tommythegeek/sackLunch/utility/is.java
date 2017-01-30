@@ -2,7 +2,7 @@
  * Copyright 2016 Thomas Bodine
  * All rights Reserved
  */
-package com.tommythegeek.sackLunch.controller;
+package com.tommythegeek.sackLunch.utility;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -34,8 +34,17 @@ public class is {
         request.getRequestDispatcher("WEB-INF/error/internalError.jsp").forward(request,response);
         return true;    
     } 
-
-    static boolean nullSession(HttpSession session, String flash,
+    public static boolean naull( String string, String name){
+        try{
+            string.getClass();
+        } catch (NullPointerException e){
+            String mess = e.getMessage() + ":";
+            mess = mess + ((name == null ) ? "unknown" : name);
+            throw( new NullPointerException(mess));
+        }
+        return true;
+    }
+    public static boolean nullSession(HttpSession session, String flash,
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         if( session !=null)
