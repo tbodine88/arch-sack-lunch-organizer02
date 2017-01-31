@@ -140,7 +140,7 @@
                                  <table bordercolor="black" border="4" >
                                     <tr>
                                        <td bgcolor="pink">
-                                          <a href="/leave" >Leave Committee</a> 
+                                          <a href="prepareToLeave" >Leave Committee</a> 
                                        </td>
                                     </tr>
                                  </table> 

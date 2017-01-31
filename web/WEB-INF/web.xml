@@ -108,6 +108,14 @@
         <servlet-name>memberChoice</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.memberChoice</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>prepareToLeave</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.prepareToLeave</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>leaveUpdate</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.leaveUpdate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -151,6 +159,14 @@
     <servlet-mapping>
         <servlet-name>memberChoice</servlet-name>
         <url-pattern>/memberChoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>prepareToLeave</servlet-name>
+        <url-pattern>/prepareToLeave</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>leaveUpdate</servlet-name>
+        <url-pattern>/leaveUpdate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

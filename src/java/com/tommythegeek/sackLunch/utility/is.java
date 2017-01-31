@@ -44,6 +44,18 @@ public class is {
         }
         return true;
     }
+    public static boolean badParamCheck( String string, String name,
+            HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+            name = (name == null ) ? "unknown" : name;
+            if ( string == null || string.isEmpty()){
+                request.setAttribute("flash", name + " is null");
+                request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request,response);
+                return true;
+            }
+        return false;
+    }
+
     public static boolean nullSession(HttpSession session, String flash,
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
