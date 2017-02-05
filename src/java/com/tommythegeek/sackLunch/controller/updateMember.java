@@ -7,16 +7,20 @@ import com.tommythegeek.sackLunch.dao.BodineMap;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Witness;
 import com.tommythegeek.sackLunch.dao.Person;
+import com.tommythegeek.sackLunch.dao.SackLunchPermission;
 import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.WitnessType;
+import com.tommythegeek.sackLunch.utility.is;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.*;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -110,28 +114,20 @@ public class updateMember extends HttpServlet {
         String accum ;
         int rowId = 0;
         Witness victor = new Witness();
-        Status result;
+        Status result = new Status();
         error.clear();
         parmap.clear();
+        ServletContext sce = request.getServletContext();
+        if ( is.naull(sce,"ServletContext", request,response)) return;
+        HttpSession session = request.getSession(false);
+        SackLunchPermission perm = (SackLunchPermission) session.getAttribute("perm");
+
         goodParm("ed_name","no name given",request);
         goodParm("ed_phone","no phone given",request);
         vouch("ed_phone",WitnessType.WTPHONE,"");
         goodParm("ed_email","no mail given",request);
         vouch("ed_email",WitnessType.WTEMAIL,"");
-        goodParm("ed_can_deliver","no delivery status",request);
-        goodParm("ed_committees","no committees",request);
-        goodParm("ed_permission","no permission (member assumed)",request);
-        goodParm("ed_login","no login",request);
-        vouch("ed_login", WitnessType.WTUSER, "");
-        goodParm("ed_password","no password",request);
-        goodParm("ed_hint","no hint",request);
-        accum = (String) parmap.get("ed_hint");
-        String login = (String) parmap.get("ed_login");
-        String password = (String) parmap.get("ed_password");
-        result = victor.validHint(accum,login,password);
-        if (result.fail() ){
-            error.add(result.message);
-        }
+        
         goodParm("activity","Internal Error: no activity specified ",request);
         String activity = (String) parmap.get("activity");
         accum = (String) parmap.get("ed_name");
@@ -140,18 +136,35 @@ public class updateMember extends HttpServlet {
         guy.setPhone(accum);
         accum = (String) parmap.get("ed_email");
         guy.setEmail(accum);
-        accum = (String) parmap.get("ed_can_deliver");
-        guy.setCan_deliver(accum.equals("on"));
-        accum = (String) parmap.get("ed_committees");
-        guy.setCommittees(accum);
-        accum = (String) parmap.get("ed_permission");
-        guy.setPermission(accum);
-        accum = (String) parmap.get("ed_login");
-        guy.setLogin(accum);
-        accum = (String) parmap.get("ed_password");
-        guy.setPassword(accum);
-        accum = (String) parmap.get("ed_hint");
-        guy.setHint(accum);
+        String can = request.getParameter("ed_can_deliver");
+        guy.setCan_deliver( ! ( can == null || can.isEmpty()) );
+        if ( perm.compareTo(SackLunchPermission.FACILITATOR) > 0) {
+            goodParm("ed_committees","no committees",request);
+            goodParm("ed_permission","no permission (member assumed)",request);
+            goodParm("ed_login","no login",request);
+            vouch("ed_login", WitnessType.WTUSER, "");
+            goodParm("ed_password","no password",request);
+            goodParm("ed_hint","no hint",request);
+            accum = (String) parmap.get("ed_hint");
+            String login = (String) parmap.get("ed_login");
+            String password = (String) parmap.get("ed_password");
+            result = victor.validHint(accum,login,password);
+            if (result.fail() ){
+                error.add(result.message);
+            }
+            accum = (String) parmap.get("ed_permission");
+            guy.setPermission(accum);
+            accum = (String) parmap.get("ed_login");
+            guy.setLogin(accum);
+            accum = (String) parmap.get("ed_password");
+            guy.setPassword(accum);
+            accum = (String) parmap.get("ed_hint");
+            guy.setHint(accum);
+            accum = (String) parmap.get("ed_committees");
+            guy.setCommittees(accum);
+
+        } // end if perm.compareTo
+        
         accum = request.getParameter("ed_rowid");
         Date now = new Date();
         guy.setUpdated(now);
@@ -186,6 +199,7 @@ public class updateMember extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/canvas/success.jsp").forward(request, response);
         } else {
             request.setAttribute("err-ed_phone",parmap.get("ed_phone"));
+            request.setAttribute("ed_login",parmap.get("ed_login"));
             request.setAttribute("flash", "There are problems with the data eneterd.");
             request.setAttribute("error", error);
             request.getRequestDispatcher("WEB-INF/error/badParameter.jsp").forward(request, response);

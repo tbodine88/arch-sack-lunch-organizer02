@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/controller/Handle.java</file>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/controller/leaveUpdate.java</file>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/web/WEB-INF/canvas/Gratitude.jsp</file>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/controller/memberChoice.java</file>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/listeners/NewServletListener.java</file>
-            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/web/WEB-INF/canvas/FacilitatorMenu.jsp</file>
+            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/controller/memberMan.java</file>
+            <file>file:/C:/Users/Owner/Documents/NetBeansProjects/arch-sack-lunch-organizer02/src/java/com/tommythegeek/sackLunch/controller/updateMember.java</file>
         </group>
     </open-files>
 </project-private>

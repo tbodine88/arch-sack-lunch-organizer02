@@ -47,7 +47,7 @@
 					<c:forEach var="i" begin="0" end="${last}">
 				<tr>
 				<td>
-				<input type="checkbox" name="selected" value="${i}" onchange="this.form.submit();" />
+				<input type="checkbox" name="selected" value="${rowid[i]}" onchange="this.form.submit();" />
 				</td>
 				<td>
 				${login[i]}

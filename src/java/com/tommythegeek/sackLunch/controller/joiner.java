@@ -8,12 +8,15 @@ import com.tommythegeek.sackLunch.dao.MeetingList;
 import com.tommythegeek.sackLunch.dao.People;
 import com.tommythegeek.sackLunch.dao.Person;
 import com.tommythegeek.sackLunch.dao.SackLunchPermission;
+import com.tommythegeek.sackLunch.dao.Schedule;
 import com.tommythegeek.sackLunch.dao.Status;
 import com.tommythegeek.sackLunch.dao.Witness;
+import com.tommythegeek.sackLunch.utility.is;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
@@ -42,15 +45,24 @@ public class joiner extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        MeetingList committee;
         
         HttpSession session = request.getSession(false);
         if( session == null){
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
-        committee = (MeetingList) session.getAttribute("meetings");
+        ServletContext ctx = session.getServletContext();
+        if (is.naull(ctx, "Servlet Context", request, response)) return;
+        Schedule sked = (Schedule) ctx.getAttribute("sked");
+        MeetingList ml = new MeetingList(sked);
+        ArrayList<String> meet = new ArrayList<>();
+        meet.add(ml.first.getDateString());
+        meet.add(ml.second.getDateString());
+        meet.add(ml.third.getDateString());
+        meet.add(ml.fourth.getDateString());
+        meet.add(ml.fifth.getDateString());
         
-        request.setAttribute("meet", committee.meeting);
+        
+        request.setAttribute("meet", meet);
         request.getRequestDispatcher("joinForm.jsp").forward(request, response);
     }
 
