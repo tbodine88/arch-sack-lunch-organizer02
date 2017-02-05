@@ -155,11 +155,19 @@ public class memberMan extends HttpServlet {
     private void retry(HttpServletRequest request, HttpServletResponse response, 
 		    SackLunchPermission perm) throws ServletException, IOException {
             int rowid = -1;
-            String login = request.getParameter("ed_login");
-            Person guy = People.personByLogin(login);
-            
-            if ( guy != null ) {
-               rowid = guy.getRowid();
+            String sid = request.getParameter("ed_rowid");
+            if ( sid != null ) {
+                try {
+                    rowid = Integer.parseInt(sid);
+                } catch(NumberFormatException e){
+                    request.getRequestDispatcher(
+                            "WEB-INF/canvas/ManageMembers.jsp")
+                            .forward(request, response);
+                }
+            } else{
+                    request.getRequestDispatcher(
+                            "WEB-INF/canvas/ManageMembers.jsp")
+                            .forward(request, response);
             }
             request.setAttribute("ed_rowid",rowid);
             request.setAttribute("ed_name", 
@@ -175,7 +183,7 @@ public class memberMan extends HttpServlet {
             if( perm == SackLunchPermission.ADMINISTRATOR) {
                 request.setAttribute("ed_permission",
 			request.getParameter("ed_permission"));
-                request.setAttribute("ed_login", login );
+                request.setAttribute("ed_login", People.personById(sid).getLogin() );
                 request.setAttribute("ed_password",
 			request.getParameter("ed_password"));
                 request.setAttribute("ed_hint",
@@ -189,6 +197,7 @@ public class memberMan extends HttpServlet {
                 request.setAttribute("ed_updated",
 			request.getParameter("ed_updated"));
             }
+            
         request.getRequestDispatcher("WEB-INF/canvas/ManageMembers.jsp").forward(request, response);
     }
 
