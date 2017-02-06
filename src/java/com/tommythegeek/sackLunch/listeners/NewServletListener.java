@@ -92,18 +92,25 @@ public class NewServletListener implements ServletContextListener {
            People.introduce(someone);
            pop.updatePop();
        }
-       String[] member = Utils.split("onefish twofish " +""
-               + "threecat fourboy fivehigh", " ");
+       String[] member = Utils.split(
+               "ableone bakerone charlyone deltaone echoone foxtrotone golfone hotelone " +
+               "abletwo bakertwo charlytwo deltatwo echotwo foxtrottwo golftwo hoteltwo " +
+               "ablethree bakerthree charlythree deltathree echothree foxtrotthree golfthree hotelthree " +
+               "ablefour bakerfour charlyfour deltafour echofour foxtrotfour golffour hotelfour " +
+               "ablefive bakerfive charlyfive deltafive echofive foxtrotfive golffive hotelfive " 
+               , " ");
        groupi = 1;
+       int groupj = 0;
        for( String login : member){
            someone=new Person();
            someone.setRowid(nexti++);
            someone.setLogin(login);
            someone.setPassword(memberPass);
-           someone.setName(login);
-           someone.setCommittees("" + 1 + ",");
+           someone.setName(login + " member");
+           someone.setCommittees("" + groupi + ",");
            someone.setEmail(login + "@nowhere.com");
-           groupi++;
+           if ((++groupj % 8) == 0)
+            groupi++;
            someone.setPermission(SackLunchPermission.MEMBER);
            People.introduce(someone);
            pop.updatePop();
@@ -133,9 +140,7 @@ public class NewServletListener implements ServletContextListener {
                 allGroups ,
                 allGroups ,
                 allGroups};
-        String[] in_item = Utils.split("Blackcurrant Blueberry Chili pepper Cranberry Eggplant " +
-			"Gooseberry Grape Guava Kiwifruit Lucuma Pomegranate Redcurrant " +
-			"Tomato Cucumber Gourd Melon Pumpkin Grapefruit Lemon Lime Orange"," ");
+        String[] in_item = Utils.split("Delivery Meat Cheese Fruit Bread Cookies Crackers Granola"," ");
         Check theCheck;
         Item thing;
         
