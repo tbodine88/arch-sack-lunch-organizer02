@@ -1,5 +1,6 @@
 *.db
 *.class
+*.lnk
 
 # BlueJ files
 *.ctxt

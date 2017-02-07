@@ -116,6 +116,10 @@
         <servlet-name>leaveUpdate</servlet-name>
         <servlet-class>com.tommythegeek.sackLunch.controller.leaveUpdate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sendReminder</servlet-name>
+        <servlet-class>com.tommythegeek.sackLunch.controller.sendReminder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>go</servlet-name>
         <url-pattern>/go</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>leaveUpdate</servlet-name>
         <url-pattern>/leaveUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendReminder</servlet-name>
+        <url-pattern>/sendReminder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
